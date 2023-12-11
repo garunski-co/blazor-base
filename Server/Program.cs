@@ -1,4 +1,10 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using System;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Spent.Client.Core.Extensions;
+using Spent.Commons.Infra;
+
+var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration.AddClientConfigurations();
 

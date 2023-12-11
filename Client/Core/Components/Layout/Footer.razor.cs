@@ -1,4 +1,9 @@
-﻿namespace Spent.Client.Core.Components.Layout;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Spent.Client.Core.Extensions;
+using Spent.Commons.Infra;
+
+namespace Spent.Client.Core.Components.Layout;
 
 public partial class Footer
 {

@@ -1,4 +1,7 @@
-﻿namespace Spent.Server.Controllers;
+﻿using Microsoft.Extensions.Localization;
+using Spent.Commons.Resources;
+
+namespace Spent.Server.Controllers;
 
 public partial class AppControllerBase : ControllerBase
 {

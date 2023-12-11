@@ -1,6 +1,10 @@
-﻿using System.Net;
+﻿using System;
+using System.Linq;
+using System.Net;
+using Microsoft.Extensions.Localization;
+using Spent.Commons.Resources;
 
-namespace Spent.Shared.Exceptions;
+namespace Spent.Commons.Exceptions;
 
 public class ResourceValidationException : RestException
 {

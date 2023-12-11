@@ -1,4 +1,10 @@
-﻿namespace Spent.Client.Maui.Services;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.Maui.ApplicationModel;
+using Microsoft.Maui.Controls;
+using Spent.Client.Core.Services.Contracts;
+
+namespace Spent.Client.Maui.Services;
 
 /// <summary>
 /// More info at <see cref="IBitDeviceCoordinator"/>

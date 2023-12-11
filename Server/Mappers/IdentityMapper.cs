@@ -1,6 +1,6 @@
 ﻿using Spent.Server.Models.Identity;
-using Spent.Shared.Dtos.Identity;
 using Riok.Mapperly.Abstractions;
+using Spent.Commons.Dtos.Identity;
 
 namespace Spent.Server.Mappers;
 

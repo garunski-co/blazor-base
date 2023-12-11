@@ -50,7 +50,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Spent.Shared\Spent.Shared.csproj"/>
+        <ProjectReference Include="..\..\Commons\Commons.csproj"/>
     </ItemGroup>
 
     <ItemGroup>

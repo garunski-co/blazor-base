@@ -1,4 +1,11 @@
-﻿namespace Spent.Client.Core.Services.HttpMessageHandlers;
+﻿using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+using Spent.Commons.Exceptions;
+
+namespace Spent.Client.Core.Services.HttpMessageHandlers;
 
 public class RetryDelegatingHandler(ExceptionDelegatingHandler handler)
     : DelegatingHandler(handler)

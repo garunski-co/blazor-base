@@ -1,11 +1,22 @@
-﻿using System.IO.Compression;
+﻿using System;
+using System.IO;
+using System.IO.Compression;
+using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using Microsoft.AspNetCore.Builder;
 using Spent.Server.Services;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.OData;
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
+using Spent.Client.Core.Extensions;
+using Spent.Commons.Exceptions;
+using Spent.Commons.Resources;
 
 namespace Spent.Server.Startup;
 

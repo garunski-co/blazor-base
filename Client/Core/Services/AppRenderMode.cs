@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components.Web;
+using Spent.Commons.Infra;
 using OS = System.OperatingSystem;
 
 namespace Spent.Client.Core.Services;

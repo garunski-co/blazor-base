@@ -1,4 +1,7 @@
-﻿namespace Spent.Shared.Exceptions;
+﻿using System;
+using Microsoft.Extensions.Localization;
+
+namespace Spent.Commons.Exceptions;
 
 public abstract class KnownException : Exception
 {

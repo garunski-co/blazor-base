@@ -1,4 +1,7 @@
-﻿namespace Spent.Shared.Dtos.Categories;
+﻿using System.ComponentModel.DataAnnotations;
+using Spent.Commons.Resources;
+
+namespace Spent.Commons.Dtos.Categories;
 
 [DtoResourceType(typeof(AppStrings))]
 public class CategoryDto

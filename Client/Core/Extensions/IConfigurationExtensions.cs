@@ -1,4 +1,7 @@
-﻿namespace Microsoft.Extensions.Configuration;
+﻿using System;
+using Microsoft.Extensions.Configuration;
+
+namespace Spent.Client.Core.Extensions;
 public static class IConfigurationExtensions
 {
     public static string GetApiServerAddress(this IConfiguration configuration)

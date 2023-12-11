@@ -1,6 +1,9 @@
 ﻿using System.Reflection;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Spent.Client.Core.Services;
 using Microsoft.JSInterop;
+using Spent.Commons.Services.Contracts;
 
 namespace Spent.Server.Services;
 
@@ -21,7 +24,7 @@ public partial class ServerSideAuthTokenProvider : IAuthTokenProvider
 
     public bool IsInitialized => jsRuntime.GetType().Name is not "UnsupportedJavaScriptRuntime" && (bool)IsInitializedProp.GetValue(jsRuntime)!;
 
-    public async Task<string?> GetAccessTokenAsync()
+    public async Task<string> GetAccessTokenAsync()
     {
         if (IsInitialized)
         {

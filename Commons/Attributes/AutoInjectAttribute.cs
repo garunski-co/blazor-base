@@ -1,4 +1,6 @@
-﻿namespace Microsoft.Extensions.DependencyInjection;
+﻿using System;
+
+namespace Spent.Commons.Attributes;
 
 /// <summary>
 /// By applying this attribute to either fields or properties, the bit source generator will automatically

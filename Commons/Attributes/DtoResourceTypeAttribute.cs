@@ -1,4 +1,6 @@
-﻿namespace Spent.Shared.Attributes;
+﻿using System;
+
+namespace Spent.Commons.Attributes;
 
 /// <summary>
 /// Instead of repeatedly applying the ErrorMessageResourceType to properties featuring validation attributes like [Required] or [StringLength],

@@ -1,4 +1,10 @@
-﻿using Spent.Shared.Dtos.Identity;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Spent.Client.Core.Extensions;
+using Spent.Commons.Dtos;
+using Spent.Commons.Dtos.Identity;
+using Spent.Commons.Resources;
 
 namespace Spent.Client.Core.Components.Layout;
 

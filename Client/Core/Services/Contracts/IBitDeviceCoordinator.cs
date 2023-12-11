@@ -1,4 +1,6 @@
-﻿namespace Spent.Client.Core.Services.Contracts;
+﻿using System.Threading.Tasks;
+
+namespace Spent.Client.Core.Services.Contracts;
 
 /// <summary>
 /// This service performs device-specific tasks, such as setting the theme.

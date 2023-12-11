@@ -1,6 +1,8 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
+using Microsoft.Extensions.Localization;
 
-namespace Spent.Shared.Resources;
+namespace Spent.Commons.Resources;
 public static class StringLocalizerProvider
 {
     public static IStringLocalizer ProvideLocalizer(Type dtoType, IStringLocalizerFactory factory)

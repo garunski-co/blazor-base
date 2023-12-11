@@ -1,6 +1,8 @@
-﻿using Spent.Client.Web.Services;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Spent.Client.Core.Extensions;
+using Spent.Client.Web.Services;
 
-namespace Microsoft.Extensions.DependencyInjection;
+namespace Spent.Client.Web.Extensions;
 
 public static class IServiceCollectionExtensions
 {

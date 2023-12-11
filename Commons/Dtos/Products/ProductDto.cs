@@ -1,4 +1,7 @@
-﻿namespace Spent.Shared.Dtos.Products;
+﻿using System.ComponentModel.DataAnnotations;
+using Spent.Commons.Resources;
+
+namespace Spent.Commons.Dtos.Products;
 
 [DtoResourceType(typeof(AppStrings))]
 public class ProductDto

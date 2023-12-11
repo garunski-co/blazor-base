@@ -1,7 +1,10 @@
-﻿using Spent.Client.Maui;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Spent.Client.Core.Extensions;
+using Spent.Client.Core.Services.Contracts;
 using Spent.Client.Maui.Services;
 
-namespace Microsoft.Extensions.DependencyInjection;
+namespace Spent.Client.Maui.Extensions;
 
 public static class IServiceCollectionExtensions
 {

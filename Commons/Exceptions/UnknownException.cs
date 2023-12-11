@@ -1,4 +1,7 @@
-﻿namespace Spent.Shared.Exceptions;
+﻿using System;
+using Spent.Commons.Resources;
+
+namespace Spent.Commons.Exceptions;
 
 public class UnknownException : Exception
 {

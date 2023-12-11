@@ -1,4 +1,7 @@
-﻿namespace Spent.Client.Core.Services;
+﻿using System.Threading.Tasks;
+using Spent.Commons.Services.Contracts;
+
+namespace Spent.Client.Core.Services;
 
 public partial class ClientSideAuthTokenProvider : IAuthTokenProvider
 {
@@ -6,7 +9,7 @@ public partial class ClientSideAuthTokenProvider : IAuthTokenProvider
 
     public bool IsInitialized => true;
 
-    public async Task<string?> GetAccessTokenAsync()
+    public async Task<string> GetAccessTokenAsync()
     {
         return await storageService.GetItem("access_token");
     }

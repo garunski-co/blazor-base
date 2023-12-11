@@ -1,8 +1,12 @@
-﻿namespace Spent.Client.Web.Services;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace Spent.Client.Web.Services;
 
 public partial class WebExceptionHandler : ExceptionHandlerBase
 {
-    public override void Handle(Exception exception, IDictionary<string, object?>? parameters = null)
+    public override void Handle(Exception exception, IDictionary<string, object>? parameters = null)
     {
         if (exception is TaskCanceledException)
         {

@@ -1,6 +1,9 @@
-﻿using Spent.Shared.Dtos.Identity;
+﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
+using Spent.Commons.Dtos.Identity;
+using Spent.Commons.Exceptions;
 
-namespace Spent.Shared.Dtos;
+namespace Spent.Commons.Dtos;
 
 /// <summary>
 /// https://devblogs.microsoft.com/dotnet/try-the-new-system-text-json-source-generator/

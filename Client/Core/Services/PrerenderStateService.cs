@@ -1,4 +1,7 @@
 ﻿
+using System;
+using System.Threading.Tasks;
+
 namespace Spent.Client.Core.Services;
 
 /// <summary>
@@ -16,7 +19,7 @@ public class PrerenderStateService : IPrerenderStateService, IAsyncDisposable
         this.persistentComponentState = persistentComponentState;
     }
 
-    public async Task<T?> GetValue<T>(string key, Func<Task<T?>> factory)
+    public async Task<T> GetValue<T>(string key, Func<Task<T?>> factory)
     {
         if (AppRenderMode.PrerenderEnabled is false)
             return await factory();

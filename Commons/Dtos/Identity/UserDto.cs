@@ -1,5 +1,10 @@
 ﻿
-namespace Spent.Shared.Dtos.Identity;
+using System;
+using System.ComponentModel.DataAnnotations;
+using Spent.Commons.Enums;
+using Spent.Commons.Resources;
+
+namespace Spent.Commons.Dtos.Identity;
 
 [DtoResourceType(typeof(AppStrings))]
 public class UserDto

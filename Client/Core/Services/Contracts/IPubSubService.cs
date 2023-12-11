@@ -1,4 +1,7 @@
-﻿namespace Spent.Client.Core.Services.Contracts;
+﻿using System;
+using System.Threading.Tasks;
+
+namespace Spent.Client.Core.Services.Contracts;
 
 /// <summary>
 /// Contract for Publish/Subscribe pattern.
@@ -6,5 +9,5 @@
 public interface IPubSubService
 {
     void Publish(string message, object? payload);
-    Action Subscribe(string message, Func<object?, Task> handler);
+    Action Subscribe(string message, Func<object, Task> handler);
 }

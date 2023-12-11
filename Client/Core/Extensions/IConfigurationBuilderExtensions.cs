@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
+using Microsoft.Extensions.Configuration;
 
-namespace Microsoft.Extensions.Configuration;
+namespace Spent.Client.Core.Extensions;
 
 public static class IConfigurationBuilderExtensions
 {

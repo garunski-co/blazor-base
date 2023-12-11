@@ -1,4 +1,9 @@
-﻿namespace System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace Spent.Client.Core.Extensions;
 
 public static class ICollectionExtensions
 {

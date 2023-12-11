@@ -1,6 +1,19 @@
-﻿using System.Text;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Security.Claims;
+using System.Text;
 using System.Text.Json;
-using Spent.Shared.Dtos.Identity;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Localization;
+using Spent.Client.Core.Extensions;
+using Spent.Commons.Dtos;
+using Spent.Commons.Dtos.Identity;
+using Spent.Commons.Exceptions;
+using Spent.Commons.Resources;
+using Spent.Commons.Services.Contracts;
 
 namespace Spent.Client.Core.Services;
 

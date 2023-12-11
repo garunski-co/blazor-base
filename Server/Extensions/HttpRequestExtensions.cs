@@ -1,7 +1,10 @@
-﻿using Microsoft.Extensions.Primitives;
+﻿using System;
+using System.Linq;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Primitives;
 using Microsoft.Net.Http.Headers;
 
-namespace Microsoft.AspNetCore.Http;
+namespace Spent.Server.Extensions;
 
 public static class HttpRequestExtensions
 {

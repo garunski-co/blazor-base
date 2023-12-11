@@ -1,6 +1,9 @@
-﻿using Spent.Shared.Services;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Spent.Commons.Services;
+using Spent.Commons.Services.Contracts;
 
-namespace Microsoft.Extensions.DependencyInjection;
+namespace Spent.Commons.Extensions;
 
 public static class IServiceCollectionExtensions
 {

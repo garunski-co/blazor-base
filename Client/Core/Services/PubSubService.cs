@@ -1,4 +1,9 @@
-﻿namespace Spent.Client.Core.Services;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace Spent.Client.Core.Services;
 
 /// <summary>
 /// For more information <see cref="IPubSubService"/> docs.
@@ -7,7 +12,7 @@ public partial class PubSubService : IPubSubService
 {
     [AutoInject] private IServiceProvider serviceProvider = default!;
 
-    private readonly ConcurrentDictionary<string, List<Func<object?, Task>>> handlers = new();
+    private readonly ConcurrentDictionary<string, List<Func<object, Task>>> handlers = new();
 
     public void Publish(string message, object? payload)
     {

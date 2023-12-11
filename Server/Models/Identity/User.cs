@@ -1,4 +1,7 @@
-﻿namespace Spent.Server.Models.Identity;
+﻿using System;
+using Spent.Commons.Enums;
+
+namespace Spent.Server.Models.Identity;
 
 public class User : IdentityUser<int>
 {

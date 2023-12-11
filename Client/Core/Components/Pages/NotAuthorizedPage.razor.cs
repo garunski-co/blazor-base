@@ -1,4 +1,8 @@
-﻿namespace Spent.Client.Core.Components.Pages;
+﻿using System;
+using System.Security.Claims;
+using System.Threading.Tasks;
+
+namespace Spent.Client.Core.Components.Pages;
 
 public partial class NotAuthorizedPage
 {

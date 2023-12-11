@@ -1,5 +1,8 @@
 ﻿
-namespace Spent.Shared.Dtos.Identity;
+using System.ComponentModel.DataAnnotations;
+using Spent.Commons.Resources;
+
+namespace Spent.Commons.Dtos.Identity;
 
 [DtoResourceType(typeof(AppStrings))]
 public class SendConfirmationEmailRequestDto

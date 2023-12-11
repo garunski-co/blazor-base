@@ -1,13 +1,22 @@
-﻿using System.Web;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Web;
 using Spent.Server.Components;
 using Spent.Server.Models.Emailing;
 using Spent.Server.Models.Identity;
 using Spent.Server.Resources;
-using Spent.Shared.Dtos.Identity;
 using FluentEmail.Core;
 using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.Extensions.Localization;
+using Spent.Commons.Dtos.Identity;
+using Spent.Commons.Exceptions;
+using Spent.Commons.Resources;
+using Spent.Server.Extensions;
 
 namespace Spent.Server.Controllers.Identity;
 
@@ -98,7 +107,7 @@ public partial class IdentityController : AppControllerBase
 
         var body = await htmlRenderer.Dispatcher.InvokeAsync(async () =>
         {
-            var renderedComponent = await htmlRenderer.RenderComponentAsync<EmailConfirmationTemplate>(ParameterView.FromDictionary(new Dictionary<string, object?>()
+            var renderedComponent = await htmlRenderer.RenderComponentAsync<EmailConfirmationTemplate>(ParameterView.FromDictionary(new Dictionary<string, object>()
             {
                 {   nameof(EmailConfirmationTemplate.Model),
                     new EmailConfirmationModel

@@ -1,4 +1,4 @@
-﻿namespace Spent.Shared.Exceptions;
+﻿namespace Spent.Commons.Exceptions;
 
 public class RestErrorInfo
 {

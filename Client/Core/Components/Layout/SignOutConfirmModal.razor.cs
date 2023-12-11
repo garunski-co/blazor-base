@@ -1,4 +1,6 @@
-﻿namespace Spent.Client.Core.Components.Layout;
+﻿using System.Threading.Tasks;
+
+namespace Spent.Client.Core.Components.Layout;
 
 public partial class SignOutConfirmModal
 {

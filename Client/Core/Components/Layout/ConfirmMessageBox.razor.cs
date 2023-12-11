@@ -1,4 +1,7 @@
-﻿namespace Spent.Client.Core.Components.Layout;
+﻿using System.Threading.Tasks;
+using Spent.Client.Core.Extensions;
+
+namespace Spent.Client.Core.Components.Layout;
 
 public partial class ConfirmMessageBox
 {

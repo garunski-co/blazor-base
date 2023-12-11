@@ -1,5 +1,5 @@
 ﻿
-namespace Spent.Shared.Dtos.Identity;
+namespace Spent.Commons.Dtos.Identity;
 
 public class TokenResponseDto
 {

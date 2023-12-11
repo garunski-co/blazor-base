@@ -1,4 +1,11 @@
-﻿namespace Spent.Client.Maui;
+﻿using System;
+using Microsoft.Maui;
+using Microsoft.Maui.ApplicationModel;
+using Microsoft.Maui.Devices;
+using Spent.Client.Core.Services.Contracts;
+using Spent.Commons.Infra;
+
+namespace Spent.Client.Maui;
 
 public partial class MainPage
 {

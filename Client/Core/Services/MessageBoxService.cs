@@ -1,4 +1,7 @@
-﻿namespace Spent.Client.Core.Services;
+﻿using System.Threading.Tasks;
+using Spent.Commons.Attributes;
+
+namespace Spent.Client.Core.Services;
 public partial class MessageBoxService
 {
     [AutoInject] private IPubSubService pubSubService = default!;

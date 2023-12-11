@@ -1,4 +1,4 @@
-﻿namespace Spent.Shared.Dtos.Dashboard;
+﻿namespace Spent.Commons.Dtos.Dashboard;
 
 public class ProductPercentagePerCategoryResponseDto
 {

@@ -1,8 +1,13 @@
-﻿
-using Spent.Client.Core.Services.HttpMessageHandlers;
+﻿using System;
+using System.Net.Http;
 using Microsoft.AspNetCore.Components.WebAssembly.Services;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Spent.Client.Core.Services.HttpMessageHandlers;
+using Spent.Commons.Extensions;
+using Spent.Commons.Services.Contracts;
 
-namespace Microsoft.Extensions.DependencyInjection;
+namespace Spent.Client.Core.Extensions;
 
 public static class IServiceCollectionExtensions
 {

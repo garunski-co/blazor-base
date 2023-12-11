@@ -1,4 +1,9 @@
-﻿namespace Spent.Client.Maui.Services;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Spent.Client.Core.Services;
+
+namespace Spent.Client.Maui.Services;
 
 /// <summary>
 /// You can easily install AppCenter, Firebase Crashlytics, and other exception tracking libraries in your Client.Maui project.
@@ -6,7 +11,7 @@
 /// </summary>
 public partial class MauiExceptionHandler : ExceptionHandlerBase
 {
-    public override void Handle(Exception exception, IDictionary<string, object?>? parameters = null)
+    public override void Handle(Exception exception, IDictionary<string, object>? parameters = null)
     {
         if (exception is TaskCanceledException)
         {

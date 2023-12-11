@@ -1,4 +1,8 @@
-﻿namespace Spent.Client.Core.Components.Layout;
+﻿using System;
+using System.Threading.Tasks;
+using Spent.Client.Core.Extensions;
+
+namespace Spent.Client.Core.Components.Layout;
 
 public partial class MessageBox : IDisposable
 {
@@ -6,7 +10,7 @@ public partial class MessageBox : IDisposable
     private string? title;
     private string? body;
 
-    private TaskCompletionSource<object?>? tcs;
+    private TaskCompletionSource<object>? tcs;
 
     private async Task OnCloseClick()
     {

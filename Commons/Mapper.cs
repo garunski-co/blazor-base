@@ -1,7 +1,7 @@
-﻿using Spent.Shared.Dtos.Identity;
-using Riok.Mapperly.Abstractions;
+﻿using Riok.Mapperly.Abstractions;
+using Spent.Commons.Dtos.Identity;
 
-namespace Spent.Shared;
+namespace Spent.Commons;
 
 /// <summary>
 /// Patching methods help you patch the DTO you have received from the server (for example, after calling an Update api) 

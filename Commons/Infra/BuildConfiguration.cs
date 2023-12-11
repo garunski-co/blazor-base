@@ -1,4 +1,4 @@
-﻿namespace Spent.Shared.Infra;
+﻿namespace Spent.Commons.Infra;
 
 public static class BuildConfiguration
 {
