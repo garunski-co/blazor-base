@@ -1,8 +1,4 @@
-﻿
-using System;
-using System.Threading.Tasks;
-
-namespace Spent.Client.Core.Services;
+﻿namespace Spent.Client.Core.Services;
 
 /// <summary>
 /// For more information <see cref="IPrerenderStateService"/> docs.

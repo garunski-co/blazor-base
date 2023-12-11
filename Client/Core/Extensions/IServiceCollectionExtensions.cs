@@ -1,11 +1,6 @@
-﻿using System;
-using System.Net.Http;
-using Microsoft.AspNetCore.Components.WebAssembly.Services;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
+﻿using Microsoft.AspNetCore.Components.WebAssembly.Services;
 using Spent.Client.Core.Services.HttpMessageHandlers;
 using Spent.Commons.Extensions;
-using Spent.Commons.Services.Contracts;
 
 namespace Spent.Client.Core.Extensions;
 

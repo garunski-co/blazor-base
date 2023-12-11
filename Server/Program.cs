@@ -1,8 +1,4 @@
-﻿using System;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Spent.Client.Core.Extensions;
-using Spent.Commons.Infra;
+﻿using Spent.Client.Core.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 

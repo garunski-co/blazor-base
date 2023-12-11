@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Spent.Client.Core.Extensions;
+using Spent.Commons.Attributes;
 using Spent.Commons.Dtos;
 using Spent.Commons.Dtos.Identity;
 using Spent.Commons.Resources;

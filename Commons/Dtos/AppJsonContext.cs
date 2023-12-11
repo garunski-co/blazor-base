@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Text.Json.Serialization;
-using Spent.Commons.Dtos.Identity;
-using Spent.Commons.Exceptions;
+﻿using Spent.Commons.Dtos.Identity;
 
 namespace Spent.Commons.Dtos;
 

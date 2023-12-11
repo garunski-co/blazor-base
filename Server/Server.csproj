@@ -61,7 +61,7 @@
         <Using Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore"/>
         <Using Include="Spent.Server.Data"/>
         <Using Include="Spent.Server.Mappers"/>
-        <Using Include="Spent.Shared.Enums"/>
+        <Using Include="Spent.Commons.Enums"/>
     </ItemGroup>
 
     <ItemGroup>

@@ -1,8 +1,4 @@
-﻿using System.Threading.Tasks;
-using Spent.Commons.Dtos;
-using Spent.Commons.Dtos.Identity;
-using Spent.Commons.Exceptions;
-using Spent.Commons.Resources;
+﻿using Spent.Commons.Dtos.Identity;
 
 namespace Spent.Client.Core.Components.Pages.Identity;
 

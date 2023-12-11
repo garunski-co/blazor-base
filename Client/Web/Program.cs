@@ -1,8 +1,5 @@
-﻿using System;
-using System.Net.Http;
-using Spent.Client.Core.Services.HttpMessageHandlers;
+﻿using Spent.Client.Core.Services.HttpMessageHandlers;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.Extensions.DependencyInjection;
 using Spent.Client.Core.Extensions;
 using Spent.Client.Web.Extensions;
 

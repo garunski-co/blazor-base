@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace Spent.Client.Web.Services;
+﻿namespace Spent.Client.Web.Services;
 
 public partial class WebExceptionHandler : ExceptionHandlerBase
 {

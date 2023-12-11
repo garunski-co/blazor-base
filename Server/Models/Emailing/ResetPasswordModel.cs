@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Spent.Server.Models.Emailing;
+﻿namespace Spent.Server.Models.Emailing;
 
 public class ResetPasswordModel
 {

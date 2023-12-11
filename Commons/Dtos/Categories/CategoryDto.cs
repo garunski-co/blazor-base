@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Spent.Commons.Resources;
-
-namespace Spent.Commons.Dtos.Categories;
+﻿namespace Spent.Commons.Dtos.Categories;
 
 [DtoResourceType(typeof(AppStrings))]
 public class CategoryDto

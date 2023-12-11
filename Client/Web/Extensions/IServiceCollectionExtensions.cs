@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Spent.Client.Core.Extensions;
+﻿using Spent.Client.Core.Extensions;
 using Spent.Client.Web.Services;
 
 namespace Spent.Client.Web.Extensions;

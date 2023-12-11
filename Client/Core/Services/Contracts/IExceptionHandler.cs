@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Spent.Client.Core.Services.Contracts;
+﻿namespace Spent.Client.Core.Services.Contracts;
 
 public interface IExceptionHandler
 {

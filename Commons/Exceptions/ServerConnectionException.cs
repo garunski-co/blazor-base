@@ -1,7 +1,4 @@
-﻿using System;
-using Spent.Commons.Resources;
-
-namespace Spent.Commons.Exceptions;
+﻿namespace Spent.Commons.Exceptions;
 public class ServerConnectionException : UnknownException
 {
     public ServerConnectionException()

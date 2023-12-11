@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-
-namespace Spent.Client.Core.Services.Contracts;
+﻿namespace Spent.Client.Core.Services.Contracts;
 
 /// <summary>
 /// This service simplifies the process of persisting application state in Pre-Rendering mode

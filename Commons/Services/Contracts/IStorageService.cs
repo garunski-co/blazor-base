@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace Spent.Commons.Services.Contracts;
+﻿namespace Spent.Commons.Services.Contracts;
 
 public interface IStorageService
 {

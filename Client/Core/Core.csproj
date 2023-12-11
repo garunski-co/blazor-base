@@ -41,7 +41,7 @@
         <Using Include="Microsoft.AspNetCore.Authorization"/>
         <Using Include="Microsoft.AspNetCore.Components.Authorization"/>
         <Using Include="Bit.BlazorUI"/>
-        <Using Include="Spent.Shared"/>
+        <Using Include="Spent.Commons"/>
         <Using Include="Spent.Client.Core.Components.Layout"/>
         <Using Include="Spent.Client.Core.Services.Contracts"/>
         <Using Include="Spent.Client.Core.Services"/>

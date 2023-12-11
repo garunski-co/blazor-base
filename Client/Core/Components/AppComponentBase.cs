@@ -1,11 +1,4 @@
-﻿using System;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Localization;
-using Spent.Commons.Resources;
-using Spent.Commons.Services.Contracts;
+﻿using Spent.Commons.Attributes;
 
 namespace Spent.Client.Core.Components;
 

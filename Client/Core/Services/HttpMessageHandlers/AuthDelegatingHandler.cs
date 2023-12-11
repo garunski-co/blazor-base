@@ -1,11 +1,4 @@
-﻿using System;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using Spent.Commons.Exceptions;
-using Spent.Commons.Services.Contracts;
+﻿using System.Net.Http.Headers;
 
 namespace Spent.Client.Core.Services.HttpMessageHandlers;
 

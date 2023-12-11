@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Localization;
-using Spent.Commons.Dtos;
-using Spent.Commons.Exceptions;
-using Spent.Commons.Resources;
+﻿using System.Net;
 
 namespace Spent.Client.Core.Services.HttpMessageHandlers;
 

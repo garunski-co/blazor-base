@@ -1,8 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Spent.Commons.Resources;
-
-namespace Spent.Commons.Dtos.Identity;
+﻿namespace Spent.Commons.Dtos.Identity;
 
 [DtoResourceType(typeof(AppStrings))]
 public class SignUpRequestDto

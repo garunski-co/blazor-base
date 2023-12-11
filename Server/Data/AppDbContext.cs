@@ -1,10 +1,5 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using Spent.Server.Models.Identity;
+﻿using Spent.Server.Models.Identity;
 using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Spent.Commons.Exceptions;
-using Spent.Commons.Resources;
 
 namespace Spent.Server.Data;
 

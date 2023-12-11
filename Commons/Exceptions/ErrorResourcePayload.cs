@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Spent.Commons.Exceptions;
+﻿namespace Spent.Commons.Exceptions;
 
 public class ErrorResourcePayload
 {

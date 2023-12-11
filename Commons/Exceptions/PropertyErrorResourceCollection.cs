@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace Spent.Commons.Exceptions;
 
 public class PropertyErrorResourceCollection

@@ -1,20 +1,11 @@
-﻿using System;
-using System.IO;
-using System.Net.Http;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using Microsoft.AspNetCore.DataProtection;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Spent.Client.Core.Extensions;
 using Spent.Client.Core.Services.HttpMessageHandlers;
 using Spent.Client.Web.Extensions;
-using Spent.Commons.Services.Contracts;
 using Spent.Server.Models.Identity;
 using Spent.Server.Services;
 
@@ -134,7 +125,7 @@ public static class IServiceCollectionExtensions
         services.AddSwaggerGen(options =>
         {
             options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "Spent.Server.xml"));
-            options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "Spent.Shared.xml"));
+            options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "Spent.Commons.xml"));
 
             options.OperationFilter<ODataOperationFilter>();
 

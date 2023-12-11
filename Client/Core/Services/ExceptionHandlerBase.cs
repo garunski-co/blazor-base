@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using Microsoft.Extensions.Localization;
-using Spent.Commons.Exceptions;
-using Spent.Commons.Infra;
-using Spent.Commons.Resources;
+﻿using System.Diagnostics;
+using Spent.Commons.Attributes;
 
 namespace Spent.Client.Core.Services;
 

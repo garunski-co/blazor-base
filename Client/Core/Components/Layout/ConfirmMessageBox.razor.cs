@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Spent.Client.Core.Extensions;
+﻿using Spent.Client.Core.Extensions;
 
 namespace Spent.Client.Core.Components.Layout;
 

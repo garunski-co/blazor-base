@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Spent.Commons.Dtos;
+﻿namespace Spent.Commons.Dtos;
 
 public class PagedResult<T>
 {

@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Spent.Commons.Infra;
-
-namespace Spent.Client.Core.Extensions;
+﻿namespace Spent.Client.Core.Extensions;
 
 public static class IJSRuntimeExtensions
 {

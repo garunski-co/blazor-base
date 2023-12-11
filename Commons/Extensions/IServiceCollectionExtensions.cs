@@ -1,7 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Spent.Commons.Services;
-using Spent.Commons.Services.Contracts;
+﻿using Spent.Commons.Services;
 
 namespace Spent.Commons.Extensions;
 

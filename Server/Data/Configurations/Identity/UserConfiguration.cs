@@ -1,6 +1,4 @@
-﻿using System;
-using Spent.Commons.Enums;
-using Spent.Server.Models.Identity;
+﻿using Spent.Server.Models.Identity;
 
 namespace Spent.Server.Data.Configurations.Identity;
 

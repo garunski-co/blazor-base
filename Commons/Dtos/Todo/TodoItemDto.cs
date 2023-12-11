@@ -1,9 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
-using Spent.Commons.Resources;
-
-namespace Spent.Commons.Dtos.Todo;
+﻿namespace Spent.Commons.Dtos.Todo;
 
 [DtoResourceType(typeof(AppStrings))]
 public class TodoItemDto

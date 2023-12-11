@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Spent.Commons.Services.Contracts;
+﻿using Spent.Commons.Attributes;
 
 namespace Spent.Client.Core.Services;
 

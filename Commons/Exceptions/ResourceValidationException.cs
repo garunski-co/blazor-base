@@ -1,8 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Net;
-using Microsoft.Extensions.Localization;
-using Spent.Commons.Resources;
+﻿using System.Net;
 
 namespace Spent.Commons.Exceptions;
 

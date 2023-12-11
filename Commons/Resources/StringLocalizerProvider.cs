@@ -1,6 +1,4 @@
-﻿using System;
-using System.Reflection;
-using Microsoft.Extensions.Localization;
+﻿using System.Reflection;
 
 namespace Spent.Commons.Resources;
 public static class StringLocalizerProvider

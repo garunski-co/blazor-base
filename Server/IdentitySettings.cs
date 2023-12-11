@@ -1,5 +1,3 @@
-using System;
-
 namespace Spent.Server;
 
 public class IdentitySettings

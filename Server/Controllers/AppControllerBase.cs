@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Localization;
-using Spent.Commons.Resources;
+﻿using Spent.Commons.Attributes;
 
 namespace Spent.Server.Controllers;
 

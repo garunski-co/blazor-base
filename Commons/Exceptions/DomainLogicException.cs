@@ -1,7 +1,4 @@
-﻿using System;
-using Microsoft.Extensions.Localization;
-
-namespace Spent.Commons.Exceptions;
+﻿namespace Spent.Commons.Exceptions;
 
 public class DomainLogicException : KnownException
 {

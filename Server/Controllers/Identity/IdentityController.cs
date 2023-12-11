@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Web;
+﻿using System.Web;
 using Spent.Server.Components;
 using Spent.Server.Models.Emailing;
 using Spent.Server.Models.Identity;
@@ -12,10 +7,8 @@ using FluentEmail.Core;
 using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using Microsoft.Extensions.Localization;
+using Spent.Commons.Attributes;
 using Spent.Commons.Dtos.Identity;
-using Spent.Commons.Exceptions;
-using Spent.Commons.Resources;
 using Spent.Server.Extensions;
 
 namespace Spent.Server.Controllers.Identity;

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Spent.Commons.Services.Contracts;
+﻿namespace Spent.Commons.Services.Contracts;
 
 public interface IDateTimeProvider
 {

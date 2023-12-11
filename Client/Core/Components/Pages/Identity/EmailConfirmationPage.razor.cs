@@ -1,9 +1,4 @@
-﻿using System.Threading.Tasks;
-using Spent.Commons.Dtos;
-using Spent.Commons.Exceptions;
-using Spent.Commons.Resources;
-
-namespace Spent.Client.Core.Components.Pages.Identity;
+﻿namespace Spent.Client.Core.Components.Pages.Identity;
 
 public partial class EmailConfirmationPage
 {
