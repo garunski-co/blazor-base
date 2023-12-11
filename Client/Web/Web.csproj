@@ -15,6 +15,8 @@
         <BlazorCacheBootResources Condition=" '$(PwaEnabled)' == 'true' ">false</BlazorCacheBootResources>
         <NoDefaultLaunchSettingsFile>true</NoDefaultLaunchSettingsFile>
         <StaticWebAssetProjectMode>Default</StaticWebAssetProjectMode>
+        <AssemblyName>Spent.Client.Web</AssemblyName>
+        <RootNamespace>Spent.Client.Web</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup Condition=" '$(PwaEnabled)' == 'true' ">
@@ -22,8 +24,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Watch Include="..\Spent.Client.Core\**\*.razor"/>
-        <Watch Include="..\Spent.Client.Core\**\*.css" Exclude="node_modules\**\*;**\*.css.map;obj\**\*;bin\**\*"/>
+        <Watch Include="..\Core\**\*.razor"/>
+        <Watch Include="..\Core\**\*.css" Exclude="node_modules\**\*;**\*.css.map;obj\**\*;bin\**\*"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -39,7 +41,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Spent.Client.Core\Spent.Client.Core.csproj"/>
+        <ProjectReference Include="..\Core\Core.csproj"/>
 
         <Using Include="Microsoft.JSInterop"/>
         <Using Include="Spent.Client.Core.Services.Contracts"/>

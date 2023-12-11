@@ -2,6 +2,8 @@
 
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
+        <AssemblyName>Spent.Server</AssemblyName>
+        <RootNamespace>Spent.Server</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -63,9 +65,9 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Spent.Shared\Spent.Shared.csproj"/>
-        <ProjectReference Include="..\Client\Spent.Client.Core\Spent.Client.Core.csproj"/>
-        <ProjectReference Include="..\Client\Spent.Client.Web\Spent.Client.Web.csproj"/>
+        <ProjectReference Include="..\Commons\Commons.csproj"/>
+        <ProjectReference Include="..\Client\Core\Core.csproj"/>
+        <ProjectReference Include="..\Client\Web\Web.csproj"/>
     </ItemGroup>
 
     <ItemGroup>

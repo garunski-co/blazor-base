@@ -6,6 +6,8 @@
             BeforeBuildTasks;
             $(ResolveStaticWebAssetsInputsDependsOn)
         </ResolveStaticWebAssetsInputsDependsOn>
+        <AssemblyName>Spent.Client.Core</AssemblyName>
+        <RootNamespace>Spent.Client.Core</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

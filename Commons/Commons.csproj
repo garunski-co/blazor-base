@@ -2,6 +2,9 @@
 
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
+
+        <AssemblyName>Spent.Commons</AssemblyName>
+        <RootNamespace>Spent.Commons</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -25,7 +28,7 @@
 
     <ItemGroup>
         <SupportedPlatform Include="browser"/>
-        <Using Include="Spent.Shared.Attributes"/>
+        <Using Include="Spent.Commons.Attributes"/>
     </ItemGroup>
 
     <ItemGroup>

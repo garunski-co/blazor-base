@@ -13,9 +13,12 @@
 
         <!-- Display name -->
         <ApplicationTitle>Spent</ApplicationTitle>
+        
+        <AssemblyName>Spent.Client.Maui</AssemblyName>
+        <RootNamespace>Spent.Client.Maui</RootNamespace>
 
         <!-- App Identifier -->
-        <ApplicationId>com.bitplatform.BP.Template</ApplicationId>
+        <ApplicationId>com.</ApplicationId>
         <ApplicationIdGuid>CA228EB2-2235-406D-A363-C65C714E7AA4</ApplicationIdGuid>
 
         <!-- Versions -->
@@ -96,7 +99,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Spent.Client.Core\Spent.Client.Core.csproj"/>
+        <ProjectReference Include="..\Core\Core.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
