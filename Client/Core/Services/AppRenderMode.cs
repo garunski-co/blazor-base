@@ -5,12 +5,24 @@ namespace Spent.Client.Core.Services;
 
 public static class AppRenderMode
 {
-    public const bool PrerenderEnabled = false;
+    private const bool PrerenderEnabled =
+#if PrerenderEnabled
+        true;
+#else
+        false;
+#endif
+
+    public const bool PwaEnabled =
+#if PwaEnabled
+        true;
+#else
+        false;
+#endif
 
     private static IComponentRenderMode Auto { get; } = new InteractiveAutoRenderMode(PrerenderEnabled);
 
-    private static IComponentRenderMode BlazorWebAssembly { get; } =
-        new InteractiveWebAssemblyRenderMode(PrerenderEnabled);
+    // private static IComponentRenderMode BlazorWebAssembly { get; } =
+    //     new InteractiveWebAssemblyRenderMode(PrerenderEnabled);
 
     private static IComponentRenderMode BlazorServer { get; } = new InteractiveServerRenderMode(PrerenderEnabled);
 
@@ -18,13 +30,6 @@ public static class AppRenderMode
 
     public static IComponentRenderMode Current =>
         BuildConfiguration.IsDebug() ? BlazorServer /*For better development experience*/ : Auto;
-
-    public static bool PwaEnabled { get; } =
-#if PwaEnabled
-        true;
-#else
-        false;
-#endif
 
     public static bool IsHybrid()
     {

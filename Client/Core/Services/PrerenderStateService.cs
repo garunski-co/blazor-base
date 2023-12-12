@@ -9,6 +9,7 @@ public class PrerenderStateService : IPrerenderStateService, IAsyncDisposable
 
     private readonly PersistingComponentStateSubscription? _subscription;
 
+    // ReSharper disable once CollectionNeverUpdated.Local
     private readonly ConcurrentDictionary<string, object?> _values = new();
 
     public PrerenderStateService(PersistentComponentState? persistentComponentState = null)
@@ -19,21 +20,14 @@ public class PrerenderStateService : IPrerenderStateService, IAsyncDisposable
 
     public async ValueTask DisposeAsync()
     {
-        if (AppRenderMode.PrerenderEnabled is false)
-        {
-            return;
-        }
-
+#if PrerenderEnabled
         _subscription?.Dispose();
+#endif
     }
 
-    public async Task<T> GetValue<T>(string key, Func<Task<T?>> factory)
+    public Task<T?> GetValue<T>(string key, Func<Task<T?>> factory)
     {
-        if (AppRenderMode.PrerenderEnabled is false)
-        {
-            return await factory();
-        }
-
+#if PrerenderEnabled
         if (_persistentComponentState!.TryTakeFromJson(key, out T? value))
         {
             return value;
@@ -42,18 +36,18 @@ public class PrerenderStateService : IPrerenderStateService, IAsyncDisposable
         var result = await factory();
         Persist(key, result);
         return result;
+#endif
+
+        return factory();
     }
 
+#if PrerenderEnabled
     private void Persist<T>(string key, T value)
     {
-        if (AppRenderMode.PrerenderEnabled is false)
-        {
-            return;
-        }
-
         _values.TryRemove(key, out var _);
         _values.TryAdd(key, value);
     }
+#endif
 
     private async Task PersistAsJson()
     {

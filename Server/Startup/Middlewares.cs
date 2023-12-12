@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Http.Extensions;
 
 namespace Spent.Server.Startup;
 
-public class Middlewares
+public static class Middlewares
 {
     public static void Use(WebApplication app, IHostEnvironment env, IConfiguration configuration)
     {
@@ -131,31 +131,32 @@ public class Middlewares
 
         app.UseStatusCodePages(options: new()
         {
-            HandleAsync = async (statusCodeContext) =>
+            HandleAsync = statusCodeContext =>
             {
                 var httpContext = statusCodeContext.HttpContext;
 
-                if (httpContext.Response.StatusCode is 401 or 403 &&
-                    httpContext.GetEndpoint()?.Metadata.OfType<ComponentTypeMetadata>()
-                        .Any() is true /* The generation of a 401 or 403 status code is attributed to Blazor. */)
+                switch (httpContext.Response.StatusCode)
                 {
-                    var is403 = httpContext.Response.StatusCode is 403;
+                    // The generation of a 401 or 403 status code is attributed to Blazor.
+                    case 401 or 403 when
+                        httpContext.GetEndpoint()?.Metadata.OfType<ComponentTypeMetadata>().Any() is true:
+                    {
+                        var is403 = httpContext.Response.StatusCode is 403;
 
-                    httpContext.Response.Redirect(
-                        $"/not-authorized?redirect-url={httpContext.Request.GetEncodedPathAndQuery()}&isForbidden={(is403 ? "true" : "false")}");
+                        httpContext.Response.Redirect(
+                            $"/not-authorized?redirect-url={httpContext.Request.GetEncodedPathAndQuery()}&isForbidden={(is403 ? "true" : "false")}");
+                        break;
+                    }
+                    // Please be aware that certain endpoints,
+                    // particularly those associated with web API actions, may intentionally return a 404 error.
+                    case 404 when httpContext.GetEndpoint() is null:
+                        httpContext.Response.Redirect($"/not-found?url={httpContext.Request.GetEncodedPathAndQuery()}");
+                        break;
+                    default:
+                        return statusCodeContext.Next.Invoke(statusCodeContext.HttpContext);
                 }
-                else if (httpContext.Response.StatusCode is 404 &&
-                         httpContext
-                                 .GetEndpoint() is
-                             null /* Please be aware that certain endpoints, particularly those associated with web API actions, may intentionally return a 404 error. */
-                        )
-                {
-                    httpContext.Response.Redirect($"/not-found?url={httpContext.Request.GetEncodedPathAndQuery()}");
-                }
-                else
-                {
-                    await statusCodeContext.Next.Invoke(statusCodeContext.HttpContext);
-                }
+
+                return Task.CompletedTask;
             }
         });
     }

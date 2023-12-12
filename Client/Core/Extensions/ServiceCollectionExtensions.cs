@@ -53,7 +53,7 @@ public static class ServiceCollectionExtensions
     /// <summary>
     /// <inheritdoc cref="AddSessioned{TService, TImplementation}(IServiceCollection)"/>
     /// </summary>
-    public static IServiceCollection TryAddSessioned<TService, TImplementation>(this IServiceCollection services)
+    private static void TryAddSessioned<TService, TImplementation>(this IServiceCollection services)
         where TImplementation : class, TService
         where TService : class
     {
@@ -65,7 +65,5 @@ public static class ServiceCollectionExtensions
         {
             services.TryAddScoped<TService, TImplementation>();
         }
-
-        return services;
     }
 }

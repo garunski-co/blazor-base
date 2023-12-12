@@ -21,7 +21,7 @@ public class ExceptionDelegatingHandler(IStringLocalizer<AppStrings> localizer, 
                 response.Content.Headers.ContentType?.MediaType?.Contains("application/json",
                     StringComparison.InvariantCultureIgnoreCase) is true)
             {
-                if (response.Headers.TryGetValues("Request-ID", out var values) && values is not null && values.Any())
+                if (response.Headers.TryGetValues("Request-ID", out var values) && values.Any())
                 {
                     var restError =
                         (await response.Content.ReadFromJsonAsync(AppJsonContext.Default.RestErrorInfo,
@@ -48,23 +48,20 @@ public class ExceptionDelegatingHandler(IStringLocalizer<AppStrings> localizer, 
                 }
             }
 
-            if (response.StatusCode is HttpStatusCode.Unauthorized)
+            switch (response.StatusCode)
             {
-                throw new UnauthorizedException(localizer[AppStrings.YouNeedToSignIn]);
+                case HttpStatusCode.Unauthorized:
+                    throw new UnauthorizedException(localizer[AppStrings.YouNeedToSignIn]);
+                case HttpStatusCode.Forbidden:
+                    throw new ForbiddenException(localizer[AppStrings.ForbiddenException]);
+                default:
+                    response.EnsureSuccessStatusCode();
+
+                    return response;
             }
-
-            if (response.StatusCode is HttpStatusCode.Forbidden)
-            {
-                throw new ForbiddenException(localizer[AppStrings.ForbiddenException]);
-            }
-
-            response.EnsureSuccessStatusCode();
-
-            return response;
         }
         catch (Exception exp) when ((exp is HttpRequestException && serverCommunicationSuccess is false)
-                                    || (exp is TaskCanceledException tcExp &&
-                                        tcExp.InnerException is TimeoutException))
+                                    || exp is TaskCanceledException { InnerException: TimeoutException })
         {
             throw new ServerConnectionException(nameof(AppStrings.ServerConnectionException), exp);
         }
