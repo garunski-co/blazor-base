@@ -1,7 +1,7 @@
 ﻿namespace Spent.Client.Core.Services;
 
 /// <summary>
-/// For more information <see cref="IPrerenderStateService"/> docs.
+///     For more information <see cref="IPrerenderStateService" /> docs.
 /// </summary>
 public class PrerenderStateService : IPrerenderStateService, IAsyncDisposable
 {

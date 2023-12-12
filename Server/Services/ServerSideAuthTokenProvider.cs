@@ -1,13 +1,14 @@
 ﻿using System.Reflection;
-using Spent.Client.Core.Services;
 using Microsoft.JSInterop;
+using Spent.Client.Core.Services;
 
 namespace Spent.Server.Services;
 
 /// <summary>
-/// The <see cref="ClientSideAuthTokenProvider"/> reads the token from the local storage,
-/// but during prerendering, there is no access to localStorage or the stored cookies.
-/// However, the cookies are sent automatically in http request and The <see cref="ServerSideAuthTokenProvider"/> provides that token to the application.
+///     The <see cref="ClientSideAuthTokenProvider" /> reads the token from the local storage,
+///     but during prerendering, there is no access to localStorage or the stored cookies.
+///     However, the cookies are sent automatically in http request and The <see cref="ServerSideAuthTokenProvider" />
+///     provides that token to the application.
 /// </summary>
 public partial class ServerSideAuthTokenProvider : IAuthTokenProvider
 {

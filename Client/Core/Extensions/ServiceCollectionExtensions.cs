@@ -35,8 +35,9 @@ public static class ServiceCollectionExtensions
     }
 
     /// <summary>
-    /// Utilizing the AddSessioned method seamlessly configures the service to function as a singleton in BlazorHybrid, and BlazorWebAssembly
-    /// environments. Simultaneously, it employs per-scope registration for pre-rendering and BlazorServer scenarios
+    ///     Utilizing the AddSessioned method seamlessly configures the service to function as a singleton in BlazorHybrid, and
+    ///     BlazorWebAssembly
+    ///     environments. Simultaneously, it employs per-scope registration for pre-rendering and BlazorServer scenarios
     /// </summary>
     public static IServiceCollection AddSessioned<TService, TImplementation>(this IServiceCollection services)
         where TImplementation : class, TService
@@ -51,7 +52,7 @@ public static class ServiceCollectionExtensions
     }
 
     /// <summary>
-    /// <inheritdoc cref="AddSessioned{TService, TImplementation}(IServiceCollection)"/>
+    ///     <inheritdoc cref="AddSessioned{TService, TImplementation}(IServiceCollection)" />
     /// </summary>
     private static void TryAddSessioned<TService, TImplementation>(this IServiceCollection services)
         where TImplementation : class, TService

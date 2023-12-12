@@ -3,7 +3,8 @@
 public static class JsRuntimeExtensions
 {
     /// <summary>
-    /// To disable the scrollbar of the body when showing the modal, so the modal can be always shown in the viewport without being scrolled out.
+    ///     To disable the scrollbar of the body when showing the modal, so the modal can be always shown in the viewport
+    ///     without being scrolled out.
     /// </summary>
     public static async Task SetBodyOverflow(this IJSRuntime jsRuntime, bool hidden)
     {

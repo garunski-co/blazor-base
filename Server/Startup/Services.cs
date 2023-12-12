@@ -1,13 +1,13 @@
 ﻿using System.IO.Compression;
 using System.Net;
 using System.Net.Mail;
-using Spent.Server.Services;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.OData;
 using Microsoft.AspNetCore.ResponseCompression;
 using Spent.Client.Core.Extensions;
 using Spent.Server.Extensions;
+using Spent.Server.Services;
 
 namespace Spent.Server.Startup;
 

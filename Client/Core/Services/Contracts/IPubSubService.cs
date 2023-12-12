@@ -1,7 +1,7 @@
 ﻿namespace Spent.Client.Core.Services.Contracts;
 
 /// <summary>
-/// Contract for Publish/Subscribe pattern.
+///     Contract for Publish/Subscribe pattern.
 /// </summary>
 public interface IPubSubService
 {

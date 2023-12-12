@@ -16,13 +16,13 @@ public class ResourceValidationException : RestException
     public ResourceValidationException(
         string resourceTypeName,
         (string propName, LocalizedString[] errorMessages)[] details)
-        : this(new ErrorResourcePayload()
+        : this(new ErrorResourcePayload
         {
             ResourceTypeName = resourceTypeName,
             Details = details.Select(propErrors => new PropertyErrorResourceCollection
             {
                 Name = propErrors.propName,
-                Errors = propErrors.errorMessages.Select(e => new ErrorResource()
+                Errors = propErrors.errorMessages.Select(e => new ErrorResource
                 {
                     Key = e.Name,
                     Message = e.Value

@@ -1,11 +1,11 @@
-﻿using Spent.Server.Models.Identity;
-using Riok.Mapperly.Abstractions;
+﻿using Riok.Mapperly.Abstractions;
 using Spent.Commons.Dtos.Identity;
+using Spent.Server.Models.Identity;
 
 namespace Spent.Server.Mappers;
 
 /// <summary>
-/// More info at Server/Mappers/README.md
+///     More info at Server/Mappers/README.md
 /// </summary>
 [Mapper(UseDeepCloning = true)]
 public static partial class IdentityMapper

@@ -1,21 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.Extensions.Localization;
 using Spent.Commons.Attributes;
 using Spent.Commons.Dtos.Identity;
 
 namespace Spent.Client.Core.Components;
 
 /// <summary>
-/// To implement forms where each error is displayed according to the language chosen by the user, you can use the <see cref="DtoResourceTypeAttribute"/>
-/// on the corresponding class instead of using `ErrorResourceType` on each property. Check out <see cref="SignUpRequestDto"/> for an example.
-/// However, you need to use <see cref="AppDataAnnotationsValidator"/> instead of <see cref="DataAnnotationsValidator"/> in Blazor EditForms for this method to work.
+///     To implement forms where each error is displayed according to the language chosen by the user, you can use the
+///     <see cref="DtoResourceTypeAttribute" />
+///     on the corresponding class instead of using `ErrorResourceType` on each property. Check out
+///     <see cref="SignUpRequestDto" /> for an example.
+///     However, you need to use <see cref="AppDataAnnotationsValidator" /> instead of
+///     <see cref="DataAnnotationsValidator" /> in Blazor EditForms for this method to work.
 /// </summary>
 public partial class AppDataAnnotationsValidator : AppComponentBase
 {

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Components.Web;
-using Spent.Commons.Extensions;
+﻿using Spent.Commons.Extensions;
 
 namespace Spent.Client.Core.Components.Layout;
 
@@ -10,11 +9,10 @@ public partial class MainLayout : IDisposable
 
     private bool _disposed;
 
-    private ErrorBoundary _errorBoundaryRef = default!;
-
+    // private ErrorBoundary _errorBoundaryRef = default!;
     [AutoInject]
     private IExceptionHandler _exceptionHandler = default!;
-
+    
     private bool _isMenuOpen;
 
     private bool _isUserAuthenticated;
@@ -31,14 +29,14 @@ public partial class MainLayout : IDisposable
         GC.SuppressFinalize(this);
     }
 
-    protected override void OnParametersSet()
-    {
-        // TODO: we can try to recover from exception after rendering the ErrorBoundary with this line.
-        // but for now it's better to persist the error ui until a force refresh.
-        // ErrorBoundaryRef.Recover();
-
-        base.OnParametersSet();
-    }
+    // protected override void OnParametersSet()
+    // {
+    //     // TODO: we can try to recover from exception after rendering the ErrorBoundary with this line.
+    //     // but for now it's better to persist the error ui until a force refresh.
+    //     // ErrorBoundaryRef.Recover();
+    //
+    //     base.OnParametersSet();
+    // }
 
     protected override async Task OnInitializedAsync()
     {
@@ -78,7 +76,7 @@ public partial class MainLayout : IDisposable
         _isMenuOpen = !_isMenuOpen;
     }
 
-    protected virtual void Dispose(bool disposing)
+    private void Dispose(bool disposing)
     {
         if (_disposed)
         {

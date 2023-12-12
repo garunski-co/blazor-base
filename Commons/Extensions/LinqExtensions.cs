@@ -5,7 +5,7 @@ namespace Spent.Commons.Extensions;
 public static class LinqExtensions
 {
     /// <summary>
-    /// https://extensionmethod.net/csharp/ienumerable-t/whereif
+    ///     https://extensionmethod.net/csharp/ienumerable-t/whereif
     /// </summary>
     public static IQueryable<T> WhereIf<T>(
         this IQueryable<T> query,

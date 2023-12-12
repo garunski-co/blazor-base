@@ -1,12 +1,12 @@
-﻿using Spent.Server.Models.Identity;
-using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
+using Spent.Server.Models.Identity;
 
 namespace Spent.Server.Data;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options)
     : IdentityDbContext<User, Role, int>(options), IDataProtectionKeyContext
 {
-    public DbSet<DataProtectionKey> DataProtectionKeys { get; set; }
+    public DbSet<DataProtectionKey> DataProtectionKeys { get; [UsedImplicitly] set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -43,7 +43,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options)
         }
     }
 
-    private void ConfigIdentityTables(ModelBuilder builder)
+    private static void ConfigIdentityTables(ModelBuilder builder)
     {
         //Config Asp Identity table name
         builder.Entity<User>().ToTable("Users");

@@ -1,11 +1,11 @@
 ﻿using System.Net;
 using System.Reflection;
 using System.Runtime.Loader;
-using Spent.Server.Components;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Components.Endpoints;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Http.Extensions;
+using Spent.Server.Components;
 
 namespace Spent.Server.Startup;
 
@@ -99,12 +99,17 @@ public static class Middlewares
     }
 
     /// <summary>
-    /// Prior to the introduction of .NET 8, the Blazor router effectively managed NotFound and NotAuthorized components during pre-rendering.
-    /// However, the current behavior has changed, and it now exclusively returns 401, 403, and 404 status codes with an empty body response!
-    /// To address this, we've implemented the UseStatusCodePages middleware to handle responses featuring 401, 403, and 404 status codes that lack a body.
-    /// This middleware facilitates redirection to the appropriate not-found and not-authorized pages. Consequently, the status code for these responses becomes 302 (Found).
-    /// To mitigate the challenges posed by this situation, our only recourse is to repurpose the 401, 403, and 404 status codes for
-    /// not-found and not-authorized responses, at the very least.
+    ///     Prior to the introduction of .NET 8, the Blazor router effectively managed NotFound and NotAuthorized components
+    ///     during pre-rendering.
+    ///     However, the current behavior has changed, and it now exclusively returns 401, 403, and 404 status codes with an
+    ///     empty body response!
+    ///     To address this, we've implemented the UseStatusCodePages middleware to handle responses featuring 401, 403, and
+    ///     404 status codes that lack a body.
+    ///     This middleware facilitates redirection to the appropriate not-found and not-authorized pages. Consequently, the
+    ///     status code for these responses becomes 302 (Found).
+    ///     To mitigate the challenges posed by this situation, our only recourse is to repurpose the 401, 403, and 404 status
+    ///     codes for
+    ///     not-found and not-authorized responses, at the very least.
     /// </summary>
     private static void Configure_401_403_404_Pages(WebApplication app)
     {

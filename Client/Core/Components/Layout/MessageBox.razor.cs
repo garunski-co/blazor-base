@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Spent.Client.Core.Extensions;
+﻿using Spent.Client.Core.Extensions;
 
 namespace Spent.Client.Core.Components.Layout;
 
@@ -14,7 +12,7 @@ public partial class MessageBox : IDisposable
 
     private bool _isOpen;
 
-    private TaskCompletionSource<object>? _tcs;
+    private TaskCompletionSource<object?>? _tcs;
 
     private string? _title;
 
@@ -44,7 +42,7 @@ public partial class MessageBox : IDisposable
     {
         _dispose = PubSubService.Subscribe(PubSubMessages.ShowMessage, async args =>
         {
-            var (message, title, tcs) = ((string message, string title, TaskCompletionSource<object?> tcs))args;
+            var (message, title, tcs) = ((string message, string title, TaskCompletionSource<object?> tcs))args!;
             await (_tcs?.Task ?? Task.CompletedTask);
             _tcs = tcs;
             await ShowMessageBox(message, title);

@@ -13,7 +13,7 @@ public partial class EmailConfirmationPage
     public string? Email { get; set; }
 
     /// <summary>
-    /// Email confirmation errors populated by api/Identity/ConfirmEmail endpoint.
+    ///     Email confirmation errors populated by api/Identity/ConfirmEmail endpoint.
     /// </summary>
     [SupplyParameterFromQuery]
     [Parameter]

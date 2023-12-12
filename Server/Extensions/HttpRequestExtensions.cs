@@ -1,12 +1,11 @@
-﻿using Microsoft.Extensions.Primitives;
-using Microsoft.Net.Http.Headers;
+﻿using Microsoft.Net.Http.Headers;
 
 namespace Spent.Server.Extensions;
 
 public static class HttpRequestExtensions
 {
     /// <summary>
-    /// https://blog.elmah.io/how-to-get-base-url-in-asp-net-core/
+    ///     https://blog.elmah.io/how-to-get-base-url-in-asp-net-core/
     /// </summary>
     public static Uri GetBaseUrl(this HttpRequest req)
     {

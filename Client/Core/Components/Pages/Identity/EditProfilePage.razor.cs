@@ -4,6 +4,7 @@ using Spent.Commons.Dtos.Identity;
 namespace Spent.Client.Core.Components.Pages.Identity;
 
 [Authorize]
+[UsedImplicitly]
 public partial class EditProfilePage
 {
     private readonly EditUserDto _userToEdit = new();

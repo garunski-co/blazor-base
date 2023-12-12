@@ -4,7 +4,7 @@
 public class SignUpRequestDto
 {
     /// <summary>
-    /// The user's email
+    ///     The user's email
     /// </summary>
     /// <example>me@gmail.com</example>
     [EmailAddress(ErrorMessage = nameof(AppStrings.EmailAddressAttribute_ValidationError))]

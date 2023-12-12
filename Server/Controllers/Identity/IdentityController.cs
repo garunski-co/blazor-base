@@ -1,14 +1,14 @@
 ﻿using System.Web;
-using Spent.Server.Components;
-using Spent.Server.Models.Emailing;
-using Spent.Server.Models.Identity;
-using Spent.Server.Resources;
 using FluentEmail.Core;
 using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Spent.Commons.Dtos.Identity;
+using Spent.Server.Components;
 using Spent.Server.Extensions;
+using Spent.Server.Models.Emailing;
+using Spent.Server.Models.Identity;
+using Spent.Server.Resources;
 
 namespace Spent.Server.Controllers.Identity;
 
@@ -39,8 +39,9 @@ public partial class IdentityController : AppControllerBase
     private IStringLocalizer<IdentityStrings> _identityLocalizer = default!;
 
     /// <summary>
-    /// By leveraging summary tags in your controller's actions and DTO properties you can make your codes much easier to maintain.
-    /// These comments will also be used in swagger docs and ui.
+    ///     By leveraging summary tags in your controller's actions and DTO properties you can make your codes much easier to
+    ///     maintain.
+    ///     These comments will also be used in swagger docs and ui.
     /// </summary>
     [HttpPost]
     public async Task SignUp(SignUpRequestDto signUpRequest, CancellationToken cancellationToken)
@@ -126,17 +127,14 @@ public partial class IdentityController : AppControllerBase
         var body = await _htmlRenderer.Dispatcher.InvokeAsync(async () =>
         {
             var renderedComponent = await _htmlRenderer.RenderComponentAsync<EmailConfirmationTemplate>(
-                ParameterView.FromDictionary(new Dictionary<string, object>()
+                ParameterView.FromDictionary(new Dictionary<string, object>
                 {
                     {
                         nameof(EmailConfirmationTemplate.Model),
-                        new EmailConfirmationModel
-                        {
-                            ConfirmationLink = confirmationLink
-                        }
+                        new EmailConfirmationModel(confirmationLink)
                     },
                     { nameof(HttpContext), HttpContext }
-                }));
+                }!));
 
             return renderedComponent.ToHtmlString();
         });
@@ -267,7 +265,7 @@ public partial class IdentityController : AppControllerBase
         var body = await _htmlRenderer.Dispatcher.InvokeAsync(async () =>
         {
             var renderedComponent = await _htmlRenderer.RenderComponentAsync<ResetPasswordTemplate>(
-                ParameterView.FromDictionary(new Dictionary<string, object?>()
+                ParameterView.FromDictionary(new Dictionary<string, object?>
                 {
                     {
                         nameof(ResetPasswordTemplate.Model),

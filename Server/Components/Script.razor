@@ -1,25 +1,24 @@
 ﻿@using Microsoft.AspNetCore.Mvc.ViewFeatures
-@using Microsoft.AspNetCore.Http
 @inject IFileVersionProvider FileVersionProvider
 @inject IHttpContextAccessor HttpContextAccessor;
 
 @code {
 
-    [Parameter]
-    public bool AppendVersion { get; set; } = true;
+  [Parameter]
+  public bool AppendVersion { get; set; } = true;
 
-    [Parameter]
-    public required string Src { get; set; } = "";
+  [Parameter]
+  public required string Src { get; set; } = "";
 
-    [Parameter(CaptureUnmatchedValues = true)]
-    public Dictionary<string, object> AdditionalAttributes { get; set; } = default!;
+  [Parameter(CaptureUnmatchedValues = true)]
+  public Dictionary<string, object> AdditionalAttributes { get; set; } = default!;
 
-    private string _src = "";
+  private string _src = "";
 
-    protected override void OnInitialized()
-    {
-        _src = AppendVersion ? FileVersionProvider.AddFileVersionToPath(HttpContextAccessor.HttpContext!.Request.PathBase, Src) : Src;
-    }
+  protected override void OnInitialized()
+  {
+    _src = AppendVersion ? FileVersionProvider.AddFileVersionToPath(HttpContextAccessor.HttpContext!.Request.PathBase, Src) : Src;
+  }
 
 }
 

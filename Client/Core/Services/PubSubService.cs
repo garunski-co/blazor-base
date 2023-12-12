@@ -1,7 +1,7 @@
 ﻿namespace Spent.Client.Core.Services;
 
 /// <summary>
-/// For more information <see cref="IPubSubService"/> docs.
+///     For more information <see cref="IPubSubService" /> docs.
 /// </summary>
 [UsedImplicitly]
 public partial class PubSubService : IPubSubService

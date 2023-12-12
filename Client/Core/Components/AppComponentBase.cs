@@ -29,13 +29,13 @@ public partial class AppComponentBase : ComponentBase, IDisposable
     protected NavigationManager NavigationManager = default!;
 
     /// <summary>
-    /// <inheritdoc cref="IPrerenderStateService"/>
+    ///     <inheritdoc cref="IPrerenderStateService" />
     /// </summary>
     [AutoInject]
     protected IPrerenderStateService PrerenderStateService = default!;
 
     /// <summary>
-    /// <inheritdoc cref="IPubSubService"/>
+    ///     <inheritdoc cref="IPubSubService" />
     /// </summary>
     [AutoInject]
     protected IPubSubService PubSubService = default!;
@@ -81,7 +81,8 @@ public partial class AppComponentBase : ComponentBase, IDisposable
     }
 
     /// <summary>
-    /// Replacement for <see cref="OnInitializedAsync"/> which catches all possible exceptions in order to prevent app crash.
+    ///     Replacement for <see cref="OnInitializedAsync" /> which catches all possible exceptions in order to prevent app
+    ///     crash.
     /// </summary>
     protected virtual Task OnInitAsync()
     {
@@ -111,7 +112,8 @@ public partial class AppComponentBase : ComponentBase, IDisposable
     }
 
     /// <summary>
-    /// Replacement for <see cref="OnParametersSetAsync"/> which catches all possible exceptions in order to prevent app crash.
+    ///     Replacement for <see cref="OnParametersSetAsync" /> which catches all possible exceptions in order to prevent app
+    ///     crash.
     /// </summary>
     protected virtual Task OnParamsSetAsync()
     {
@@ -119,7 +121,7 @@ public partial class AppComponentBase : ComponentBase, IDisposable
     }
 
     /// <summary>
-    /// Method invoked after first time the component has been rendered.
+    ///     Method invoked after first time the component has been rendered.
     /// </summary>
     protected virtual Task OnAfterFirstRenderAsync()
     {
@@ -127,7 +129,7 @@ public partial class AppComponentBase : ComponentBase, IDisposable
     }
 
     /// <summary>
-    /// Executes passed action while catching all possible exceptions to prevent app crash.
+    ///     Executes passed action while catching all possible exceptions to prevent app crash.
     /// </summary>
     public virtual Action WrapHandled(Action action)
     {
@@ -145,11 +147,11 @@ public partial class AppComponentBase : ComponentBase, IDisposable
     }
 
     /// <summary>
-    /// Executes passed action while catching all possible exceptions to prevent app crash.
+    ///     Executes passed action while catching all possible exceptions to prevent app crash.
     /// </summary>
     public virtual Action<T> WrapHandled<T>(Action<T> func)
     {
-        return (e) =>
+        return e =>
         {
             try
             {
@@ -163,7 +165,7 @@ public partial class AppComponentBase : ComponentBase, IDisposable
     }
 
     /// <summary>
-    /// Executes passed function while catching all possible exceptions to prevent app crash.
+    ///     Executes passed function while catching all possible exceptions to prevent app crash.
     /// </summary>
     public virtual Func<Task> WrapHandled(Func<Task> func)
     {
@@ -181,11 +183,11 @@ public partial class AppComponentBase : ComponentBase, IDisposable
     }
 
     /// <summary>
-    /// Executes passed function while catching all possible exceptions to prevent app crash.
+    ///     Executes passed function while catching all possible exceptions to prevent app crash.
     /// </summary>
     public virtual Func<T, Task> WrapHandled<T>(Func<T, Task> func)
     {
-        return async (e) =>
+        return async e =>
         {
             try
             {

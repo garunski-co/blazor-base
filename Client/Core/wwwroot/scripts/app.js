@@ -2,14 +2,14 @@
 var App = /** @class */ (function () {
     function App() {
     }
-    App.setCookie = function (name, value, seconds, remeber, secure) {
+    App.setCookie = function (name, value, seconds, remember, secure) {
         var date = new Date();
         date.setSeconds(date.getSeconds() + seconds);
         var cookie = "".concat(name, "=").concat(value, ";path=/;samesite=strict;");
-        if (remeber == true) {
+        if (remember) {
             cookie = cookie += "expires=".concat(date.toUTCString(), ";");
         }
-        if (secure == true) {
+        if (secure) {
             cookie = "".concat(cookie, ";secure");
         }
         document.cookie = cookie;
@@ -32,10 +32,9 @@ var App = /** @class */ (function () {
     };
     return App;
 }());
-;
 BitTheme.init({
     system: true,
-    onChange: function (newTheme, oldThem) {
+    onChange: function (newTheme) {
         if (newTheme === 'dark') {
             document.body.classList.add('theme-dark');
             document.body.classList.remove('theme-light');

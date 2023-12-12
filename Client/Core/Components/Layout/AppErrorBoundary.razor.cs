@@ -1,12 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
-using Spent.Commons.Attributes;
-using Spent.Commons.Infra;
-
-namespace Spent.Client.Core.Components.Layout;
+﻿namespace Spent.Client.Core.Components.Layout;
 
 /// <summary>
-/// https://learn.microsoft.com/en-us/aspnet/core/blazor/fundamentals/handle-errors
+///     https://learn.microsoft.com/en-us/aspnet/core/blazor/fundamentals/handle-errors
 /// </summary>
 public partial class AppErrorBoundary
 {

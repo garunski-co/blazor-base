@@ -5,7 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 namespace Spent.Server.Services;
 
 /// <summary>
-/// Stores bearer token in jwt format
+///     Stores bearer token in jwt format
 /// </summary>
 public class AppSecureJwtDataFormat(AppSettings appSettings, TokenValidationParameters validationParameters)
     : ISecureDataFormat<AuthenticationTicket>
@@ -22,7 +22,7 @@ public class AppSecureJwtDataFormat(AppSettings appSettings, TokenValidationPara
             var handler = new JwtSecurityTokenHandler();
             var principal = handler.ValidateToken(protectedText, validationParameters, out var validToken);
             var validJwt = (JwtSecurityToken)validToken;
-            var data = new AuthenticationTicket(principal, new AuthenticationProperties()
+            var data = new AuthenticationTicket(principal, new AuthenticationProperties
             {
                 ExpiresUtc = validJwt.ValidTo
             }, IdentityConstants.BearerScheme);

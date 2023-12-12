@@ -1,8 +1,4 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Spent.Client.Core.Extensions;
-using Spent.Commons.Attributes;
-using Spent.Commons.Infra;
+﻿using Spent.Client.Core.Extensions;
 
 namespace Spent.Client.Core.Components.Layout;
 
@@ -34,7 +30,7 @@ public partial class Footer
         await JsRuntime.SetCookie(".AspNetCore.Culture", $"c={_selectedCulture}|uic={_selectedCulture}",
             30 * 24 * 3600, true);
 
-        await StorageService.SetItem("Culture", _selectedCulture, true);
+        await StorageService.SetItem("Culture", _selectedCulture);
 
         // Relevant in the context of Blazor Hybrid, where the reloading of the web view doesn't result in the resetting of all static in memory data on the client side
         CultureInfoManager.SetCurrentCulture(_selectedCulture);

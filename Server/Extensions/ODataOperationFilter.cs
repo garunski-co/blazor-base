@@ -5,7 +5,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 namespace Spent.Server.Extensions;
 
 /// <summary>
-/// https://docs.microsoft.com/en-us/odata/concepts/queryoptions-overview
+///     https://docs.microsoft.com/en-us/odata/concepts/queryoptions-overview
 /// </summary>
 public class ODataOperationFilter : IOperationFilter
 {

@@ -7,7 +7,7 @@ public class TokenResponseDto
     public string? AccessToken { get; set; }
 
     /// <summary>
-    /// In seconds.
+    ///     In seconds.
     /// </summary>
     public long ExpiresIn { get; set; }
 

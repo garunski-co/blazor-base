@@ -1,6 +1,6 @@
-﻿using Spent.Client.Core.Services.HttpMessageHandlers;
-using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+﻿using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Spent.Client.Core.Extensions;
+using Spent.Client.Core.Services.HttpMessageHandlers;
 using Spent.Client.Web.Extensions;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);

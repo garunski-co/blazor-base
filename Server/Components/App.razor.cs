@@ -2,7 +2,7 @@
 
 namespace Spent.Server.Components;
 
-[StreamRendering(true)]
+[StreamRendering]
 public partial class App
 {
     [CascadingParameter]

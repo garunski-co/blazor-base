@@ -49,7 +49,7 @@ public class CultureInfoManager
     }
 
     /// <summary>
-    /// This is an example to demonstrate the way you can customize application culture
+    ///     This is an example to demonstrate the way you can customize application culture
     /// </summary>
     public static CultureInfo CustomizeCultureInfoForFaCulture(CultureInfo cultureInfo)
     {

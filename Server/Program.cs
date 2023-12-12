@@ -1,4 +1,5 @@
 ﻿using Spent.Client.Core.Extensions;
+using Spent.Server.Startup;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,10 +18,10 @@ if (BuildConfiguration.IsDebug())
     }
 }
 
-Spent.Server.Startup.Services.Add(builder.Services, builder.Environment, builder.Configuration);
+Services.Add(builder.Services, builder.Environment, builder.Configuration);
 
 var app = builder.Build();
 
-Spent.Server.Startup.Middlewares.Use(app, builder.Environment, builder.Configuration);
+Middlewares.Use(app, builder.Environment, builder.Configuration);
 
 app.Run();

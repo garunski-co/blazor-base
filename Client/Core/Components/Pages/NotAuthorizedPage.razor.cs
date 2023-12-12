@@ -1,7 +1,4 @@
-﻿using System;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Spent.Commons.Extensions;
+﻿using Spent.Commons.Extensions;
 
 namespace Spent.Client.Core.Components.Pages;
 

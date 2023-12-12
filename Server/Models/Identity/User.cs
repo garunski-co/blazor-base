@@ -3,6 +3,7 @@
 public class User : IdentityUser<int>
 {
     [PersonalData]
+    [MaxLength(255)]
     public string? FullName { get; set; }
 
     [PersonalData]
@@ -12,6 +13,7 @@ public class User : IdentityUser<int>
     public DateTimeOffset? BirthDate { get; set; }
 
     [PersonalData]
+    [MaxLength(255)]
     public string? ProfileImageName { get; set; }
 
     public DateTimeOffset? ConfirmationEmailRequestedOn { get; set; }

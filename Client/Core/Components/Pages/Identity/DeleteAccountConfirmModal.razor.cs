@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace Spent.Client.Core.Components.Pages.Identity;
+﻿namespace Spent.Client.Core.Components.Pages.Identity;
 
 public partial class DeleteAccountConfirmModal
 {
