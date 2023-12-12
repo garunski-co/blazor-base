@@ -21,7 +21,8 @@ public static class CollectionExtensions
         }
     }
 
-    public static async Task<List<T>> ToListAsync<T>(this IAsyncEnumerable<T> items,
+    public static async Task<List<T>> ToListAsync<T>(
+        this IAsyncEnumerable<T> items,
         CancellationToken cancellationToken = default)
     {
         var results = new List<T>();

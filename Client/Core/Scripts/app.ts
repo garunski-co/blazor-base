@@ -33,7 +33,9 @@
     }
 }
 
-declare class BitTheme { static init(options: any): void; };
+declare class BitTheme {
+    static init(options: any): void;
+};
 
 BitTheme.init({
     system: true,

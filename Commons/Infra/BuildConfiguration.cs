@@ -11,7 +11,6 @@ public static class BuildConfiguration
 #endif
     }
 
-
     public static bool IsRelease()
     {
 #if DEBUG

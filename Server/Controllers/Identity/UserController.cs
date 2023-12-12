@@ -8,17 +8,20 @@ namespace Spent.Server.Controllers.Identity;
 [ApiController]
 public partial class UserController : AppControllerBase
 {
-    [AutoInject] private readonly UserManager<User> userManager = default!;
+    [AutoInject]
+    private readonly UserManager<User> _userManager = default!;
 
     [HttpGet]
     public async Task<UserDto> GetCurrentUser(CancellationToken cancellationToken)
     {
         var userId = User.GetUserId();
 
-        var user = await userManager.Users.FirstOrDefaultAsync(user => user.Id == userId, cancellationToken);
+        var user = await _userManager.Users.FirstOrDefaultAsync(user => user.Id == userId, cancellationToken);
 
         if (user is null)
+        {
             throw new ResourceNotFoundException();
+        }
 
         return user.Map();
     }
@@ -28,17 +31,21 @@ public partial class UserController : AppControllerBase
     {
         var userId = User.GetUserId();
 
-        var user = await userManager.Users.FirstOrDefaultAsync(user => user.Id == userId, cancellationToken);
+        var user = await _userManager.Users.FirstOrDefaultAsync(user => user.Id == userId, cancellationToken);
 
         if (user is null)
+        {
             throw new ResourceNotFoundException();
+        }
 
         userDto.Patch(user);
 
-        var result = await userManager.UpdateAsync(user);
+        var result = await _userManager.UpdateAsync(user);
         if (!result.Succeeded)
+        {
             throw new ResourceValidationException(result.Errors
                 .Select(err => new LocalizedString(err.Code, err.Description)).ToArray());
+        }
 
         return await GetCurrentUser(cancellationToken);
     }
@@ -48,12 +55,14 @@ public partial class UserController : AppControllerBase
     {
         var userId = User.GetUserId();
 
-        var user = await userManager.Users.FirstOrDefaultAsync(user => user.Id == userId, cancellationToken)
+        var user = await _userManager.Users.FirstOrDefaultAsync(user => user.Id == userId, cancellationToken)
                    ?? throw new ResourceNotFoundException();
 
-        var result = await userManager.DeleteAsync(user);
+        var result = await _userManager.DeleteAsync(user);
         if (!result.Succeeded)
+        {
             throw new ResourceValidationException(result.Errors
                 .Select(err => new LocalizedString(err.Code, err.Description)).ToArray());
+        }
     }
 }

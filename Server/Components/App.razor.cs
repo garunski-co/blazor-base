@@ -2,8 +2,9 @@
 
 namespace Spent.Server.Components;
 
-[StreamRendering(enabled: true)]
+[StreamRendering(true)]
 public partial class App
 {
-    [CascadingParameter] HttpContext HttpContext { get; set; } = default!;
+    [CascadingParameter]
+    private HttpContext HttpContext { get; set; } = default!;
 }

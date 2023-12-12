@@ -5,12 +5,16 @@ namespace Spent.Client.Core.Components.Pages.Identity;
 
 public partial class SignInPage
 {
-    private bool isLoading;
-    private string? signInMessage;
-    private BitMessageBarType signInMessageType;
-    private readonly SignInRequestDto signInModel = new();
+    private readonly SignInRequestDto _signInModel = new();
 
-    [SupplyParameterFromQuery(Name = "redirect-url"), Parameter]
+    private bool _isLoading;
+
+    private string? _signInMessage;
+
+    private BitMessageBarType _signInMessageType;
+
+    [SupplyParameterFromQuery(Name = "redirect-url")]
+    [Parameter]
     public string? RedirectUrl { get; set; }
 
     protected override async Task OnAfterFirstRenderAsync()
@@ -25,26 +29,29 @@ public partial class SignInPage
 
     private async Task DoSignIn()
     {
-        if (isLoading) return;
+        if (_isLoading)
+        {
+            return;
+        }
 
-        isLoading = true;
-        signInMessage = null;
+        _isLoading = true;
+        _signInMessage = null;
 
         try
         {
-            await AuthenticationManager.SignIn(signInModel, CurrentCancellationToken);
+            await AuthenticationManager.SignIn(_signInModel, CurrentCancellationToken);
 
             NavigationManager.NavigateTo(RedirectUrl ?? "/");
         }
         catch (KnownException e)
         {
-            signInMessageType = BitMessageBarType.Error;
+            _signInMessageType = BitMessageBarType.Error;
 
-            signInMessage = e.Message;
+            _signInMessage = e.Message;
         }
         finally
         {
-            isLoading = false;
+            _isLoading = false;
         }
     }
 }

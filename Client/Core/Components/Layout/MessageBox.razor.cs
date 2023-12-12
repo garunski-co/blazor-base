@@ -6,38 +6,47 @@ namespace Spent.Client.Core.Components.Layout;
 
 public partial class MessageBox : IDisposable
 {
-    private bool isOpen;
-    private string? title;
-    private string? body;
+    private string? _body;
 
-    private TaskCompletionSource<object>? tcs;
+    private Action? _dispose;
+
+    private bool _disposed = false;
+
+    private bool _isOpen;
+
+    private TaskCompletionSource<object>? _tcs;
+
+    private string? _title;
+
+    public override void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
 
     private async Task OnCloseClick()
     {
-        isOpen = false;
+        _isOpen = false;
         await JsRuntime.SetBodyOverflow(false);
-        tcs?.SetResult(null);
-        tcs = null;
+        _tcs?.SetResult(null);
+        _tcs = null;
     }
 
     private async Task OnOkClick()
     {
-        isOpen = false;
+        _isOpen = false;
         await JsRuntime.SetBodyOverflow(false);
-        tcs?.SetResult(null);
-        tcs = null;
+        _tcs?.SetResult(null);
+        _tcs = null;
     }
-
-    Action? dispose;
-    bool disposed = false;
 
     protected override Task OnInitAsync()
     {
-        dispose = PubSubService.Subscribe(PubSubMessages.ShowMessage, async args =>
+        _dispose = PubSubService.Subscribe(PubSubMessages.ShowMessage, async args =>
         {
-            (var message, var title, var tcs) = ((string message, string title, TaskCompletionSource<object?> tcs))args;
-            await (this.tcs?.Task ?? Task.CompletedTask);
-            this.tcs = tcs;
+            var (message, title, tcs) = ((string message, string title, TaskCompletionSource<object?> tcs))args;
+            await (_tcs?.Task ?? Task.CompletedTask);
+            _tcs = tcs;
             await ShowMessageBox(message, title);
         });
 
@@ -50,28 +59,25 @@ public partial class MessageBox : IDisposable
         {
             _ = JsRuntime.SetBodyOverflow(true);
 
-            isOpen = true;
-            this.title = title;
-            body = message;
+            _isOpen = true;
+            _title = title;
+            _body = message;
 
             StateHasChanged();
         });
     }
 
-    public override void Dispose()
-    {
-        Dispose(true);
-        GC.SuppressFinalize(this);
-    }
-
     protected virtual void Dispose(bool disposing)
     {
-        if (disposed || disposing is false) return;
+        if (_disposed || disposing is false)
+        {
+            return;
+        }
 
-        tcs?.TrySetResult(null);
-        tcs = null;
-        dispose?.Invoke();
+        _tcs?.TrySetResult(null);
+        _tcs = null;
+        _dispose?.Invoke();
 
-        disposed = true;
+        _disposed = true;
     }
 }

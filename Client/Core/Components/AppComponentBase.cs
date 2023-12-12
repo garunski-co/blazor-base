@@ -2,38 +2,57 @@
 
 public partial class AppComponentBase : ComponentBase, IDisposable
 {
-    [AutoInject] protected IJSRuntime JsRuntime = default!;
+    private readonly CancellationTokenSource _cts = new();
 
-    [AutoInject] protected IStorageService StorageService = default!;
+    [AutoInject]
+    protected AuthenticationManager AuthenticationManager = default!;
 
-    [AutoInject] protected HttpClient HttpClient = default!;
+    [AutoInject]
+    protected IAuthTokenProvider AuthTokenProvider = default!;
+
+    [AutoInject]
+    protected IConfiguration Configuration = default!;
+
+    [AutoInject]
+    protected IExceptionHandler ExceptionHandler = default!;
+
+    [AutoInject]
+    protected HttpClient HttpClient = default!;
+
+    [AutoInject]
+    protected IJSRuntime JsRuntime = default!;
+
+    [AutoInject]
+    protected IStringLocalizer<AppStrings> Localizer = default!;
+
+    [AutoInject]
+    protected NavigationManager NavigationManager = default!;
 
     /// <summary>
     /// <inheritdoc cref="IPrerenderStateService"/>
     /// </summary>
-    [AutoInject] protected IPrerenderStateService PrerenderStateService = default!;
+    [AutoInject]
+    protected IPrerenderStateService PrerenderStateService = default!;
 
     /// <summary>
     /// <inheritdoc cref="IPubSubService"/>
     /// </summary>
-    [AutoInject] protected IPubSubService PubSubService = default!;
+    [AutoInject]
+    protected IPubSubService PubSubService = default!;
 
-    [AutoInject] protected IConfiguration Configuration = default!;
+    [AutoInject]
+    protected IStorageService StorageService = default!;
 
-    [AutoInject] protected NavigationManager NavigationManager = default!;
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthenticationStateTask { get; set; } = default!;
 
-    [AutoInject] protected IAuthTokenProvider AuthTokenProvider = default!;
+    protected CancellationToken CurrentCancellationToken => _cts.Token;
 
-    [AutoInject] protected IStringLocalizer<AppStrings> Localizer = default!;
-
-    [AutoInject] protected IExceptionHandler ExceptionHandler = default!;
-
-    [AutoInject] protected AuthenticationManager AuthenticationManager = default!;
-
-    [CascadingParameter] public Task<AuthenticationState> AuthenticationStateTask { get; set; } = default!;
-
-    private readonly CancellationTokenSource cts = new();
-    protected CancellationToken CurrentCancellationToken => cts.Token;
+    public virtual void Dispose()
+    {
+        _cts.Cancel();
+        _cts.Dispose();
+    }
 
     protected sealed override async Task OnInitializedAsync()
     {
@@ -177,11 +196,5 @@ public partial class AppComponentBase : ComponentBase, IDisposable
                 ExceptionHandler.Handle(exp);
             }
         };
-    }
-
-    public virtual void Dispose()
-    {
-        cts.Cancel();
-        cts.Dispose();
     }
 }

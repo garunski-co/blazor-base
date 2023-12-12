@@ -155,7 +155,9 @@ public static class ServiceCollectionExtensions
         });
     }
 
-    public static IServiceCollection AddHealthChecks(this IServiceCollection services, IWebHostEnvironment env,
+    public static IServiceCollection AddHealthChecks(
+        this IServiceCollection services,
+        IWebHostEnvironment env,
         IConfiguration configuration)
     {
         var appSettings = configuration.GetSection(nameof(AppSettings)).Get<AppSettings>()!;
@@ -163,18 +165,20 @@ public static class ServiceCollectionExtensions
         var healthCheckSettings = appSettings.HealthCheckSettings;
 
         if (healthCheckSettings.EnableHealthChecks is false)
+        {
             return services;
+        }
 
-        services.AddHealthChecksUI(setupSettings: setup =>
+        services.AddHealthChecksUI(setup =>
         {
             setup.AddHealthCheckEndpoint("BPHealthChecks",
                 env.IsDevelopment() ? "https://localhost:5031/healthz" : "/healthz");
         }).AddInMemoryStorage();
 
         var healthChecksBuilder = services.AddHealthChecks()
-            .AddProcessAllocatedMemoryHealthCheck(maximumMegabytesAllocated: 6 * 1024)
+            .AddProcessAllocatedMemoryHealthCheck(6 * 1024)
             .AddDiskStorageHealthCheck(opt =>
-                opt.AddDrive(Path.GetPathRoot(Directory.GetCurrentDirectory())!, minimumFreeMegabytes: 5 * 1024))
+                opt.AddDrive(Path.GetPathRoot(Directory.GetCurrentDirectory())!, 5 * 1024))
             .AddDbContextCheck<AppDbContext>();
 
         var emailSettings = appSettings.EmailSettings;

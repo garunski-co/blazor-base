@@ -6,22 +6,33 @@ namespace Spent.Client.Core.Components.Pages.Identity;
 [Authorize]
 public partial class EditProfilePage
 {
-    private bool isSaving;
-    private bool isRemoving;
-    private bool isLoading;
-    private string? profileImageUrl;
-    private string? profileImageError;
-    private string? editProfileMessage;
-    private string? profileImageUploadUrl;
-    private string? profileImageRemoveUrl;
-    private BitMessageBarType editProfileMessageType;
-    private UserDto user = new();
-    private readonly EditUserDto userToEdit = new();
-    private bool isDeleteAccountConfirmModalOpen;
+    private readonly EditUserDto _userToEdit = new();
+
+    private string? _editProfileMessage;
+
+    private BitMessageBarType _editProfileMessageType;
+
+    private bool _isDeleteAccountConfirmModalOpen;
+
+    private bool _isLoading;
+
+    private bool _isRemoving;
+
+    private bool _isSaving;
+
+    private string? _profileImageError;
+
+    private string? _profileImageRemoveUrl;
+
+    private string? _profileImageUploadUrl;
+
+    private string? _profileImageUrl;
+
+    private UserDto _user = new();
 
     protected override async Task OnInitAsync()
     {
-        isLoading = true;
+        _isLoading = true;
 
         try
         {
@@ -30,15 +41,15 @@ public partial class EditProfilePage
             var accessToken = await PrerenderStateService.GetValue($"{nameof(EditProfilePage)}-access_token",
                 AuthTokenProvider.GetAccessTokenAsync);
 
-            profileImageUploadUrl =
+            _profileImageUploadUrl =
                 $"{Configuration.GetApiServerAddress()}Attachment/UploadProfileImage?access_token={accessToken}";
-            profileImageUrl =
+            _profileImageUrl =
                 $"{Configuration.GetApiServerAddress()}Attachment/GetProfileImage?access_token={accessToken}";
-            profileImageRemoveUrl = $"Attachment/RemoveProfileImage?access_token={accessToken}";
+            _profileImageRemoveUrl = $"Attachment/RemoveProfileImage?access_token={accessToken}";
         }
         finally
         {
-            isLoading = false;
+            _isLoading = false;
         }
 
         await base.OnInitAsync();
@@ -46,7 +57,7 @@ public partial class EditProfilePage
 
     private async Task LoadEditProfileData()
     {
-        user = await GetCurrentUser() ?? new();
+        _user = await GetCurrentUser() ?? new();
 
         UpdateEditProfileData();
     }
@@ -55,74 +66,83 @@ public partial class EditProfilePage
     {
         await LoadEditProfileData();
 
-        PubSubService.Publish(PubSubMessages.ProfileUpdated, user);
+        PubSubService.Publish(PubSubMessages.ProfileUpdated, _user);
     }
 
     private void UpdateEditProfileData()
     {
-        userToEdit.Gender = user.Gender;
-        userToEdit.FullName = user.FullName;
-        userToEdit.BirthDate = user.BirthDate;
+        _userToEdit.Gender = _user.Gender;
+        _userToEdit.FullName = _user.FullName;
+        _userToEdit.BirthDate = _user.BirthDate;
     }
 
-    private Task<UserDto?> GetCurrentUser() => PrerenderStateService.GetValue(
-        $"{nameof(EditProfilePage)}-{nameof(user)}",
-        () => HttpClient.GetFromJsonAsync("User/GetCurrentUser", AppJsonContext.Default.UserDto));
+    private Task<UserDto?> GetCurrentUser()
+    {
+        return PrerenderStateService.GetValue(
+            $"{nameof(EditProfilePage)}-{nameof(_user)}",
+            () => HttpClient.GetFromJsonAsync("User/GetCurrentUser", AppJsonContext.Default.UserDto));
+    }
 
     private async Task DoSave()
     {
-        if (isSaving) return;
+        if (_isSaving)
+        {
+            return;
+        }
 
-        isSaving = true;
-        editProfileMessage = null;
+        _isSaving = true;
+        _editProfileMessage = null;
 
         try
         {
-            user.FullName = userToEdit.FullName;
-            user.BirthDate = userToEdit.BirthDate;
-            user.Gender = userToEdit.Gender;
+            _user.FullName = _userToEdit.FullName;
+            _user.BirthDate = _userToEdit.BirthDate;
+            _user.Gender = _userToEdit.Gender;
 
-            (await (await HttpClient.PutAsJsonAsync("User/Update", userToEdit, AppJsonContext.Default.EditUserDto,
+            (await (await HttpClient.PutAsJsonAsync("User/Update", _userToEdit, AppJsonContext.Default.EditUserDto,
                     CurrentCancellationToken))
-                .Content.ReadFromJsonAsync(AppJsonContext.Default.UserDto, CurrentCancellationToken))!.Patch(user);
+                .Content.ReadFromJsonAsync(AppJsonContext.Default.UserDto, CurrentCancellationToken))!.Patch(_user);
 
-            PubSubService.Publish(PubSubMessages.ProfileUpdated, user);
+            PubSubService.Publish(PubSubMessages.ProfileUpdated, _user);
 
-            editProfileMessageType = BitMessageBarType.Success;
-            editProfileMessage = Localizer[nameof(AppStrings.ProfileUpdatedSuccessfullyMessage)];
+            _editProfileMessageType = BitMessageBarType.Success;
+            _editProfileMessage = Localizer[nameof(AppStrings.ProfileUpdatedSuccessfullyMessage)];
         }
         catch (KnownException e)
         {
-            editProfileMessageType = BitMessageBarType.Error;
+            _editProfileMessageType = BitMessageBarType.Error;
 
-            editProfileMessage = e.Message;
+            _editProfileMessage = e.Message;
         }
         finally
         {
-            isSaving = false;
+            _isSaving = false;
         }
     }
 
     private async Task RemoveProfileImage()
     {
-        if (isRemoving) return;
+        if (_isRemoving)
+        {
+            return;
+        }
 
-        isRemoving = true;
+        _isRemoving = true;
 
         try
         {
-            await HttpClient.DeleteAsync(profileImageRemoveUrl, CurrentCancellationToken);
+            await HttpClient.DeleteAsync(_profileImageRemoveUrl, CurrentCancellationToken);
 
             await RefreshProfileData();
         }
         catch (KnownException e)
         {
-            editProfileMessage = e.Message;
-            editProfileMessageType = BitMessageBarType.Error;
+            _editProfileMessage = e.Message;
+            _editProfileMessageType = BitMessageBarType.Error;
         }
         finally
         {
-            isRemoving = false;
+            _isRemoving = false;
         }
     }
 }

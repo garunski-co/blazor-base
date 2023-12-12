@@ -33,11 +33,11 @@
     </div>
 
     <div class="footer-content">
-        @if (selectedCulture is not null)
+        @if (_selectedCulture is not null)
         {
-            <BitDropdown @bind-Value="selectedCulture"
+            <BitDropdown @bind-Value="_selectedCulture"
                          Class="culture-drp"
-                         Items="cultures"
+                         Items="_cultures"
                          OnSelectItem="WrapHandled((BitDropdownItem<string> item) => OnCultureChanged())"/>
         }
         <div class="footer-contact">info@bitplatform.dev</div>

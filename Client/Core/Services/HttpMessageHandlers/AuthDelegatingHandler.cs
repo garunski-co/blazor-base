@@ -9,7 +9,8 @@ public class AuthDelegatingHandler(
     RetryDelegatingHandler handler)
     : DelegatingHandler(handler)
 {
-    protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
+    protected override async Task<HttpResponseMessage> SendAsync(
+        HttpRequestMessage request,
         CancellationToken cancellationToken)
     {
         if (request.Headers.Authorization is null)
@@ -25,7 +26,7 @@ public class AuthDelegatingHandler(
         {
             return await base.SendAsync(request, cancellationToken);
         }
-        catch (Exception _) when ((_ is ForbiddenException or UnauthorizedException) && tokenProvider.IsInitialized)
+        catch (Exception _) when (_ is ForbiddenException or UnauthorizedException && tokenProvider.IsInitialized)
         {
             // Let's update the access token by refreshing it when a refresh token is available.
             // Following this procedure, the newly acquired access token may now include the necessary roles or claims.

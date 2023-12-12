@@ -7,14 +7,15 @@ namespace Spent.Client.Core.Components.Pages;
 
 public partial class NotAuthorizedPage
 {
-    private ClaimsPrincipal user = default!;
+    private ClaimsPrincipal _user = default!;
 
-    [SupplyParameterFromQuery(Name = "redirect-url"), Parameter]
+    [SupplyParameterFromQuery(Name = "redirect-url")]
+    [Parameter]
     public string? RedirectUrl { get; set; }
 
     protected override async Task OnParamsSetAsync()
     {
-        user = (await AuthenticationStateTask).User;
+        _user = (await AuthenticationStateTask).User;
 
         await base.OnParamsSetAsync();
     }
@@ -45,8 +46,8 @@ public partial class NotAuthorizedPage
         }
 
         if ((await AuthenticationStateTask).User.IsAuthenticated() is false)
-        {
             // If neither the refresh_token nor the access_token is present, proceed to the sign-in page.
+        {
             await SignIn();
         }
 

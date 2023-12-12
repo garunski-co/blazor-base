@@ -5,19 +5,26 @@ namespace Spent.Client.Core.Components.Pages.Identity;
 
 public partial class ResetPasswordPage
 {
-    private bool isLoading;
-    private string? resetPasswordMessage;
-    private BitMessageBarType resetPasswordMessageType;
-    private readonly ResetPasswordRequestDto resetPasswordModel = new();
+    private readonly ResetPasswordRequestDto _resetPasswordModel = new();
 
-    [Parameter, SupplyParameterFromQuery] public string? Email { get; set; }
+    private bool _isLoading;
 
-    [Parameter, SupplyParameterFromQuery] public string? Token { get; set; }
+    private string? _resetPasswordMessage;
+
+    private BitMessageBarType _resetPasswordMessageType;
+
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string? Email { get; set; }
+
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string? Token { get; set; }
 
     protected override async Task OnInitAsync()
     {
-        resetPasswordModel.Email = Email;
-        resetPasswordModel.Token = Token;
+        _resetPasswordModel.Email = Email;
+        _resetPasswordModel.Token = Token;
 
         await base.OnInitAsync();
     }
@@ -34,29 +41,32 @@ public partial class ResetPasswordPage
 
     private async Task DoSubmit()
     {
-        if (isLoading) return;
+        if (_isLoading)
+        {
+            return;
+        }
 
-        isLoading = true;
-        resetPasswordMessage = null;
+        _isLoading = true;
+        _resetPasswordMessage = null;
 
         try
         {
-            await HttpClient.PostAsJsonAsync("Identity/ResetPassword", resetPasswordModel,
+            await HttpClient.PostAsJsonAsync("Identity/ResetPassword", _resetPasswordModel,
                 AppJsonContext.Default.ResetPasswordRequestDto, CurrentCancellationToken);
 
-            resetPasswordMessageType = BitMessageBarType.Success;
+            _resetPasswordMessageType = BitMessageBarType.Success;
 
-            resetPasswordMessage = Localizer[nameof(AppStrings.PasswordChangedSuccessfullyMessage)];
+            _resetPasswordMessage = Localizer[nameof(AppStrings.PasswordChangedSuccessfullyMessage)];
         }
         catch (KnownException e)
         {
-            resetPasswordMessageType = BitMessageBarType.Error;
+            _resetPasswordMessageType = BitMessageBarType.Error;
 
-            resetPasswordMessage = e.Message;
+            _resetPasswordMessage = e.Message;
         }
         finally
         {
-            isLoading = false;
+            _isLoading = false;
         }
     }
 }

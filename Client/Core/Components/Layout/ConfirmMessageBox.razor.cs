@@ -4,37 +4,41 @@ namespace Spent.Client.Core.Components.Layout;
 
 public partial class ConfirmMessageBox
 {
-    private bool isOpen;
-    private string? title;
-    private string? message;
+    private bool _isOpen;
+
+    private string? _message;
+
+    private TaskCompletionSource<bool>? _tcs;
+
+    private string? _title;
 
     public async Task<bool> Show(string message, string title)
     {
-        if (tcs is not null)
-            await tcs.Task;
+        if (_tcs is not null)
+        {
+            await _tcs.Task;
+        }
 
-        tcs = new TaskCompletionSource<bool>();
+        _tcs = new TaskCompletionSource<bool>();
 
         await InvokeAsync(() =>
         {
             _ = JsRuntime.SetBodyOverflow(true);
 
-            isOpen = true;
-            this.title = title;
-            this.message = message;
+            _isOpen = true;
+            _title = title;
+            _message = message;
 
             StateHasChanged();
         });
 
-        return await tcs.Task;
+        return await _tcs.Task;
     }
-
-    private TaskCompletionSource<bool>? tcs;
 
     public async Task Confirm(bool value)
     {
-        isOpen = false;
+        _isOpen = false;
         await JsRuntime.SetBodyOverflow(false);
-        tcs?.SetResult(value);
+        _tcs?.SetResult(value);
     }
 }

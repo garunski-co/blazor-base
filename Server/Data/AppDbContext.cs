@@ -8,7 +8,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> options)
 {
     public DbSet<DataProtectionKey> DataProtectionKeys { get; set; }
 
-
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
@@ -30,8 +29,9 @@ public class AppDbContext(DbContextOptions<AppDbContext> options)
         }
     }
 
-    public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess,
-        CancellationToken cancellationToken = new CancellationToken())
+    public override async Task<int> SaveChangesAsync(
+        bool acceptAllChangesOnSuccess,
+        CancellationToken cancellationToken = new())
     {
         try
         {
@@ -42,7 +42,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> options)
             throw new ConflictException(nameof(AppStrings.UpdateConcurrencyException), exception);
         }
     }
-
 
     private void ConfigIdentityTables(ModelBuilder builder)
     {

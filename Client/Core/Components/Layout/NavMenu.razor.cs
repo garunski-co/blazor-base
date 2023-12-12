@@ -11,62 +11,80 @@ namespace Spent.Client.Core.Components.Layout;
 
 public partial class NavMenu : IDisposable
 {
-    private bool disposed;
-    private bool isSignOutModalOpen;
-    private string? profileImageUrl;
-    private string? profileImageUrlBase;
-    private UserDto user = new();
-    private List<BitNavItem> navItems = [];
-    private Action unsubscribe = default!;
+    private bool _disposed;
 
-    [AutoInject] private NavigationManager navManager = default!;
+    private bool _isSignOutModalOpen;
 
-    [Parameter] public bool IsMenuOpen { get; set; }
+    private List<BitNavItem> _navItems = [];
 
-    [Parameter] public EventCallback<bool> IsMenuOpenChanged { get; set; }
+    [AutoInject]
+    private NavigationManager _navManager = default!;
+
+    private string? _profileImageUrl;
+
+    private string? _profileImageUrlBase;
+
+    private Action _unsubscribe = default!;
+
+    private UserDto _user = new();
+
+    [Parameter]
+    public bool IsMenuOpen { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> IsMenuOpenChanged { get; set; }
+
+    public override void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
 
     protected override async Task OnInitAsync()
     {
-        navItems =
+        _navItems =
         [
             new BitNavItem
             {
                 Text = Localizer[nameof(AppStrings.Home)],
                 IconName = BitIconName.Home,
-                Url = "/",
+                Url = "/"
             },
             new BitNavItem
             {
                 Text = Localizer[nameof(AppStrings.EditProfileTitle)],
                 IconName = BitIconName.EditContact,
-                Url = "/edit-profile",
+                Url = "/edit-profile"
             },
             new BitNavItem
             {
                 Text = Localizer[nameof(AppStrings.TermsTitle)],
                 IconName = BitIconName.EntityExtraction,
-                Url = "/terms",
+                Url = "/terms"
             }
         ];
 
-        unsubscribe = PubSubService.Subscribe(PubSubMessages.ProfileUpdated, async payload =>
+        _unsubscribe = PubSubService.Subscribe(PubSubMessages.ProfileUpdated, async payload =>
         {
-            if (payload is null) return;
+            if (payload is null)
+            {
+                return;
+            }
 
-            user = (UserDto)payload;
+            _user = (UserDto)payload;
 
             SetProfileImageUrl();
 
             StateHasChanged();
         });
 
-        user = await PrerenderStateService.GetValue($"{nameof(NavMenu)}-{nameof(user)}", async () =>
+        _user = await PrerenderStateService.GetValue($"{nameof(NavMenu)}-{nameof(_user)}", async () =>
             await HttpClient.GetFromJsonAsync("User/GetCurrentUser", AppJsonContext.Default.UserDto,
                 CurrentCancellationToken)) ?? new();
 
         var accessToken = await PrerenderStateService.GetValue($"{nameof(NavMenu)}-access_token",
             AuthTokenProvider.GetAccessTokenAsync);
-        profileImageUrlBase =
+        _profileImageUrlBase =
             $"{Configuration.GetApiServerAddress()}Attachment/GetProfileImage?access_token={accessToken}&file=";
 
         SetProfileImageUrl();
@@ -74,12 +92,12 @@ public partial class NavMenu : IDisposable
 
     private void SetProfileImageUrl()
     {
-        profileImageUrl = user.ProfileImageName is not null ? profileImageUrlBase + user.ProfileImageName : null;
+        _profileImageUrl = _user.ProfileImageName is not null ? _profileImageUrlBase + _user.ProfileImageName : null;
     }
 
     private async Task DoSignOut()
     {
-        isSignOutModalOpen = true;
+        _isSignOutModalOpen = true;
 
         await CloseMenu();
     }
@@ -87,7 +105,7 @@ public partial class NavMenu : IDisposable
     private async Task GoToEditProfile()
     {
         await CloseMenu();
-        navManager.NavigateTo("edit-profile");
+        _navManager.NavigateTo("edit-profile");
     }
 
     private async Task CloseMenu()
@@ -96,18 +114,15 @@ public partial class NavMenu : IDisposable
         await IsMenuOpenChanged.InvokeAsync(false);
     }
 
-    public override void Dispose()
-    {
-        Dispose(true);
-        GC.SuppressFinalize(this);
-    }
-
     protected virtual void Dispose(bool disposing)
     {
-        if (disposed || disposing is false) return;
+        if (_disposed || disposing is false)
+        {
+            return;
+        }
 
-        unsubscribe?.Invoke();
+        _unsubscribe?.Invoke();
 
-        disposed = true;
+        _disposed = true;
     }
 }

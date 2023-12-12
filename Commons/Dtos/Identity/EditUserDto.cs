@@ -16,7 +16,8 @@ public class EditUserDto
     [JsonIgnore]
     public string? GenderAsString
     {
-        get { return Gender?.ToString(); }
+        get => Gender?.ToString();
+
         set
         {
             if (string.IsNullOrEmpty(value) is false)

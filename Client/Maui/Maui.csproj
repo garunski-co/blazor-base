@@ -13,7 +13,7 @@
 
         <!-- Display name -->
         <ApplicationTitle>Spent</ApplicationTitle>
-        
+
         <AssemblyName>Spent.Client.Maui</AssemblyName>
         <RootNamespace>Spent.Client.Maui</RootNamespace>
 

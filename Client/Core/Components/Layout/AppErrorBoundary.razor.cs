@@ -10,29 +10,31 @@ namespace Spent.Client.Core.Components.Layout;
 /// </summary>
 public partial class AppErrorBoundary
 {
-    private bool showException;
+    [AutoInject]
+    private IExceptionHandler _exceptionHandler = default!;
 
-    [AutoInject] private IExceptionHandler exceptionHandler = default!;
+    [AutoInject]
+    private NavigationManager _navigationManager = default!;
 
-    [AutoInject] private NavigationManager navigationManager = default!;
+    private bool _showException;
 
     protected override void OnInitialized()
     {
-        showException = BuildConfiguration.IsDebug();
+        _showException = BuildConfiguration.IsDebug();
     }
 
     protected override async Task OnErrorAsync(Exception exception)
     {
-        exceptionHandler.Handle(exception);
+        _exceptionHandler.Handle(exception);
     }
 
     private void Refresh()
     {
-        navigationManager.Refresh(forceReload: true);
+        _navigationManager.Refresh(true);
     }
 
     private void GoHome()
     {
-        navigationManager.NavigateTo("/", true);
+        _navigationManager.NavigateTo("/", true);
     }
 }

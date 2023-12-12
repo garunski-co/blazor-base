@@ -5,21 +5,16 @@ namespace Spent.Commons.Exceptions;
 public class ResourceValidationException : RestException
 {
     public ResourceValidationException(params LocalizedString[] errorMessages)
-        : this([("*", errorMessages)])
-    {
-    }
+        : this([("*", errorMessages)]) { }
 
     public ResourceValidationException((string propName, LocalizedString[] errorMessages)[] details)
-        : this("*", details)
-    {
-    }
+        : this("*", details) { }
 
     public ResourceValidationException(Type resourceType, (string propName, LocalizedString[] errorMessages)[] details)
-        : this(resourceType.FullName!, details)
-    {
-    }
+        : this(resourceType.FullName!, details) { }
 
-    public ResourceValidationException(string resourceTypeName,
+    public ResourceValidationException(
+        string resourceTypeName,
         (string propName, LocalizedString[] errorMessages)[] details)
         : this(new ErrorResourcePayload()
         {
@@ -33,14 +28,10 @@ public class ResourceValidationException : RestException
                     Message = e.Value
                 }).ToList()
             }).ToList()
-        })
-    {
-    }
+        }) { }
 
     public ResourceValidationException(ErrorResourcePayload payload)
-        : this(message: nameof(AppStrings.ResourceValidationException), payload)
-    {
-    }
+        : this(nameof(AppStrings.ResourceValidationException), payload) { }
 
     public ResourceValidationException(string message, ErrorResourcePayload payload)
         : base(message)
@@ -48,7 +39,7 @@ public class ResourceValidationException : RestException
         Payload = payload;
     }
 
-    public ErrorResourcePayload Payload { get; set; } = new ErrorResourcePayload();
+    public ErrorResourcePayload Payload { get; set; } = new();
 
     public override HttpStatusCode StatusCode => HttpStatusCode.BadRequest;
 }

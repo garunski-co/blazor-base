@@ -1,5 +1,3 @@
 ﻿namespace Spent.Client.Core;
 
-public partial class Routes
-{
-}
+public partial class Routes { }

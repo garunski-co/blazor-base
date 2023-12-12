@@ -11,24 +11,30 @@ namespace Spent.Server.Services;
 /// </summary>
 public partial class ServerSideAuthTokenProvider : IAuthTokenProvider
 {
-    [AutoInject] private readonly IHttpContextAccessor httpContextAccessor = default!;
-    [AutoInject] private readonly IJSRuntime jsRuntime = default!;
-    [AutoInject] private readonly IStorageService storageService = default!;
-
     private static readonly PropertyInfo IsInitializedProp = Assembly.Load("Microsoft.AspNetCore.Components.Server")
         .GetType("Microsoft.AspNetCore.Components.Server.Circuits.RemoteJSRuntime")!
         .GetProperty("IsInitialized")!;
 
-    public bool IsInitialized => jsRuntime.GetType().Name is not "UnsupportedJavaScriptRuntime" &&
-                                 (bool)IsInitializedProp.GetValue(jsRuntime)!;
+    [AutoInject]
+    private readonly IHttpContextAccessor _httpContextAccessor = default!;
+
+    [AutoInject]
+    private readonly IJSRuntime _jsRuntime = default!;
+
+    [AutoInject]
+    private readonly IStorageService _storageService = default!;
+
+    public bool IsInitialized =>
+        _jsRuntime.GetType().Name is not "UnsupportedJavaScriptRuntime" &&
+        (bool)IsInitializedProp.GetValue(_jsRuntime)!;
 
     public async Task<string?> GetAccessTokenAsync()
     {
         if (IsInitialized)
         {
-            return await storageService.GetItem("access_token");
+            return await _storageService.GetItem("access_token");
         }
 
-        return httpContextAccessor.HttpContext?.Request.Cookies["access_token"];
+        return _httpContextAccessor.HttpContext?.Request.Cookies["access_token"];
     }
 }

@@ -5,29 +5,19 @@ namespace Spent.Commons.Exceptions;
 public class ConflictException : RestException
 {
     public ConflictException()
-        : this(nameof(AppStrings.ConflicException))
-    {
-    }
+        : this(nameof(AppStrings.ConflicException)) { }
 
     public ConflictException(string message)
-        : base(message)
-    {
-    }
+        : base(message) { }
 
     public ConflictException(string message, Exception? innerException)
-        : base(message, innerException)
-    {
-    }
+        : base(message, innerException) { }
 
     public ConflictException(LocalizedString message)
-        : base(message)
-    {
-    }
+        : base(message) { }
 
     public ConflictException(LocalizedString message, Exception? innerException)
-        : base(message, innerException)
-    {
-    }
+        : base(message, innerException) { }
 
     public override HttpStatusCode StatusCode => HttpStatusCode.Conflict;
 }

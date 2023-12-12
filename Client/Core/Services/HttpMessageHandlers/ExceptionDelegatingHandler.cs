@@ -5,7 +5,8 @@ namespace Spent.Client.Core.Services.HttpMessageHandlers;
 public class ExceptionDelegatingHandler(IStringLocalizer<AppStrings> localizer, HttpClientHandler httpClientHandler)
     : DelegatingHandler(httpClientHandler)
 {
-    protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
+    protected override async Task<HttpResponseMessage> SendAsync(
+        HttpRequestMessage request,
         CancellationToken cancellationToken)
     {
         var serverCommunicationSuccess = false;
@@ -62,7 +63,8 @@ public class ExceptionDelegatingHandler(IStringLocalizer<AppStrings> localizer, 
             return response;
         }
         catch (Exception exp) when ((exp is HttpRequestException && serverCommunicationSuccess is false)
-                                    || exp is TaskCanceledException tcExp && tcExp.InnerException is TimeoutException)
+                                    || (exp is TaskCanceledException tcExp &&
+                                        tcExp.InnerException is TimeoutException))
         {
             throw new ServerConnectionException(nameof(AppStrings.ServerConnectionException), exp);
         }

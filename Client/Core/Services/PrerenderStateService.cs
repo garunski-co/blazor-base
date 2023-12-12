@@ -5,50 +5,61 @@
 /// </summary>
 public class PrerenderStateService : IPrerenderStateService, IAsyncDisposable
 {
-    private readonly PersistingComponentStateSubscription? subscription;
-    private readonly PersistentComponentState? persistentComponentState;
-    private readonly ConcurrentDictionary<string, object?> values = new();
+    private readonly PersistentComponentState? _persistentComponentState;
+
+    private readonly PersistingComponentStateSubscription? _subscription;
+
+    private readonly ConcurrentDictionary<string, object?> _values = new();
 
     public PrerenderStateService(PersistentComponentState? persistentComponentState = null)
     {
-        subscription = persistentComponentState?.RegisterOnPersisting(PersistAsJson, AppRenderMode.Current);
-        this.persistentComponentState = persistentComponentState;
+        _subscription = persistentComponentState?.RegisterOnPersisting(PersistAsJson, AppRenderMode.Current);
+        _persistentComponentState = persistentComponentState;
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (AppRenderMode.PrerenderEnabled is false)
+        {
+            return;
+        }
+
+        _subscription?.Dispose();
     }
 
     public async Task<T> GetValue<T>(string key, Func<Task<T?>> factory)
     {
         if (AppRenderMode.PrerenderEnabled is false)
+        {
             return await factory();
+        }
 
-        if (persistentComponentState!.TryTakeFromJson(key, out T? value)) return value;
+        if (_persistentComponentState!.TryTakeFromJson(key, out T? value))
+        {
+            return value;
+        }
 
         var result = await factory();
         Persist(key, result);
         return result;
     }
 
-    void Persist<T>(string key, T value)
+    private void Persist<T>(string key, T value)
     {
         if (AppRenderMode.PrerenderEnabled is false)
-            return;
-
-        values.TryRemove(key, out var _);
-        values.TryAdd(key, value);
-    }
-
-    async Task PersistAsJson()
-    {
-        foreach (var item in values)
         {
-            persistentComponentState!.PersistAsJson(item.Key, item.Value);
+            return;
         }
+
+        _values.TryRemove(key, out var _);
+        _values.TryAdd(key, value);
     }
 
-    public async ValueTask DisposeAsync()
+    private async Task PersistAsJson()
     {
-        if (AppRenderMode.PrerenderEnabled is false)
-            return;
-
-        subscription?.Dispose();
+        foreach (var item in _values)
+        {
+            _persistentComponentState!.PersistAsJson(item.Key, item.Value);
+        }
     }
 }

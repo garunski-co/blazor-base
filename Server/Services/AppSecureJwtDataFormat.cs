@@ -11,7 +11,9 @@ public class AppSecureJwtDataFormat(AppSettings appSettings, TokenValidationPara
     : ISecureDataFormat<AuthenticationTicket>
 {
     public AuthenticationTicket? Unprotect(string? protectedText)
-        => Unprotect(protectedText, null);
+    {
+        return Unprotect(protectedText, null);
+    }
 
     public AuthenticationTicket? Unprotect(string? protectedText, string? purpose)
     {
@@ -20,7 +22,7 @@ public class AppSecureJwtDataFormat(AppSettings appSettings, TokenValidationPara
             var handler = new JwtSecurityTokenHandler();
             var principal = handler.ValidateToken(protectedText, validationParameters, out var validToken);
             var validJwt = (JwtSecurityToken)validToken;
-            var data = new AuthenticationTicket(principal, properties: new AuthenticationProperties()
+            var data = new AuthenticationTicket(principal, new AuthenticationProperties()
             {
                 ExpiresUtc = validJwt.ValidTo
             }, IdentityConstants.BearerScheme);
@@ -32,12 +34,10 @@ public class AppSecureJwtDataFormat(AppSettings appSettings, TokenValidationPara
         }
     }
 
-    private AuthenticationTicket NotSignedIn()
+    public string Protect(AuthenticationTicket data)
     {
-        return new AuthenticationTicket(new ClaimsPrincipal(new ClaimsIdentity()), string.Empty);
+        return Protect(data, null);
     }
-
-    public string Protect(AuthenticationTicket data) => Protect(data, null);
 
     public string Protect(AuthenticationTicket data, string? purpose)
     {
@@ -52,11 +52,16 @@ public class AppSecureJwtDataFormat(AppSettings appSettings, TokenValidationPara
                 Expires = data.Properties.ExpiresUtc!.Value.UtcDateTime,
                 SigningCredentials =
                     new SigningCredentials(validationParameters.IssuerSigningKey, SecurityAlgorithms.RsaSha512),
-                Subject = new ClaimsIdentity(data.Principal.Claims),
+                Subject = new ClaimsIdentity(data.Principal.Claims)
             });
 
         var encodedJwt = jwtSecurityTokenHandler.WriteToken(securityToken);
 
         return encodedJwt;
+    }
+
+    private AuthenticationTicket NotSignedIn()
+    {
+        return new AuthenticationTicket(new ClaimsPrincipal(new ClaimsIdentity()), string.Empty);
     }
 }

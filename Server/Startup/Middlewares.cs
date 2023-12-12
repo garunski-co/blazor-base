@@ -59,7 +59,7 @@ public class Middlewares
         }.SetDefaultCulture(CultureInfoManager.DefaultCulture.code));
 #endif
 
-        app.UseExceptionHandler("/", createScopeForErrors: true);
+        app.UseExceptionHandler("/", true);
 
         app.UseSwagger();
 
@@ -117,7 +117,8 @@ public class Middlewares
                     context.Response.StatusCode = (int)HttpStatusCode.NotFound;
                 }
 
-                if (context.Request.Path.Value.Contains("not-authorized", StringComparison.InvariantCultureIgnoreCase))
+                if (context.Request.Path.Value.Contains("not-authorized",
+                        StringComparison.InvariantCultureIgnoreCase))
                 {
                     context.Response.StatusCode = context.Request.Query["isForbidden"].FirstOrDefault() is "true"
                         ? (int)HttpStatusCode.Forbidden

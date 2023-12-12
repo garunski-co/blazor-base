@@ -11,6 +11,7 @@ namespace Spent.Server.Mappers;
 public static partial class IdentityMapper
 {
     public static partial UserDto Map(this User source);
+
     public static partial void Patch(this EditUserDto source, User destination);
 
     private static partial User MapInternal(this SignUpRequestDto source);

@@ -17,28 +17,41 @@ namespace Spent.Client.Core.Components;
 /// on the corresponding class instead of using `ErrorResourceType` on each property. Check out <see cref="SignUpRequestDto"/> for an example.
 /// However, you need to use <see cref="AppDataAnnotationsValidator"/> instead of <see cref="DataAnnotationsValidator"/> in Blazor EditForms for this method to work.
 /// </summary>
-public partial class AppDataAnnotationsValidator : AppComponentBase, IDisposable
+public partial class AppDataAnnotationsValidator : AppComponentBase
 {
     private static readonly PropertyInfo OtherPropertyNamePropertyInfo =
         typeof(CompareAttribute).GetProperty(nameof(CompareAttribute.OtherPropertyDisplayName))!;
 
-    private bool disposed;
-    private ValidationMessageStore validationMessageStore = default!;
+    private bool _disposed;
 
-    [AutoInject] private IServiceProvider serviceProvider = default!;
-    [AutoInject] private IStringLocalizerFactory stringLocalizerFactory = default!;
+    [AutoInject]
+    private IServiceProvider _serviceProvider = default!;
 
-    [CascadingParameter] public EditContext EditContext { get; set; } = default!;
+    [AutoInject]
+    private IStringLocalizerFactory _stringLocalizerFactory = default!;
+
+    private ValidationMessageStore _validationMessageStore = default!;
+
+    [CascadingParameter]
+    public EditContext EditContext { get; set; } = default!;
+
+    public override void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
 
     protected override Task OnInitAsync()
     {
         if (EditContext is null)
+        {
             throw new InvalidOperationException("EditContext is required");
+        }
 
         EditContext.OnFieldChanged += OnFieldChanged;
         EditContext.OnValidationRequested += OnValidationRequested;
 
-        validationMessageStore = new ValidationMessageStore(EditContext);
+        _validationMessageStore = new ValidationMessageStore(EditContext);
 
         return base.OnInitAsync();
     }
@@ -47,21 +60,24 @@ public partial class AppDataAnnotationsValidator : AppComponentBase, IDisposable
     {
         var fieldIdentifier = eventArgs.FieldIdentifier;
         var propertyInfo = fieldIdentifier.Model.GetType().GetProperty(fieldIdentifier.FieldName);
-        if (propertyInfo is null) return;
+        if (propertyInfo is null)
+        {
+            return;
+        }
 
         var propertyValue = propertyInfo.GetValue(fieldIdentifier.Model);
-        var validationContext = new ValidationContext(fieldIdentifier.Model, serviceProvider, items: null)
+        var validationContext = new ValidationContext(fieldIdentifier.Model, _serviceProvider, null)
         {
             MemberName = propertyInfo.Name
         };
-        var results = new List<ValidationResult>();
 
+        var results = new List<ValidationResult>();
         var parent = propertyInfo.DeclaringType!;
         var dtoResourceTypeAttr = parent.GetCustomAttribute<DtoResourceTypeAttribute>();
         if (dtoResourceTypeAttr is not null)
         {
             var resourceType = dtoResourceTypeAttr.ResourceType;
-            var stringLocalizer = stringLocalizerFactory.Create(resourceType);
+            var stringLocalizer = _stringLocalizerFactory.Create(resourceType);
             var validationAttributes = propertyInfo.GetCustomAttributes<ValidationAttribute>();
 
             foreach (var attribute in validationAttributes)
@@ -87,6 +103,7 @@ public partial class AppDataAnnotationsValidator : AppComponentBase, IDisposable
                              throw new InvalidOperationException(
                                  $"Invalid OtherProperty {compareAttribute.OtherProperty}"))
                             .GetCustomAttribute<DisplayAttribute>();
+
                         OtherPropertyNamePropertyInfo.SetValue(attribute,
                             stringLocalizer
                                 .GetString(otherPropertyInfoDisplayAttribute?.Name ?? compareAttribute.OtherProperty)
@@ -107,10 +124,11 @@ public partial class AppDataAnnotationsValidator : AppComponentBase, IDisposable
             Validator.TryValidateProperty(propertyValue, validationContext, results);
         }
 
-        validationMessageStore.Clear(fieldIdentifier);
+        _validationMessageStore.Clear(fieldIdentifier);
+
         foreach (var result in CollectionsMarshal.AsSpan(results))
         {
-            validationMessageStore.Add(fieldIdentifier, result.ErrorMessage!);
+            _validationMessageStore.Add(fieldIdentifier, result.ErrorMessage!);
         }
 
         EditContext.NotifyValidationStateChanged();
@@ -118,26 +136,28 @@ public partial class AppDataAnnotationsValidator : AppComponentBase, IDisposable
 
     private void OnValidationRequested(object? sender, ValidationRequestedEventArgs e)
     {
-        var validationContext = new ValidationContext(EditContext.Model, serviceProvider, items: null);
+        var validationContext = new ValidationContext(EditContext.Model, _serviceProvider, null);
         var results = new List<ValidationResult>();
 
         var objectType = validationContext.ObjectType;
         var objectInstance = validationContext.ObjectInstance;
         var dtoResourceTypeAttr = objectType.GetCustomAttribute<DtoResourceTypeAttribute>();
 
-        validationMessageStore.Clear();
+        _validationMessageStore.Clear();
         if (dtoResourceTypeAttr is not null)
         {
             var resourceType = dtoResourceTypeAttr.ResourceType;
 
-            var stringLocalizer = stringLocalizerFactory.Create(resourceType);
+            var stringLocalizer = _stringLocalizerFactory.Create(resourceType);
 
             var properties = objectType.GetProperties(BindingFlags.Instance | BindingFlags.Public);
 
             foreach (var propertyInfo in properties)
             {
-                var context = new ValidationContext(objectInstance, validationContext, validationContext.Items);
-                context.MemberName = propertyInfo.Name;
+                var context = new ValidationContext(objectInstance, validationContext, validationContext.Items)
+                {
+                    MemberName = propertyInfo.Name
+                };
                 var propertyValue = propertyInfo.GetValue(objectInstance);
                 var validationAttributes = propertyInfo.GetCustomAttributes<ValidationAttribute>();
                 foreach (var attribute in validationAttributes)
@@ -162,6 +182,7 @@ public partial class AppDataAnnotationsValidator : AppComponentBase, IDisposable
                                  throw new InvalidOperationException(
                                      $"Invalid OtherProperty {compareAttribute.OtherProperty}"))
                                 .GetCustomAttribute<DisplayAttribute>();
+
                             OtherPropertyNamePropertyInfo.SetValue(attribute,
                                 stringLocalizer
                                     .GetString(
@@ -184,43 +205,38 @@ public partial class AppDataAnnotationsValidator : AppComponentBase, IDisposable
             Validator.TryValidateObject(EditContext.Model, validationContext, results, true);
         }
 
-        validationMessageStore.Clear();
+        _validationMessageStore.Clear();
         foreach (var validationResult in results)
         {
-            if (validationResult == null) continue;
-
             var hasMemberNames = false;
             foreach (var memberName in validationResult.MemberNames)
             {
                 hasMemberNames = true;
-                validationMessageStore.Add(EditContext.Field(memberName), validationResult.ErrorMessage!);
+                _validationMessageStore.Add(EditContext.Field(memberName), validationResult.ErrorMessage!);
             }
 
-            if (hasMemberNames) continue;
+            if (hasMemberNames)
+            {
+                continue;
+            }
 
-            validationMessageStore.Add(new FieldIdentifier(EditContext.Model, fieldName: string.Empty),
+            _validationMessageStore.Add(new FieldIdentifier(EditContext.Model, string.Empty),
                 validationResult.ErrorMessage!);
         }
 
         EditContext.NotifyValidationStateChanged();
     }
 
-    public override void Dispose()
-    {
-        Dispose(true);
-        GC.SuppressFinalize(this);
-    }
-
     protected virtual void Dispose(bool disposing)
     {
-        if (disposed || disposing is false) return;
-
-        if (EditContext is not null)
+        if (_disposed || disposing is false)
         {
-            EditContext.OnFieldChanged -= OnFieldChanged;
-            EditContext.OnValidationRequested -= OnValidationRequested;
+            return;
         }
 
-        disposed = true;
+        EditContext.OnFieldChanged -= OnFieldChanged;
+        EditContext.OnValidationRequested -= OnValidationRequested;
+
+        _disposed = true;
     }
 }

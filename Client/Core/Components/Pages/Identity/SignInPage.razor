@@ -5,43 +5,43 @@
 <PageTitle>@Localizer[nameof(AppStrings.SignInTitle)]</PageTitle>
 
 <div class="page-container">
-    <EditForm OnValidSubmit="WrapHandled(DoSignIn)" class="form" Model="signInModel">
+    <EditForm OnValidSubmit="WrapHandled(DoSignIn)" class="form" Model="_signInModel">
         <AppDataAnnotationsValidator/>
 
-        @if (string.IsNullOrEmpty(signInMessage) is false)
+        @if (string.IsNullOrEmpty(_signInMessage) is false)
         {
             <BitMessageBar Class="form-message-bar"
-                           MessageBarType="@signInMessageType"
-                           OnDismiss="() => signInMessage = null">
-                @signInMessage
+                           MessageBarType="@_signInMessageType"
+                           OnDismiss="() => _signInMessage = null">
+                @_signInMessage
             </BitMessageBar>
         }
 
         <h1 class="form-title">@Localizer[nameof(AppStrings.SignInTitle)]</h1>
 
         <div class="form-input-container">
-            <BitTextField @bind-Value="signInModel.UserName"
+            <BitTextField @bind-Value="_signInModel.UserName"
                           Label="@Localizer[nameof(AppStrings.Email)]"
                           Placeholder="@Localizer[nameof(AppStrings.Email)]"
                           Type="BitTextFieldType.Email"/>
-            <ValidationMessage For="@(() => signInModel.UserName)"/>
+            <ValidationMessage For="@(() => _signInModel.UserName)"/>
         </div>
 
         <div class="form-input-container">
-            <BitTextField @bind-Value="signInModel.Password"
+            <BitTextField @bind-Value="_signInModel.Password"
                           Label="@Localizer[nameof(AppStrings.Password)]"
                           Type="BitTextFieldType.Password"
                           AutoComplete="current-password"
                           CanRevealPassword="true"
                           Placeholder="@Localizer[nameof(AppStrings.Password)]"/>
-            <ValidationMessage For="@(() => signInModel.Password)"/>
+            <ValidationMessage For="@(() => _signInModel.Password)"/>
         </div>
 
         <div class="form-input-container form-input-container--no-margin">
-            <BitCheckbox Class="form-checkbox" @bind-Value="signInModel.RememberMe" Label="@Localizer[nameof(AppStrings.RememberMe)]"/>
+            <BitCheckbox Class="form-checkbox" @bind-Value="_signInModel.RememberMe" Label="@Localizer[nameof(AppStrings.RememberMe)]"/>
         </div>
 
-        <BitButton IsLoading="isLoading"
+        <BitButton IsLoading="_isLoading"
                    Class="form-submit-button"
                    ButtonStyle="BitButtonStyle.Primary"
                    Title="@Localizer[nameof(AppStrings.SignIn)]"

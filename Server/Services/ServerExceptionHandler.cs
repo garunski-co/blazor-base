@@ -7,10 +7,15 @@ namespace Spent.Server.Services;
 
 public partial class ServerExceptionHandler : IExceptionHandler
 {
-    [AutoInject] private readonly IWebHostEnvironment webHostEnvironment = default!;
-    [AutoInject] private readonly IStringLocalizer<AppStrings> localizer = default!;
+    [AutoInject]
+    private readonly IStringLocalizer<AppStrings> _localizer = default!;
 
-    public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception e,
+    [AutoInject]
+    private readonly IWebHostEnvironment _webHostEnvironment = default!;
+
+    public async ValueTask<bool> TryHandleAsync(
+        HttpContext httpContext,
+        Exception e,
         CancellationToken cancellationToken)
     {
         // Using the Request-Id header, one can find the log for server-related exceptions
@@ -22,7 +27,7 @@ public partial class ServerExceptionHandler : IExceptionHandler
         // The details of all of the exceptions are returned only in dev mode. in any other modes like production, only the details of the known exceptions are returned.
         var key = knownException?.Key ?? nameof(UnknownException);
         var message = knownException?.Message ??
-                      (webHostEnvironment.IsDevelopment() ? exception.Message : localizer[nameof(UnknownException)]);
+                      (_webHostEnvironment.IsDevelopment() ? exception.Message : _localizer[nameof(UnknownException)]);
 
         var statusCode = (int)(exception is RestException restExp
             ? restExp.StatusCode
@@ -30,7 +35,7 @@ public partial class ServerExceptionHandler : IExceptionHandler
 
         if (exception is KnownException && message == key)
         {
-            message = localizer[message];
+            message = _localizer[message];
         }
 
         var restExceptionPayload = new RestErrorInfo

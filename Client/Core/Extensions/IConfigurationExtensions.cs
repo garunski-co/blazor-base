@@ -4,7 +4,7 @@ public static class ConfigurationExtensions
 {
     public static string GetApiServerAddress(this IConfiguration configuration)
     {
-        var apiServerAddress = configuration.GetValue("ApiServerAddress", defaultValue: "api/")!;
+        var apiServerAddress = configuration.GetValue("ApiServerAddress", "api/")!;
 
         return Uri.TryCreate(apiServerAddress, UriKind.RelativeOrAbsolute, out _)
             ? apiServerAddress

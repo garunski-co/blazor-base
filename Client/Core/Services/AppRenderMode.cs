@@ -14,8 +14,7 @@ public static class AppRenderMode
 
     private static IComponentRenderMode BlazorServer { get; } = new InteractiveServerRenderMode(PrerenderEnabled);
 
-    public static IComponentRenderMode NoPrerenderBlazorWebAssembly =>
-        new InteractiveWebAssemblyRenderMode(prerender: false);
+    public static IComponentRenderMode NoPrerenderBlazorWebAssembly => new InteractiveWebAssemblyRenderMode(false);
 
     public static IComponentRenderMode Current =>
         BuildConfiguration.IsDebug() ? BlazorServer /*For better development experience*/ : Auto;
@@ -27,6 +26,8 @@ public static class AppRenderMode
         false;
 #endif
 
-    public static bool IsHybrid() =>
-        OS.IsAndroid() || OS.IsIOS() || OS.IsMacCatalyst() || OS.IsMacOS() || OS.IsWindows();
+    public static bool IsHybrid()
+    {
+        return OS.IsAndroid() || OS.IsIOS() || OS.IsMacCatalyst() || OS.IsMacOS() || OS.IsWindows();
+    }
 }

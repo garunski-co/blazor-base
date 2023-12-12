@@ -10,23 +10,29 @@ namespace Spent.Server.Controllers;
 [ApiController]
 public partial class AttachmentController : AppControllerBase
 {
-    [AutoInject] private readonly UserManager<User> userManager = default!;
+    [AutoInject]
+    private readonly UserManager<User> _userManager = default!;
 
-    [AutoInject] private readonly IWebHostEnvironment webHostEnvironment = default!;
+    [AutoInject]
+    private readonly IWebHostEnvironment _webHostEnvironment = default!;
 
     [HttpPost]
     [RequestSizeLimit(11 * 1024 * 1024 /*11MB*/)]
     public async Task UploadProfileImage(IFormFile? file, CancellationToken cancellationToken)
     {
         if (file is null)
+        {
             throw new BadRequestException();
+        }
 
         var userId = User.GetUserId();
 
-        var user = await userManager.FindByIdAsync(userId.ToString());
+        var user = await _userManager.FindByIdAsync(userId.ToString());
 
         if (user is null)
+        {
             throw new ResourceNotFoundException();
+        }
 
         var destFileName = $"{userId}_{file.FileName}";
 
@@ -76,15 +82,19 @@ public partial class AttachmentController : AppControllerBase
 
             user.ProfileImageName = destFileName;
 
-            var result = await userManager.UpdateAsync(user);
+            var result = await _userManager.UpdateAsync(user);
             if (!result.Succeeded)
+            {
                 throw new ResourceValidationException(result.Errors
                     .Select(err => new LocalizedString(err.Code, err.Description)).ToArray());
+            }
         }
         catch
         {
             if (SystemFile.Exists(resizedFilePath))
+            {
                 SystemFile.Delete(resizedFilePath);
+            }
 
             throw;
         }
@@ -99,10 +109,12 @@ public partial class AttachmentController : AppControllerBase
     {
         var userId = User.GetUserId();
 
-        var user = await userManager.FindByIdAsync(userId.ToString());
+        var user = await _userManager.FindByIdAsync(userId.ToString());
 
         if (user?.ProfileImageName is null)
+        {
             throw new ResourceNotFoundException();
+        }
 
         var userProfileImageDirPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
             AppSettings.UserProfileImagesDir);
@@ -110,14 +122,18 @@ public partial class AttachmentController : AppControllerBase
         var filePath = Path.Combine(userProfileImageDirPath, user.ProfileImageName);
 
         if (SystemFile.Exists(filePath) is false)
+        {
             throw new ResourceNotFoundException(Localizer[nameof(AppStrings.UserImageCouldNotBeFound)]);
+        }
 
         user.ProfileImageName = null;
 
-        var result = await userManager.UpdateAsync(user);
+        var result = await _userManager.UpdateAsync(user);
         if (!result.Succeeded)
+        {
             throw new ResourceValidationException(result.Errors
                 .Select(err => new LocalizedString(err.Code, err.Description)).ToArray());
+        }
 
         SystemFile.Delete(filePath);
     }
@@ -127,10 +143,12 @@ public partial class AttachmentController : AppControllerBase
     {
         var userId = User.GetUserId();
 
-        var user = await userManager.FindByIdAsync(userId.ToString());
+        var user = await _userManager.FindByIdAsync(userId.ToString());
 
         if (user?.ProfileImageName is null)
+        {
             throw new ResourceNotFoundException();
+        }
 
         var userProfileImageDirPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
             AppSettings.UserProfileImagesDir);
@@ -138,9 +156,11 @@ public partial class AttachmentController : AppControllerBase
         var filePath = Path.Combine(userProfileImageDirPath, user.ProfileImageName);
 
         if (SystemFile.Exists(filePath) is false)
+        {
             return new EmptyResult();
+        }
 
-        return PhysicalFile(Path.Combine(webHostEnvironment.ContentRootPath, filePath),
-            MimeTypeMap.GetMimeType(Path.GetExtension(filePath)), enableRangeProcessing: true);
+        return PhysicalFile(Path.Combine(_webHostEnvironment.ContentRootPath, filePath),
+            MimeTypeMap.GetMimeType(Path.GetExtension(filePath)), true);
     }
 }
