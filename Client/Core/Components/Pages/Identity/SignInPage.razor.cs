@@ -10,7 +10,8 @@ public partial class SignInPage
     private BitMessageBarType signInMessageType;
     private readonly SignInRequestDto signInModel = new();
 
-    [SupplyParameterFromQuery(Name = "redirect-url"), Parameter] public string? RedirectUrl { get; set; }
+    [SupplyParameterFromQuery(Name = "redirect-url"), Parameter]
+    public string? RedirectUrl { get; set; }
 
     protected override async Task OnAfterFirstRenderAsync()
     {
@@ -47,4 +48,3 @@ public partial class SignInPage
         }
     }
 }
-

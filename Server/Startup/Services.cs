@@ -24,18 +24,22 @@ public static class Services
         services.AddBlazor(configuration);
 
         services.AddClientSharedServices();
-        
+
         services.AddCors();
 
         services
             .AddControllers()
             .AddOData(options => options.EnableQueryFeatures())
-            .AddDataAnnotationsLocalization(options => options.DataAnnotationLocalizerProvider = StringLocalizerProvider.ProvideLocalizer)
+            .AddDataAnnotationsLocalization(options =>
+                options.DataAnnotationLocalizerProvider = StringLocalizerProvider.ProvideLocalizer)
             .ConfigureApiBehaviorOptions(options =>
             {
                 options.InvalidModelStateResponseFactory = context =>
                 {
-                    throw new ResourceValidationException(context.ModelState.Select(ms => (ms.Key, ms.Value!.Errors.Select(e => new LocalizedString(e.ErrorMessage, e.ErrorMessage)).ToArray())).ToArray());
+                    throw new ResourceValidationException(context.ModelState.Select(ms =>
+                        (ms.Key,
+                            ms.Value!.Errors.Select(e => new LocalizedString(e.ErrorMessage, e.ErrorMessage))
+                                .ToArray())).ToArray());
                 };
             });
 
@@ -50,23 +54,21 @@ public static class Services
         services.AddHttpContextAccessor();
 
         services.AddResponseCompression(opts =>
-        {
-            opts.EnableForHttps = true;
-            opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(["application/octet-stream"]).ToArray();
-            opts.Providers.Add<BrotliCompressionProvider>();
-            opts.Providers.Add<GzipCompressionProvider>();
-        })
+            {
+                opts.EnableForHttps = true;
+                opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(["application/octet-stream"]).ToArray();
+                opts.Providers.Add<BrotliCompressionProvider>();
+                opts.Providers.Add<GzipCompressionProvider>();
+            })
             .Configure<BrotliCompressionProviderOptions>(opt => opt.Level = CompressionLevel.Fastest)
             .Configure<GzipCompressionProviderOptions>(opt => opt.Level = CompressionLevel.Fastest);
 
         services.AddDbContext<AppDbContext>(options =>
         {
-            options.UseNpgsql(configuration.GetConnectionString("Default"), dbOptions =>
-            {
-                dbOptions.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
-            });
+            options.UseNpgsql(configuration.GetConnectionString("Default"),
+                dbOptions => { dbOptions.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery); });
         });
-        
+
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
         services.Configure<AppSettings>(configuration.GetSection(nameof(AppSettings)));
@@ -83,7 +85,8 @@ public static class Services
 
         services.AddTransient<HtmlRenderer>();
 
-        var fluentEmailServiceBuilder = services.AddFluentEmail(appSettings.EmailSettings.DefaultFromEmail, appSettings.EmailSettings.DefaultFromName);
+        var fluentEmailServiceBuilder = services.AddFluentEmail(appSettings.EmailSettings.DefaultFromEmail,
+            appSettings.EmailSettings.DefaultFromName);
 
         if (appSettings.EmailSettings.UseLocalFolderForEmails)
         {
@@ -101,10 +104,12 @@ public static class Services
         {
             if (appSettings.EmailSettings.HasCredential)
             {
-                fluentEmailServiceBuilder.AddSmtpSender(() => new(appSettings.EmailSettings.Host, appSettings.EmailSettings.Port)
-                {
-                    Credentials = new NetworkCredential(appSettings.EmailSettings.UserName, appSettings.EmailSettings.Password)
-                });
+                fluentEmailServiceBuilder.AddSmtpSender(() =>
+                    new(appSettings.EmailSettings.Host, appSettings.EmailSettings.Port)
+                    {
+                        Credentials = new NetworkCredential(appSettings.EmailSettings.UserName,
+                            appSettings.EmailSettings.Password)
+                    });
             }
             else
             {

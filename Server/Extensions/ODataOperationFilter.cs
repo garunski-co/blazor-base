@@ -18,9 +18,11 @@ public class ODataOperationFilter : IOperationFilter
         if (descriptor is null)
             return;
 
-        var odataQueryOptionsParameter = descriptor.Parameters.SingleOrDefault(p => typeof(ODataQueryOptions).IsAssignableFrom(p.ParameterType));
+        var odataQueryOptionsParameter =
+            descriptor.Parameters.SingleOrDefault(p => typeof(ODataQueryOptions).IsAssignableFrom(p.ParameterType));
 
-        if (descriptor.FilterDescriptors.Any(filter => filter.Filter is EnableQueryAttribute) || odataQueryOptionsParameter is not null)
+        if (descriptor.FilterDescriptors.Any(filter => filter.Filter is EnableQueryAttribute) ||
+            odataQueryOptionsParameter is not null)
         {
             operation.Parameters.Add(new()
             {

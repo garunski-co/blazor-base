@@ -33,7 +33,8 @@ public partial class MainLayout : IDisposable
         {
             authManager.AuthenticationStateChanged += VerifyUserIsAuthenticatedOrNot;
 
-            isUserAuthenticated = await prerenderStateService.GetValue($"{nameof(MainLayout)}-isUserAuthenticated", async () => (await AuthenticationStateTask).User.IsAuthenticated());
+            isUserAuthenticated = await prerenderStateService.GetValue($"{nameof(MainLayout)}-isUserAuthenticated",
+                async () => (await AuthenticationStateTask).User.IsAuthenticated());
 
             await base.OnInitializedAsync();
         }

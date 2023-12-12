@@ -2,11 +2,11 @@
 
 <div class="status-bar">Spent</div>
 
-<Header OnToggleMenu=ToggleMenuHandler />
+<Header OnToggleMenu=ToggleMenuHandler/>
 
 @if (isUserAuthenticated)
 {
-    <NavMenu @bind-IsMenuOpen=isMenuOpen />
+    <NavMenu @bind-IsMenuOpen=isMenuOpen/>
 }
 
 <div class="main @(isUserAuthenticated ? "main--authenticated" : null)">
@@ -15,7 +15,7 @@
             @Body
         </AppErrorBoundary>
     </div>
-    <Footer />
+    <Footer/>
 </div>
 
-<MessageBox />
+<MessageBox/>

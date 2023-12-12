@@ -14,7 +14,8 @@ if (apiServerAddress!.IsAbsoluteUri is false)
     apiServerAddress = new Uri($"{builder.HostEnvironment.BaseAddress}{apiServerAddress}");
 }
 
-builder.Services.AddTransient(sp => new HttpClient(sp.GetRequiredService<RequestHeadersDelegationHandler>()) { BaseAddress = apiServerAddress });
+builder.Services.AddTransient(sp => new HttpClient(sp.GetRequiredService<RequestHeadersDelegationHandler>())
+    { BaseAddress = apiServerAddress });
 
 builder.Services.AddClientWebServices();
 

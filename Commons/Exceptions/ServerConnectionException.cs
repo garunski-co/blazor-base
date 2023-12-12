@@ -1,4 +1,5 @@
 ﻿namespace Spent.Commons.Exceptions;
+
 public class ServerConnectionException : UnknownException
 {
     public ServerConnectionException()

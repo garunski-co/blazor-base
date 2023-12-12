@@ -3,8 +3,8 @@
 public class RetryDelegatingHandler(ExceptionDelegatingHandler handler)
     : DelegatingHandler(handler)
 {
-
-    protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+    protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
+        CancellationToken cancellationToken)
     {
         var delays = GetDelays(scaleFirstTry: TimeSpan.FromSeconds(3), maxRetries: 3).ToArray();
 
@@ -38,7 +38,8 @@ public class RetryDelegatingHandler(ExceptionDelegatingHandler handler)
             var num2 = i + Random.Shared.NextDouble();
             var next = Math.Pow(2.0, num2) * Math.Tanh(Math.Sqrt(4.0 * num2));
             var num3 = next - num;
-            yield return TimeSpan.FromTicks((long)Math.Min(num3 * 0.7_142_857_142_857_143 * targetTicksFirstDelay, maxTimeSpanDouble));
+            yield return TimeSpan.FromTicks((long)Math.Min(num3 * 0.7_142_857_142_857_143 * targetTicksFirstDelay,
+                maxTimeSpanDouble));
             num = next;
         }
     }

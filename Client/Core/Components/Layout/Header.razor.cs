@@ -15,7 +15,8 @@ public partial class Header : IDisposable
     {
         AuthenticationManager.AuthenticationStateChanged += VerifyUserIsAuthenticatedOrNot;
 
-        isUserAuthenticated = await PrerenderStateService.GetValue($"{nameof(Header)}-isUserAuthenticated", async () => (await AuthenticationStateTask).User.IsAuthenticated());
+        isUserAuthenticated = await PrerenderStateService.GetValue($"{nameof(Header)}-isUserAuthenticated",
+            async () => (await AuthenticationStateTask).User.IsAuthenticated());
 
         await base.OnInitAsync();
     }

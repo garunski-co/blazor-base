@@ -14,6 +14,5 @@ public class PagedResult<T>
 
     public PagedResult()
     {
-
     }
 }

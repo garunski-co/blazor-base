@@ -16,10 +16,11 @@ public partial class ServerSideAuthTokenProvider : IAuthTokenProvider
     [AutoInject] private readonly IStorageService storageService = default!;
 
     private static readonly PropertyInfo IsInitializedProp = Assembly.Load("Microsoft.AspNetCore.Components.Server")
-                                                                .GetType("Microsoft.AspNetCore.Components.Server.Circuits.RemoteJSRuntime")!
-                                                                .GetProperty("IsInitialized")!;
+        .GetType("Microsoft.AspNetCore.Components.Server.Circuits.RemoteJSRuntime")!
+        .GetProperty("IsInitialized")!;
 
-    public bool IsInitialized => jsRuntime.GetType().Name is not "UnsupportedJavaScriptRuntime" && (bool)IsInitializedProp.GetValue(jsRuntime)!;
+    public bool IsInitialized => jsRuntime.GetType().Name is not "UnsupportedJavaScriptRuntime" &&
+                                 (bool)IsInitializedProp.GetValue(jsRuntime)!;
 
     public async Task<string?> GetAccessTokenAsync()
     {

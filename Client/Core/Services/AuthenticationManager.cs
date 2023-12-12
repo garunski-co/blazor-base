@@ -15,8 +15,9 @@ public partial class AuthenticationManager : AuthenticationStateProvider
 
     public async Task SignIn(SignInRequestDto signInModel, CancellationToken cancellationToken)
     {
-        var result = await (await httpClient.PostAsJsonAsync("Identity/SignIn", signInModel, AppJsonContext.Default.SignInRequestDto, cancellationToken))
-                .Content.ReadFromJsonAsync(AppJsonContext.Default.TokenResponseDto, cancellationToken);
+        var result = await (await httpClient.PostAsJsonAsync("Identity/SignIn", signInModel,
+                AppJsonContext.Default.SignInRequestDto, cancellationToken))
+            .Content.ReadFromJsonAsync(AppJsonContext.Default.TokenResponseDto, cancellationToken);
 
         await StoreToken(result!, signInModel.RememberMe);
 
@@ -31,6 +32,7 @@ public partial class AuthenticationManager : AuthenticationStateProvider
         {
             await jsRuntime.RemoveCookie("access_token");
         }
+
         NotifyAuthenticationStateChanged(Task.FromResult(await GetAuthenticationStateAsync()));
     }
 
@@ -40,6 +42,7 @@ public partial class AuthenticationManager : AuthenticationStateProvider
         {
             await jsRuntime.RemoveCookie("access_token");
         }
+
         await storageService.RemoveItem("access_token");
         NotifyAuthenticationStateChanged(Task.FromResult(await GetAuthenticationStateAsync()));
     }
@@ -60,7 +63,8 @@ public partial class AuthenticationManager : AuthenticationStateProvider
 
                 try
                 {
-                    var refreshTokenResponse = await (await httpClient.PostAsJsonAsync("Identity/Refresh", new() { RefreshToken = refreshToken }, AppJsonContext.Default.RefreshRequestDto))
+                    var refreshTokenResponse = await (await httpClient.PostAsJsonAsync("Identity/Refresh",
+                            new() { RefreshToken = refreshToken }, AppJsonContext.Default.RefreshRequestDto))
                         .Content.ReadFromJsonAsync(AppJsonContext.Default.TokenResponseDto);
 
                     await StoreToken(refreshTokenResponse!);
@@ -79,7 +83,8 @@ public partial class AuthenticationManager : AuthenticationStateProvider
             return NotSignedIn();
         }
 
-        var identity = new ClaimsIdentity(claims: ParseTokenClaims(accessToken), authenticationType: "Bearer", nameType: "name", roleType: "role");
+        var identity = new ClaimsIdentity(claims: ParseTokenClaims(accessToken), authenticationType: "Bearer",
+            nameType: "name", roleType: "role");
 
         return new AuthenticationState(new ClaimsPrincipal(identity));
     }
@@ -87,12 +92,13 @@ public partial class AuthenticationManager : AuthenticationStateProvider
     private async Task StoreToken(TokenResponseDto tokenResponseDto, bool? rememberMe = null)
     {
         rememberMe ??= await storageService.IsPersistent("refresh_token");
-        
+
         await storageService.SetItem("access_token", tokenResponseDto.AccessToken, rememberMe is true);
         await storageService.SetItem("refresh_token", tokenResponseDto.RefreshToken, rememberMe is true);
         if (AppRenderMode.PrerenderEnabled && AppRenderMode.IsHybrid() is false)
         {
-            await jsRuntime.SetCookie("access_token", tokenResponseDto.AccessToken!, tokenResponseDto.ExpiresIn, rememberMe is true);
+            await jsRuntime.SetCookie("access_token", tokenResponseDto.AccessToken!, tokenResponseDto.ExpiresIn,
+                rememberMe is true);
         }
     }
 

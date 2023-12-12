@@ -2,10 +2,15 @@
 
 namespace Spent.Client.Core.Services.HttpMessageHandlers;
 
-public class AuthDelegatingHandler(IAuthTokenProvider tokenProvider, IServiceProvider serviceProvider, IStorageService storageService, RetryDelegatingHandler handler)
+public class AuthDelegatingHandler(
+    IAuthTokenProvider tokenProvider,
+    IServiceProvider serviceProvider,
+    IStorageService storageService,
+    RetryDelegatingHandler handler)
     : DelegatingHandler(handler)
 {
-    protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+    protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
+        CancellationToken cancellationToken)
     {
         if (request.Headers.Authorization is null)
         {
@@ -33,7 +38,8 @@ public class AuthDelegatingHandler(IAuthTokenProvider tokenProvider, IServicePro
                 // In the AuthenticationStateProvider, the access_token is refreshed using the refresh_token (if available).
                 await authManager.RefreshToken();
 
-                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", await tokenProvider.GetAccessTokenAsync());
+                request.Headers.Authorization =
+                    new AuthenticationHeaderValue("Bearer", await tokenProvider.GetAccessTokenAsync());
 
                 return await base.SendAsync(request, cancellationToken);
             }

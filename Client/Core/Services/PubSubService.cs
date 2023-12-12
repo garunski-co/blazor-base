@@ -16,7 +16,8 @@ public partial class PubSubService : IPubSubService
             foreach (var handler in messageHandlers)
             {
                 handler(payload)
-                    .ContinueWith(t => serviceProvider.GetRequiredService<IExceptionHandler>().Handle(t.Exception!), TaskContinuationOptions.OnlyOnFaulted);
+                    .ContinueWith(t => serviceProvider.GetRequiredService<IExceptionHandler>().Handle(t.Exception!),
+                        TaskContinuationOptions.OnlyOnFaulted);
             }
         }
     }
@@ -24,8 +25,8 @@ public partial class PubSubService : IPubSubService
     public Action Subscribe(string message, Func<object?, Task> handler)
     {
         var messageHandlers = handlers.ContainsKey(message)
-                            ? handlers[message]
-                            : handlers[message] = [];
+            ? handlers[message]
+            : handlers[message] = [];
 
         messageHandlers.Add(handler);
 

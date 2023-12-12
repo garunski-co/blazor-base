@@ -6,7 +6,9 @@
 @code {
     [Parameter] public bool AppendVersion { get; set; } = true;
     [Parameter] public required string Href { get; set; } = "";
-    [Parameter(CaptureUnmatchedValues = true)] public Dictionary<string, object> AdditionalAttributes { get; set; } = default!;
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object> AdditionalAttributes { get; set; } = default!;
 
     private string href = "";
 
@@ -14,6 +16,7 @@
     {
         href = AppendVersion ? FileVersionProvider.AddFileVersionToPath(HttpContextAccessor.HttpContext!.Request.PathBase, Href) : Href;
     }
+
 }
 
-<link href="@href" @attributes="AdditionalAttributes" />
+<link href="@href" @attributes="AdditionalAttributes"/>

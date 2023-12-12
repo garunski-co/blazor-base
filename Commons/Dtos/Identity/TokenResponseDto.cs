@@ -1,5 +1,4 @@
-﻿
-namespace Spent.Commons.Dtos.Identity;
+﻿namespace Spent.Commons.Dtos.Identity;
 
 public class TokenResponseDto
 {

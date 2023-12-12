@@ -50,7 +50,8 @@ public class AppSecureJwtDataFormat(AppSettings appSettings, TokenValidationPara
                 Audience = appSettings.IdentitySettings.Audience,
                 IssuedAt = DateTime.UtcNow,
                 Expires = data.Properties.ExpiresUtc!.Value.UtcDateTime,
-                SigningCredentials = new SigningCredentials(validationParameters.IssuerSigningKey, SecurityAlgorithms.RsaSha512),
+                SigningCredentials =
+                    new SigningCredentials(validationParameters.IssuerSigningKey, SecurityAlgorithms.RsaSha512),
                 Subject = new ClaimsIdentity(data.Principal.Claims),
             });
 

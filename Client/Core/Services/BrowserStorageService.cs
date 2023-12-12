@@ -7,7 +7,7 @@ public partial class BrowserStorageService : IStorageService
     public async ValueTask<string?> GetItem(string key)
     {
         return await jsRuntime.InvokeAsync<string?>("window.localStorage.getItem", key) ??
-            await jsRuntime.InvokeAsync<string?>("window.sessionStorage.getItem", key);
+               await jsRuntime.InvokeAsync<string?>("window.sessionStorage.getItem", key);
     }
 
     public async ValueTask RemoveItem(string key)
@@ -18,7 +18,8 @@ public partial class BrowserStorageService : IStorageService
 
     public async ValueTask SetItem(string key, string? value, bool persistent = true)
     {
-        await jsRuntime.InvokeAsync<string?>($"window.{(persistent ? "localStorage" : "sessionStorage")}.setItem", key, value);
+        await jsRuntime.InvokeAsync<string?>($"window.{(persistent ? "localStorage" : "sessionStorage")}.setItem", key,
+            value);
     }
 
     public async ValueTask<bool> IsPersistent(string key)

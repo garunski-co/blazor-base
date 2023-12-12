@@ -10,7 +10,8 @@ public partial class ServerExceptionHandler : IExceptionHandler
     [AutoInject] private readonly IWebHostEnvironment webHostEnvironment = default!;
     [AutoInject] private readonly IStringLocalizer<AppStrings> localizer = default!;
 
-    public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception e, CancellationToken cancellationToken)
+    public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception e,
+        CancellationToken cancellationToken)
     {
         // Using the Request-Id header, one can find the log for server-related exceptions
         httpContext.Response.Headers.Append(HeaderNames.RequestId, httpContext.TraceIdentifier);
@@ -20,9 +21,12 @@ public partial class ServerExceptionHandler : IExceptionHandler
 
         // The details of all of the exceptions are returned only in dev mode. in any other modes like production, only the details of the known exceptions are returned.
         var key = knownException?.Key ?? nameof(UnknownException);
-        var message = knownException?.Message ?? (webHostEnvironment.IsDevelopment() ? exception.Message : localizer[nameof(UnknownException)]);
+        var message = knownException?.Message ??
+                      (webHostEnvironment.IsDevelopment() ? exception.Message : localizer[nameof(UnknownException)]);
 
-        var statusCode = (int)(exception is RestException restExp ? restExp.StatusCode : HttpStatusCode.InternalServerError);
+        var statusCode = (int)(exception is RestException restExp
+            ? restExp.StatusCode
+            : HttpStatusCode.InternalServerError);
 
         if (exception is KnownException && message == key)
         {
@@ -43,7 +47,8 @@ public partial class ServerExceptionHandler : IExceptionHandler
 
         httpContext.Response.StatusCode = statusCode;
 
-        await httpContext.Response.WriteAsJsonAsync(restExceptionPayload, AppJsonContext.Default.RestErrorInfo, cancellationToken: cancellationToken);
+        await httpContext.Response.WriteAsJsonAsync(restExceptionPayload, AppJsonContext.Default.RestErrorInfo,
+            cancellationToken: cancellationToken);
 
         return true;
     }

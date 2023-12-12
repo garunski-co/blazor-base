@@ -27,10 +27,13 @@ public partial class EditProfilePage
         {
             await LoadEditProfileData();
 
-            var accessToken = await PrerenderStateService.GetValue($"{nameof(EditProfilePage)}-access_token", AuthTokenProvider.GetAccessTokenAsync);
+            var accessToken = await PrerenderStateService.GetValue($"{nameof(EditProfilePage)}-access_token",
+                AuthTokenProvider.GetAccessTokenAsync);
 
-            profileImageUploadUrl = $"{Configuration.GetApiServerAddress()}Attachment/UploadProfileImage?access_token={accessToken}";
-            profileImageUrl = $"{Configuration.GetApiServerAddress()}Attachment/GetProfileImage?access_token={accessToken}";
+            profileImageUploadUrl =
+                $"{Configuration.GetApiServerAddress()}Attachment/UploadProfileImage?access_token={accessToken}";
+            profileImageUrl =
+                $"{Configuration.GetApiServerAddress()}Attachment/GetProfileImage?access_token={accessToken}";
             profileImageRemoveUrl = $"Attachment/RemoveProfileImage?access_token={accessToken}";
         }
         finally
@@ -62,7 +65,9 @@ public partial class EditProfilePage
         userToEdit.BirthDate = user.BirthDate;
     }
 
-    private Task<UserDto?> GetCurrentUser() => PrerenderStateService.GetValue($"{nameof(EditProfilePage)}-{nameof(user)}", () => HttpClient.GetFromJsonAsync("User/GetCurrentUser", AppJsonContext.Default.UserDto));
+    private Task<UserDto?> GetCurrentUser() => PrerenderStateService.GetValue(
+        $"{nameof(EditProfilePage)}-{nameof(user)}",
+        () => HttpClient.GetFromJsonAsync("User/GetCurrentUser", AppJsonContext.Default.UserDto));
 
     private async Task DoSave()
     {
@@ -77,7 +82,8 @@ public partial class EditProfilePage
             user.BirthDate = userToEdit.BirthDate;
             user.Gender = userToEdit.Gender;
 
-            (await (await HttpClient.PutAsJsonAsync("User/Update", userToEdit, AppJsonContext.Default.EditUserDto, CurrentCancellationToken))
+            (await (await HttpClient.PutAsJsonAsync("User/Update", userToEdit, AppJsonContext.Default.EditUserDto,
+                    CurrentCancellationToken))
                 .Content.ReadFromJsonAsync(AppJsonContext.Default.UserDto, CurrentCancellationToken))!.Patch(user);
 
             PubSubService.Publish(PubSubMessages.ProfileUpdated, user);

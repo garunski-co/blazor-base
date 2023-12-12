@@ -37,7 +37,8 @@ public partial class UserController : AppControllerBase
 
         var result = await userManager.UpdateAsync(user);
         if (!result.Succeeded)
-            throw new ResourceValidationException(result.Errors.Select(err => new LocalizedString(err.Code, err.Description)).ToArray());
+            throw new ResourceValidationException(result.Errors
+                .Select(err => new LocalizedString(err.Code, err.Description)).ToArray());
 
         return await GetCurrentUser(cancellationToken);
     }
@@ -48,10 +49,11 @@ public partial class UserController : AppControllerBase
         var userId = User.GetUserId();
 
         var user = await userManager.Users.FirstOrDefaultAsync(user => user.Id == userId, cancellationToken)
-                    ?? throw new ResourceNotFoundException();
+                   ?? throw new ResourceNotFoundException();
 
         var result = await userManager.DeleteAsync(user);
         if (!result.Succeeded)
-            throw new ResourceValidationException(result.Errors.Select(err => new LocalizedString(err.Code, err.Description)).ToArray());
+            throw new ResourceValidationException(result.Errors
+                .Select(err => new LocalizedString(err.Code, err.Description)).ToArray());
     }
 }

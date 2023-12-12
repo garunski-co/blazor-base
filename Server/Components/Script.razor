@@ -6,7 +6,9 @@
 @code {
     [Parameter] public bool AppendVersion { get; set; } = true;
     [Parameter] public required string Src { get; set; } = "";
-    [Parameter(CaptureUnmatchedValues = true)] public Dictionary<string, object> AdditionalAttributes { get; set; } = default!;
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object> AdditionalAttributes { get; set; } = default!;
 
     private string src = "";
 
@@ -14,6 +16,7 @@
     {
         src = AppendVersion ? FileVersionProvider.AddFileVersionToPath(HttpContextAccessor.HttpContext!.Request.PathBase, Src) : Src;
     }
+
 }
 
 <script src="@src" @attributes="AdditionalAttributes"></script>

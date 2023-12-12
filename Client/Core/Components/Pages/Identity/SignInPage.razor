@@ -6,7 +6,7 @@
 
 <div class="page-container">
     <EditForm OnValidSubmit="WrapHandled(DoSignIn)" class="form" Model="signInModel">
-        <AppDataAnnotationsValidator />
+        <AppDataAnnotationsValidator/>
 
         @if (string.IsNullOrEmpty(signInMessage) is false)
         {
@@ -23,8 +23,8 @@
             <BitTextField @bind-Value="signInModel.UserName"
                           Label="@Localizer[nameof(AppStrings.Email)]"
                           Placeholder="@Localizer[nameof(AppStrings.Email)]"
-                          Type="BitTextFieldType.Email" />
-            <ValidationMessage For="@(() => signInModel.UserName)" />
+                          Type="BitTextFieldType.Email"/>
+            <ValidationMessage For="@(() => signInModel.UserName)"/>
         </div>
 
         <div class="form-input-container">
@@ -33,12 +33,12 @@
                           Type="BitTextFieldType.Password"
                           AutoComplete="current-password"
                           CanRevealPassword="true"
-                          Placeholder="@Localizer[nameof(AppStrings.Password)]" />
-            <ValidationMessage For="@(() => signInModel.Password)" />
+                          Placeholder="@Localizer[nameof(AppStrings.Password)]"/>
+            <ValidationMessage For="@(() => signInModel.Password)"/>
         </div>
 
         <div class="form-input-container form-input-container--no-margin">
-            <BitCheckbox Class="form-checkbox" @bind-Value="signInModel.RememberMe" Label="@Localizer[nameof(AppStrings.RememberMe)]" />
+            <BitCheckbox Class="form-checkbox" @bind-Value="signInModel.RememberMe" Label="@Localizer[nameof(AppStrings.RememberMe)]"/>
         </div>
 
         <BitButton IsLoading="isLoading"

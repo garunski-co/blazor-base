@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using Spent.Commons.Attributes;
 using Spent.Commons.Infra;

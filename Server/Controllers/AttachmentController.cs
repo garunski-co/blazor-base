@@ -30,7 +30,8 @@ public partial class AttachmentController : AppControllerBase
 
         var destFileName = $"{userId}_{file.FileName}";
 
-        var userProfileImagesDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), AppSettings.UserProfileImagesDir);
+        var userProfileImagesDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+            AppSettings.UserProfileImagesDir);
 
         var destFilePath = Path.Combine(userProfileImagesDir, destFileName);
 
@@ -77,7 +78,8 @@ public partial class AttachmentController : AppControllerBase
 
             var result = await userManager.UpdateAsync(user);
             if (!result.Succeeded)
-                throw new ResourceValidationException(result.Errors.Select(err => new LocalizedString(err.Code, err.Description)).ToArray());
+                throw new ResourceValidationException(result.Errors
+                    .Select(err => new LocalizedString(err.Code, err.Description)).ToArray());
         }
         catch
         {
@@ -102,7 +104,8 @@ public partial class AttachmentController : AppControllerBase
         if (user?.ProfileImageName is null)
             throw new ResourceNotFoundException();
 
-        var userProfileImageDirPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), AppSettings.UserProfileImagesDir);
+        var userProfileImageDirPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+            AppSettings.UserProfileImagesDir);
 
         var filePath = Path.Combine(userProfileImageDirPath, user.ProfileImageName);
 
@@ -113,7 +116,8 @@ public partial class AttachmentController : AppControllerBase
 
         var result = await userManager.UpdateAsync(user);
         if (!result.Succeeded)
-            throw new ResourceValidationException(result.Errors.Select(err => new LocalizedString(err.Code, err.Description)).ToArray());
+            throw new ResourceValidationException(result.Errors
+                .Select(err => new LocalizedString(err.Code, err.Description)).ToArray());
 
         SystemFile.Delete(filePath);
     }
@@ -128,7 +132,8 @@ public partial class AttachmentController : AppControllerBase
         if (user?.ProfileImageName is null)
             throw new ResourceNotFoundException();
 
-        var userProfileImageDirPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), AppSettings.UserProfileImagesDir);
+        var userProfileImageDirPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+            AppSettings.UserProfileImagesDir);
 
         var filePath = Path.Combine(userProfileImageDirPath, user.ProfileImageName);
 

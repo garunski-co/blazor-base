@@ -61,10 +61,13 @@ public partial class NavMenu : IDisposable
         });
 
         user = await PrerenderStateService.GetValue($"{nameof(NavMenu)}-{nameof(user)}", async () =>
-            await HttpClient.GetFromJsonAsync("User/GetCurrentUser", AppJsonContext.Default.UserDto, CurrentCancellationToken)) ?? new();
+            await HttpClient.GetFromJsonAsync("User/GetCurrentUser", AppJsonContext.Default.UserDto,
+                CurrentCancellationToken)) ?? new();
 
-        var accessToken = await PrerenderStateService.GetValue($"{nameof(NavMenu)}-access_token", AuthTokenProvider.GetAccessTokenAsync);
-        profileImageUrlBase = $"{Configuration.GetApiServerAddress()}Attachment/GetProfileImage?access_token={accessToken}&file=";
+        var accessToken = await PrerenderStateService.GetValue($"{nameof(NavMenu)}-access_token",
+            AuthTokenProvider.GetAccessTokenAsync);
+        profileImageUrlBase =
+            $"{Configuration.GetApiServerAddress()}Attachment/GetProfileImage?access_token={accessToken}&file=";
 
         SetProfileImageUrl();
     }

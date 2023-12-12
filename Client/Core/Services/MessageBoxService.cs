@@ -1,4 +1,5 @@
 ﻿namespace Spent.Client.Core.Services;
+
 public partial class MessageBoxService
 {
     [AutoInject] private readonly IPubSubService pubSubService = default!;

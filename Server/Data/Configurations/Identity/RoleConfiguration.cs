@@ -9,4 +9,3 @@ public class RoleConfiguration : IEntityTypeConfiguration<Role>
         builder.Property(role => role.Name).HasMaxLength(50);
     }
 }
-

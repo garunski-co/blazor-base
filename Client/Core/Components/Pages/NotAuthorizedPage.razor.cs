@@ -9,7 +9,8 @@ public partial class NotAuthorizedPage
 {
     private ClaimsPrincipal user = default!;
 
-    [SupplyParameterFromQuery(Name = "redirect-url"), Parameter] public string? RedirectUrl { get; set; }
+    [SupplyParameterFromQuery(Name = "redirect-url"), Parameter]
+    public string? RedirectUrl { get; set; }
 
     protected override async Task OnParamsSetAsync()
     {
@@ -26,7 +27,8 @@ public partial class NotAuthorizedPage
         // Following this procedure, the newly acquired access token may now include the necessary roles or claims.
         // To prevent infinitie redirect loop, let's append refresh_token=false to the url, so we only redirect in case no refresh_token=false is present
 
-        if (string.IsNullOrEmpty(refreshToken) is false && RedirectUrl?.Contains("refresh_token=false", StringComparison.InvariantCulture) is null or false)
+        if (string.IsNullOrEmpty(refreshToken) is false &&
+            RedirectUrl?.Contains("refresh_token=false", StringComparison.InvariantCulture) is null or false)
         {
             await AuthenticationManager.RefreshToken();
 
@@ -34,7 +36,9 @@ public partial class NotAuthorizedPage
             {
                 if (RedirectUrl is not null)
                 {
-                    var @char = RedirectUrl.Contains('?') ? '&' : '?'; // The RedirectUrl may already include a query string.
+                    var @char = RedirectUrl.Contains('?')
+                        ? '&'
+                        : '?'; // The RedirectUrl may already include a query string.
                     NavigationManager.NavigateTo($"{RedirectUrl}{@char}refresh_token=false");
                 }
             }
@@ -59,6 +63,7 @@ public partial class NotAuthorizedPage
     private void RedirectToSignInPage()
     {
         var redirectUrl = RedirectUrl ?? NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
-        NavigationManager.NavigateTo($"/sign-in{(string.IsNullOrEmpty(redirectUrl) ? "" : $"?redirect-url={redirectUrl}")}");
+        NavigationManager.NavigateTo(
+            $"/sign-in{(string.IsNullOrEmpty(redirectUrl) ? "" : $"?redirect-url={redirectUrl}")}");
     }
 }

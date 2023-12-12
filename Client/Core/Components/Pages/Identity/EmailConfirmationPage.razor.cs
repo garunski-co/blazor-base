@@ -11,9 +11,11 @@ public partial class EmailConfirmationPage
     /// <summary>
     /// Email confirmation errors populated by api/Identity/ConfirmEmail endpoint.
     /// </summary>
-    [SupplyParameterFromQuery, Parameter] public string? Errors { get; set; }
+    [SupplyParameterFromQuery, Parameter]
+    public string? Errors { get; set; }
 
-    [SupplyParameterFromQuery(Name = "email-confirmed"), Parameter] public bool EmailConfirmed { get; set; }
+    [SupplyParameterFromQuery(Name = "email-confirmed"), Parameter]
+    public bool EmailConfirmed { get; set; }
 
     private void RedirectToSignIn()
     {
@@ -29,7 +31,8 @@ public partial class EmailConfirmationPage
 
         try
         {
-            await HttpClient.PostAsJsonAsync("Identity/SendConfirmationEmail", new() { Email = Email }, AppJsonContext.Default.SendConfirmationEmailRequestDto, CurrentCancellationToken);
+            await HttpClient.PostAsJsonAsync("Identity/SendConfirmationEmail", new() { Email = Email },
+                AppJsonContext.Default.SendConfirmationEmailRequestDto, CurrentCancellationToken);
 
             emailConfirmationMessageType = BitMessageBarType.Success;
 

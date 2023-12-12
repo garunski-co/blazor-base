@@ -14,6 +14,7 @@ public static partial class IdentityMapper
     public static partial void Patch(this EditUserDto source, User destination);
 
     private static partial User MapInternal(this SignUpRequestDto source);
+
     public static User Map(this SignUpRequestDto source)
     {
         var destination = source.MapInternal();

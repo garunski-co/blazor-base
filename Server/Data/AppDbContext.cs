@@ -30,7 +30,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options)
         }
     }
 
-    public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = new CancellationToken())
+    public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess,
+        CancellationToken cancellationToken = new CancellationToken())
     {
         try
         {

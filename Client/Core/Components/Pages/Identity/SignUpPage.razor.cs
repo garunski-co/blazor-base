@@ -31,14 +31,16 @@ public partial class SignUpPage
 
         try
         {
-            await HttpClient.PostAsJsonAsync("Identity/SignUp", signUpModel, AppJsonContext.Default.SignUpRequestDto, CurrentCancellationToken);
+            await HttpClient.PostAsJsonAsync("Identity/SignUp", signUpModel, AppJsonContext.Default.SignUpRequestDto,
+                CurrentCancellationToken);
 
             isSignedUp = true;
         }
         catch (ResourceValidationException e)
         {
             signUpMessageType = BitMessageBarType.Error;
-            signUpMessage = string.Join(Environment.NewLine, e.Payload.Details.SelectMany(d => d.Errors).Select(e => e.Message));
+            signUpMessage = string.Join(Environment.NewLine,
+                e.Payload.Details.SelectMany(d => d.Errors).Select(e => e.Message));
         }
         catch (KnownException e)
         {
@@ -60,7 +62,8 @@ public partial class SignUpPage
 
         try
         {
-            await HttpClient.PostAsJsonAsync("Identity/SendConfirmationEmail", new() { Email = signUpModel.Email }, AppJsonContext.Default.SendConfirmationEmailRequestDto, CurrentCancellationToken);
+            await HttpClient.PostAsJsonAsync("Identity/SendConfirmationEmail", new() { Email = signUpModel.Email },
+                AppJsonContext.Default.SendConfirmationEmailRequestDto, CurrentCancellationToken);
 
             signUpMessageType = BitMessageBarType.Success;
             signUpMessage = Localizer[nameof(AppStrings.ResendConfirmationLinkMessage)];

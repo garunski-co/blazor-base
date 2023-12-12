@@ -5,24 +5,22 @@ namespace Spent.Commons.Exceptions;
 public class ResourceValidationException : RestException
 {
     public ResourceValidationException(params LocalizedString[] errorMessages)
-    : this([("*", errorMessages)])
+        : this([("*", errorMessages)])
     {
-
     }
 
     public ResourceValidationException((string propName, LocalizedString[] errorMessages)[] details)
         : this("*", details)
     {
-
     }
 
     public ResourceValidationException(Type resourceType, (string propName, LocalizedString[] errorMessages)[] details)
         : this(resourceType.FullName!, details)
     {
-
     }
 
-    public ResourceValidationException(string resourceTypeName, (string propName, LocalizedString[] errorMessages)[] details)
+    public ResourceValidationException(string resourceTypeName,
+        (string propName, LocalizedString[] errorMessages)[] details)
         : this(new ErrorResourcePayload()
         {
             ResourceTypeName = resourceTypeName,
@@ -37,13 +35,11 @@ public class ResourceValidationException : RestException
             }).ToList()
         })
     {
-
     }
 
     public ResourceValidationException(ErrorResourcePayload payload)
         : this(message: nameof(AppStrings.ResourceValidationException), payload)
     {
-
     }
 
     public ResourceValidationException(string message, ErrorResourcePayload payload)

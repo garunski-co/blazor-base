@@ -1,4 +1,5 @@
 ﻿namespace Spent.Commons.Infra;
+
 public class CultureInfoManager
 {
     public static (string name, string code) DefaultCulture { get; } = ("English", "en-US");
@@ -13,7 +14,9 @@ public class CultureInfoManager
 
     public static CultureInfo CreateCultureInfo(string cultureInfoId)
     {
-        var cultureInfo = OperatingSystem.IsBrowser() ? CultureInfo.CreateSpecificCulture(cultureInfoId) : new CultureInfo(cultureInfoId);
+        var cultureInfo = OperatingSystem.IsBrowser()
+            ? CultureInfo.CreateSpecificCulture(cultureInfoId)
+            : new CultureInfo(cultureInfoId);
 
         if (cultureInfoId == "fa-IR")
         {
@@ -29,7 +32,9 @@ public class CultureInfoManager
 
         var cultureInfo = CreateCultureInfo(currentCulture);
 
-        CultureInfo.CurrentCulture = CultureInfo.CurrentUICulture = CultureInfo.DefaultThreadCurrentCulture = CultureInfo.DefaultThreadCurrentUICulture = Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = cultureInfo;
+        CultureInfo.CurrentCulture = CultureInfo.CurrentUICulture = CultureInfo.DefaultThreadCurrentCulture =
+            CultureInfo.DefaultThreadCurrentUICulture = Thread.CurrentThread.CurrentCulture =
+                Thread.CurrentThread.CurrentUICulture = cultureInfo;
     }
 
     public static string GetCurrentCulture(string? preferredCulture = null)
@@ -39,6 +44,7 @@ public class CultureInfoManager
         {
             culture = DefaultCulture.code;
         }
+
         return culture;
     }
 

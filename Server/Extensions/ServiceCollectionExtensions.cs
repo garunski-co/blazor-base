@@ -22,7 +22,9 @@ public static class ServiceCollectionExtensions
 
             if (apiServerAddress!.IsAbsoluteUri is false)
             {
-                apiServerAddress = new Uri(sp.GetRequiredService<IHttpContextAccessor>().HttpContext!.Request.GetBaseUrl(), apiServerAddress);
+                apiServerAddress =
+                    new Uri(sp.GetRequiredService<IHttpContextAccessor>().HttpContext!.Request.GetBaseUrl(),
+                        apiServerAddress);
             }
 
             return new HttpClient(sp.GetRequiredService<RequestHeadersDelegationHandler>())
@@ -49,68 +51,69 @@ public static class ServiceCollectionExtensions
         var certificate = new X509Certificate2(certificatePath,
             appSettings.IdentitySettings.IdentityCertificatePassword,
             OperatingSystem.IsWindows() ? X509KeyStorageFlags.EphemeralKeySet : X509KeyStorageFlags.DefaultKeySet);
-        
+
         services.AddDataProtection()
             .PersistKeysToDbContext<AppDbContext>()
             .ProtectKeysWithCertificate(certificate);
 
         services.AddIdentity<User, Role>(options =>
-        {
-            options.User.RequireUniqueEmail = settings.RequireUniqueEmail;
-            options.SignIn.RequireConfirmedEmail = true;
-            options.Password.RequireDigit = settings.PasswordRequireDigit;
-            options.Password.RequireLowercase = settings.PasswordRequireLowercase;
-            options.Password.RequireUppercase = settings.PasswordRequireUppercase;
-            options.Password.RequireNonAlphanumeric = settings.PasswordRequireNonAlphanumeric;
-            options.Password.RequiredLength = settings.PasswordRequiredLength;
-        })
+            {
+                options.User.RequireUniqueEmail = settings.RequireUniqueEmail;
+                options.SignIn.RequireConfirmedEmail = true;
+                options.Password.RequireDigit = settings.PasswordRequireDigit;
+                options.Password.RequireLowercase = settings.PasswordRequireLowercase;
+                options.Password.RequireUppercase = settings.PasswordRequireUppercase;
+                options.Password.RequireNonAlphanumeric = settings.PasswordRequireNonAlphanumeric;
+                options.Password.RequiredLength = settings.PasswordRequiredLength;
+            })
             .AddEntityFrameworkStores<AppDbContext>()
             .AddDefaultTokenProviders()
             .AddErrorDescriber<AppIdentityErrorDescriber>()
             .AddApiEndpoints();
 
         services.AddAuthentication(options =>
-        {
-            options.DefaultAuthenticateScheme = IdentityConstants.BearerScheme;
-            options.DefaultChallengeScheme = IdentityConstants.BearerScheme;
-            options.DefaultScheme = IdentityConstants.BearerScheme;
-        })
-        .AddBearerToken(IdentityConstants.BearerScheme, options =>
-        {
-            options.BearerTokenExpiration = settings.BearerTokenExpiration;
-            options.RefreshTokenExpiration = settings.RefreshTokenExpiration;
-            
-            var validationParameters = new TokenValidationParameters
             {
-                ClockSkew = TimeSpan.Zero,
-                RequireSignedTokens = true,
-
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new X509SecurityKey(certificate),
-
-                RequireExpirationTime = true,
-                ValidateLifetime = true,
-
-                ValidateAudience = true,
-                ValidAudience = settings.Audience,
-
-                ValidateIssuer = true,
-                ValidIssuer = settings.Issuer,
-
-                AuthenticationType = IdentityConstants.BearerScheme
-            };
-
-            options.BearerTokenProtector = new AppSecureJwtDataFormat(appSettings, validationParameters);
-
-            options.Events = new()
+                options.DefaultAuthenticateScheme = IdentityConstants.BearerScheme;
+                options.DefaultChallengeScheme = IdentityConstants.BearerScheme;
+                options.DefaultScheme = IdentityConstants.BearerScheme;
+            })
+            .AddBearerToken(IdentityConstants.BearerScheme, options =>
             {
-                OnMessageReceived = async context =>
+                options.BearerTokenExpiration = settings.BearerTokenExpiration;
+                options.RefreshTokenExpiration = settings.RefreshTokenExpiration;
+
+                var validationParameters = new TokenValidationParameters
                 {
-                    // The server accepts the access_token from either the authorization header, the cookie, or the request URL query string
-                    context.Token ??= context.Request.Cookies["access_token"] ?? context.Request.Query["access_token"];
-                }
-            };
-        });
+                    ClockSkew = TimeSpan.Zero,
+                    RequireSignedTokens = true,
+
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new X509SecurityKey(certificate),
+
+                    RequireExpirationTime = true,
+                    ValidateLifetime = true,
+
+                    ValidateAudience = true,
+                    ValidAudience = settings.Audience,
+
+                    ValidateIssuer = true,
+                    ValidIssuer = settings.Issuer,
+
+                    AuthenticationType = IdentityConstants.BearerScheme
+                };
+
+                options.BearerTokenProtector = new AppSecureJwtDataFormat(appSettings, validationParameters);
+
+                options.Events = new()
+                {
+                    OnMessageReceived = async context =>
+                    {
+                        // The server accepts the access_token from either the authorization header, the cookie, or the request URL query string
+                        context.Token ??= context.Request.Cookies["access_token"] ??
+                                          context.Request.Query["access_token"];
+                    }
+                };
+            });
 
         services.AddAuthorization();
     }
@@ -152,7 +155,8 @@ public static class ServiceCollectionExtensions
         });
     }
 
-    public static IServiceCollection AddHealthChecks(this IServiceCollection services, IWebHostEnvironment env, IConfiguration configuration)
+    public static IServiceCollection AddHealthChecks(this IServiceCollection services, IWebHostEnvironment env,
+        IConfiguration configuration)
     {
         var appSettings = configuration.GetSection(nameof(AppSettings)).Get<AppSettings>()!;
 
@@ -163,7 +167,8 @@ public static class ServiceCollectionExtensions
 
         services.AddHealthChecksUI(setupSettings: setup =>
         {
-            setup.AddHealthCheckEndpoint("BPHealthChecks", env.IsDevelopment() ? "https://localhost:5031/healthz" : "/healthz");
+            setup.AddHealthCheckEndpoint("BPHealthChecks",
+                env.IsDevelopment() ? "https://localhost:5031/healthz" : "/healthz");
         }).AddInMemoryStorage();
 
         var healthChecksBuilder = services.AddHealthChecks()
