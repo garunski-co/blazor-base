@@ -61,11 +61,13 @@ public static class Services
 
         services.AddDbContext<AppDbContext>(options =>
         {
-            options.UseSqlServer(configuration.GetConnectionString("SqlServerConnectionString"), dbOptions =>
+            options.UseNpgsql(configuration.GetConnectionString("SqlServerConnectionString"), dbOptions =>
             {
                 dbOptions.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
             });
         });
+        
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
         services.Configure<AppSettings>(configuration.GetSection(nameof(AppSettings)));
 

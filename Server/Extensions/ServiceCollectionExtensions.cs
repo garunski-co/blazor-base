@@ -1,5 +1,4 @@
-﻿using System.Security.Cryptography;
-using System.Security.Cryptography.X509Certificates;
+﻿using System.Security.Cryptography.X509Certificates;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -11,7 +10,7 @@ using Spent.Server.Services;
 
 namespace Spent.Server.Extensions;
 
-public static class IServiceCollectionExtensions
+public static class ServiceCollectionExtensions
 {
     public static void AddBlazor(this IServiceCollection services, IConfiguration configuration)
     {
@@ -47,10 +46,13 @@ public static class IServiceCollectionExtensions
         var settings = appSettings.IdentitySettings;
 
         var certificatePath = Path.Combine(Directory.GetCurrentDirectory(), "IdentityCertificate.pfx");
-
+        var certificate = new X509Certificate2(certificatePath,
+            appSettings.IdentitySettings.IdentityCertificatePassword,
+            OperatingSystem.IsWindows() ? X509KeyStorageFlags.EphemeralKeySet : X509KeyStorageFlags.DefaultKeySet);
+        
         services.AddDataProtection()
             .PersistKeysToDbContext<AppDbContext>()
-            .ProtectKeysWithCertificate(new X509Certificate2(certificatePath, appSettings.IdentitySettings.IdentityCertificatePassword, OperatingSystem.IsWindows() ? X509KeyStorageFlags.EphemeralKeySet : X509KeyStorageFlags.DefaultKeySet));
+            .ProtectKeysWithCertificate(certificate);
 
         services.AddIdentity<User, Role>(options =>
         {
@@ -77,21 +79,14 @@ public static class IServiceCollectionExtensions
         {
             options.BearerTokenExpiration = settings.BearerTokenExpiration;
             options.RefreshTokenExpiration = settings.RefreshTokenExpiration;
-
-            var certificatePath = Path.Combine(Directory.GetCurrentDirectory(), "IdentityCertificate.pfx");
-            RSA? rsaPrivateKey;
-            using (X509Certificate2 signingCert = new X509Certificate2(certificatePath, appSettings.IdentitySettings.IdentityCertificatePassword, OperatingSystem.IsWindows() ? X509KeyStorageFlags.EphemeralKeySet : X509KeyStorageFlags.DefaultKeySet))
-            {
-                rsaPrivateKey = signingCert.GetRSAPrivateKey();
-            }
-
+            
             var validationParameters = new TokenValidationParameters
             {
                 ClockSkew = TimeSpan.Zero,
                 RequireSignedTokens = true,
 
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new RsaSecurityKey(rsaPrivateKey),
+                IssuerSigningKey = new X509SecurityKey(certificate),
 
                 RequireExpirationTime = true,
                 ValidateLifetime = true,
