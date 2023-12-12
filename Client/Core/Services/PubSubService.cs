@@ -1,13 +1,11 @@
-﻿using Spent.Commons.Attributes;
-
-namespace Spent.Client.Core.Services;
+﻿namespace Spent.Client.Core.Services;
 
 /// <summary>
 /// For more information <see cref="IPubSubService"/> docs.
 /// </summary>
 public partial class PubSubService : IPubSubService
 {
-    [AutoInject] private IServiceProvider serviceProvider = default!;
+    [AutoInject] private readonly IServiceProvider serviceProvider = default!;
 
     private readonly ConcurrentDictionary<string, List<Func<object, Task>>> handlers = new();
 

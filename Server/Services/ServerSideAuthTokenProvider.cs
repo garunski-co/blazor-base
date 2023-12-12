@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
 using Spent.Client.Core.Services;
 using Microsoft.JSInterop;
-using Spent.Commons.Attributes;
 
 namespace Spent.Server.Services;
 
@@ -12,17 +11,17 @@ namespace Spent.Server.Services;
 /// </summary>
 public partial class ServerSideAuthTokenProvider : IAuthTokenProvider
 {
-    [AutoInject] private IHttpContextAccessor httpContextAccessor = default!;
-    [AutoInject] private IJSRuntime jsRuntime = default!;
-    [AutoInject] private IStorageService storageService = default!;
+    [AutoInject] private readonly IHttpContextAccessor httpContextAccessor = default!;
+    [AutoInject] private readonly IJSRuntime jsRuntime = default!;
+    [AutoInject] private readonly IStorageService storageService = default!;
 
-    private static readonly PropertyInfo IsInitializedProp = Assembly.Load("Microsoft.AspNetCore.Components.Server")!
+    private static readonly PropertyInfo IsInitializedProp = Assembly.Load("Microsoft.AspNetCore.Components.Server")
                                                                 .GetType("Microsoft.AspNetCore.Components.Server.Circuits.RemoteJSRuntime")!
                                                                 .GetProperty("IsInitialized")!;
 
     public bool IsInitialized => jsRuntime.GetType().Name is not "UnsupportedJavaScriptRuntime" && (bool)IsInitializedProp.GetValue(jsRuntime)!;
 
-    public async Task<string> GetAccessTokenAsync()
+    public async Task<string?> GetAccessTokenAsync()
     {
         if (IsInitialized)
         {

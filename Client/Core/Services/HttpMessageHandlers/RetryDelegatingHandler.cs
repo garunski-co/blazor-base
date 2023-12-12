@@ -28,7 +28,7 @@ public class RetryDelegatingHandler(ExceptionDelegatingHandler handler)
 
     private static IEnumerable<TimeSpan> GetDelays(TimeSpan scaleFirstTry, int maxRetries)
     {
-        TimeSpan maxValue = TimeSpan.MaxValue;
+        var maxValue = TimeSpan.MaxValue;
         var maxTimeSpanDouble = maxValue.Ticks - 1_000.0;
         var i = 0;
         var targetTicksFirstDelay = scaleFirstTry.Ticks;

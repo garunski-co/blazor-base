@@ -2,7 +2,7 @@
 
 namespace Spent.Commons.Extensions;
 
-public static class IServiceCollectionExtensions
+public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddSharedServices(this IServiceCollection services)
     {

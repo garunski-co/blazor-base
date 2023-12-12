@@ -1,6 +1,6 @@
 ﻿namespace Spent.Client.Core.Extensions;
 
-public static class IJSRuntimeExtensions
+public static class IjsRuntimeExtensions
 {
     /// <summary>
     /// To disable the scrollbar of the body when showing the modal, so the modal can be always shown in the viewport without being scrolled out.
@@ -22,7 +22,7 @@ public static class IJSRuntimeExtensions
 
     public static async Task SetCookie(this IJSRuntime jsRuntime, string key, string value, long expiresIn, bool rememberMe)
     {
-        bool secure = BuildConfiguration.IsRelease();
+        var secure = BuildConfiguration.IsRelease();
 
         await jsRuntime.InvokeVoidAsync("App.setCookie", key, value, expiresIn, rememberMe, secure);
     }

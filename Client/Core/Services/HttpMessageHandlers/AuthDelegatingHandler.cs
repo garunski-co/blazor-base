@@ -9,10 +9,10 @@ public class AuthDelegatingHandler(IAuthTokenProvider tokenProvider, IServicePro
     {
         if (request.Headers.Authorization is null)
         {
-            var access_token = await tokenProvider.GetAccessTokenAsync();
-            if (access_token is not null)
+            var accessToken = await tokenProvider.GetAccessTokenAsync();
+            if (accessToken is not null)
             {
-                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", access_token);
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
             }
         }
 
@@ -26,9 +26,9 @@ public class AuthDelegatingHandler(IAuthTokenProvider tokenProvider, IServicePro
             // Following this procedure, the newly acquired access token may now include the necessary roles or claims.
 
             var authManager = serviceProvider.GetRequiredService<AuthenticationManager>();
-            var refresh_token = await storageService.GetItem("refresh_token");
+            var refreshToken = await storageService.GetItem("refresh_token");
 
-            if (refresh_token is not null)
+            if (refreshToken is not null)
             {
                 // In the AuthenticationStateProvider, the access_token is refreshed using the refresh_token (if available).
                 await authManager.RefreshToken();

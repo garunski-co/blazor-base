@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components.Web;
-using Spent.Commons.Attributes;
 using Spent.Commons.Extensions;
 
 namespace Spent.Client.Core.Components.Layout;

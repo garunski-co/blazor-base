@@ -15,7 +15,7 @@ public partial class MessageBox : IDisposable
     private async Task OnCloseClick()
     {
         isOpen = false;
-        await JSRuntime.SetBodyOverflow(false);
+        await JsRuntime.SetBodyOverflow(false);
         tcs?.SetResult(null);
         tcs = null;
     }
@@ -23,7 +23,7 @@ public partial class MessageBox : IDisposable
     private async Task OnOkClick()
     {
         isOpen = false;
-        await JSRuntime.SetBodyOverflow(false);
+        await JsRuntime.SetBodyOverflow(false);
         tcs?.SetResult(null);
         tcs = null;
     }
@@ -33,9 +33,9 @@ public partial class MessageBox : IDisposable
 
     protected override Task OnInitAsync()
     {
-        dispose = PubSubService.Subscribe(PubSubMessages.SHOW_MESSAGE, async args =>
+        dispose = PubSubService.Subscribe(PubSubMessages.ShowMessage, async args =>
         {
-            (var message, string title, TaskCompletionSource<object?> tcs) = ((string message, string title, TaskCompletionSource<object?> tcs))args!;
+            (var message, var title, var tcs) = ((string message, string title, TaskCompletionSource<object?> tcs))args;
             await (this.tcs?.Task ?? Task.CompletedTask);
             this.tcs = tcs;
             await ShowMessageBox(message, title);
@@ -48,7 +48,7 @@ public partial class MessageBox : IDisposable
     {
         await InvokeAsync(() =>
         {
-            _ = JSRuntime.SetBodyOverflow(true);
+            _ = JsRuntime.SetBodyOverflow(true);
 
             isOpen = true;
             this.title = title;

@@ -2,14 +2,13 @@
 using System.Reflection;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.Net.Http.Headers;
-using Spent.Commons.Attributes;
 
 namespace Spent.Server.Services;
 
 public partial class ServerExceptionHandler : IExceptionHandler
 {
-    [AutoInject] private IWebHostEnvironment webHostEnvironment = default!;
-    [AutoInject] private IStringLocalizer<AppStrings> localizer = default!;
+    [AutoInject] private readonly IWebHostEnvironment webHostEnvironment = default!;
+    [AutoInject] private readonly IStringLocalizer<AppStrings> localizer = default!;
 
     public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception e, CancellationToken cancellationToken)
     {

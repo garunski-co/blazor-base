@@ -131,7 +131,7 @@ public class Middlewares
                 if (httpContext.Response.StatusCode is 401 or 403 &&
                     httpContext.GetEndpoint()?.Metadata.OfType<ComponentTypeMetadata>().Any() is true /* The generation of a 401 or 403 status code is attributed to Blazor. */)
                 {
-                    bool is403 = httpContext.Response.StatusCode is 403;
+                    var is403 = httpContext.Response.StatusCode is 403;
 
                     httpContext.Response.Redirect($"/not-authorized?redirect-url={httpContext.Request.GetEncodedPathAndQuery()}&isForbidden={(is403 ? "true" : "false")}");
                 }

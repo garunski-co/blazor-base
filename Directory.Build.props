@@ -39,6 +39,7 @@
         <Using Include="Microsoft.Extensions.Configuration" />
         <Using Include="Microsoft.Extensions.DependencyInjection" />
         <Using Include="Microsoft.Extensions.DependencyInjection.Extensions" />
+        <Using Include="JetBrains.Annotations" />
         <Using Include="Spent" />
         <Using Include="Spent.Commons.Dtos" />
         <Using Include="Spent.Commons.Enums" />

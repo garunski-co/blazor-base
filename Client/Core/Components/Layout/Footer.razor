@@ -25,9 +25,9 @@
     </div>
 
     <div class="footer-content">
-        @if (SelectedCulture is not null)
+        @if (selectedCulture is not null)
         {
-            <BitDropdown @bind-Value="SelectedCulture"
+            <BitDropdown @bind-Value="selectedCulture"
                          Class="culture-drp"
                          Items="cultures"
                          OnSelectItem="WrapHandled((BitDropdownItem<string> item) => OnCultureChanged())" />

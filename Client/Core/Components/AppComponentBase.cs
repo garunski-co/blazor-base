@@ -1,10 +1,8 @@
-﻿using Spent.Commons.Attributes;
-
-namespace Spent.Client.Core.Components;
+﻿namespace Spent.Client.Core.Components;
 
 public partial class AppComponentBase : ComponentBase, IDisposable
 {
-    [AutoInject] protected IJSRuntime JSRuntime = default!;
+    [AutoInject] protected IJSRuntime JsRuntime = default!;
 
     [AutoInject] protected IStorageService StorageService = default!;
 

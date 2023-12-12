@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Mvc.ViewFeatures
 @using Microsoft.AspNetCore.Http
-@inject IFileVersionProvider _fileVersionProvider
-@inject IHttpContextAccessor _httpContextAccessor;
+@inject IFileVersionProvider FileVersionProvider
+@inject IHttpContextAccessor HttpContextAccessor;
 
 @code {
     [Parameter] public bool AppendVersion { get; set; } = true;
@@ -12,7 +12,7 @@
 
     protected override void OnInitialized()
     {
-        href = AppendVersion ? _fileVersionProvider.AddFileVersionToPath(_httpContextAccessor.HttpContext!.Request.PathBase, Href) : Href;
+        href = AppendVersion ? FileVersionProvider.AddFileVersionToPath(HttpContextAccessor.HttpContext!.Request.PathBase, Href) : Href;
     }
 }
 

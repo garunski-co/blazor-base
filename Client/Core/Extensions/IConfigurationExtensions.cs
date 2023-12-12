@@ -1,5 +1,5 @@
 ﻿namespace Spent.Client.Core.Extensions;
-public static class IConfigurationExtensions
+public static class ConfigurationExtensions
 {
     public static string GetApiServerAddress(this IConfiguration configuration)
     {

@@ -7,7 +7,7 @@ public class ExceptionDelegatingHandler(IStringLocalizer<AppStrings> localizer, 
 {
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
-        bool serverCommunicationSuccess = false;
+        var serverCommunicationSuccess = false;
 
         try
         {
@@ -17,11 +17,11 @@ public class ExceptionDelegatingHandler(IStringLocalizer<AppStrings> localizer, 
 
             if (response.IsSuccessStatusCode is false && response.Content.Headers.ContentType?.MediaType?.Contains("application/json", StringComparison.InvariantCultureIgnoreCase) is true)
             {
-                if (response.Headers.TryGetValues("Request-ID", out IEnumerable<string>? values) && values is not null && values.Any())
+                if (response.Headers.TryGetValues("Request-ID", out var values) && values is not null && values.Any())
                 {
-                    RestErrorInfo restError = (await response!.Content.ReadFromJsonAsync(AppJsonContext.Default.RestErrorInfo, cancellationToken))!;
+                    var restError = (await response.Content.ReadFromJsonAsync(AppJsonContext.Default.RestErrorInfo, cancellationToken))!;
 
-                    Type exceptionType = typeof(RestErrorInfo).Assembly.GetType(restError.ExceptionType!) ?? typeof(UnknownException);
+                    var exceptionType = typeof(RestErrorInfo).Assembly.GetType(restError.ExceptionType!) ?? typeof(UnknownException);
 
                     var args = new List<object?> { typeof(KnownException).IsAssignableFrom(exceptionType) ? new LocalizedString(restError.Key!, restError.Message!) : restError.Message! };
 
@@ -30,7 +30,7 @@ public class ExceptionDelegatingHandler(IStringLocalizer<AppStrings> localizer, 
                         args.Add(restError.Payload);
                     }
 
-                    Exception exp = (Exception)Activator.CreateInstance(exceptionType, args.ToArray())!;
+                    var exp = (Exception)Activator.CreateInstance(exceptionType, args.ToArray())!;
 
                     throw exp;
                 }

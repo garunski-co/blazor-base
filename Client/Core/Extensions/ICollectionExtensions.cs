@@ -1,6 +1,6 @@
 ﻿namespace Spent.Client.Core.Extensions;
 
-public static class ICollectionExtensions
+public static class CollectionExtensions
 {
     // Basically a Polyfill since we now expose IList instead of List
     // which is better but IList doesn't have AddRange
@@ -15,7 +15,7 @@ public static class ICollectionExtensions
             return;
         }
 
-        foreach (T item in items)
+        foreach (var item in items)
         {
             list.Add(item);
         }

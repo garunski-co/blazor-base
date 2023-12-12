@@ -7,7 +7,6 @@ using FluentEmail.Core;
 using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using Spent.Commons.Attributes;
 using Spent.Commons.Dtos.Identity;
 using Spent.Server.Extensions;
 
@@ -17,19 +16,19 @@ namespace Spent.Server.Controllers.Identity;
 [ApiController, AllowAnonymous]
 public partial class IdentityController : AppControllerBase
 {
-    [AutoInject] private UserManager<User> userManager = default!;
+    [AutoInject] private readonly UserManager<User> userManager = default!;
 
-    [AutoInject] private SignInManager<User> signInManager = default!;
+    [AutoInject] private readonly SignInManager<User> signInManager = default!;
 
-    [AutoInject] private IFluentEmail fluentEmail = default!;
+    [AutoInject] private readonly IFluentEmail fluentEmail = default!;
 
-    [AutoInject] private IStringLocalizer<EmailStrings> emailLocalizer = default!;
+    [AutoInject] private readonly IStringLocalizer<EmailStrings> emailLocalizer = default!;
 
-    [AutoInject] private HtmlRenderer htmlRenderer = default!;
+    [AutoInject] private readonly HtmlRenderer htmlRenderer = default!;
 
     [AutoInject] private IStringLocalizer<IdentityStrings> identityLocalizer = default!;
 
-    [AutoInject] private IOptionsMonitor<BearerTokenOptions> bearerTokenOptions = default!;
+    [AutoInject] private readonly IOptionsMonitor<BearerTokenOptions> bearerTokenOptions = default!;
 
     /// <summary>
     /// By leveraging summary tags in your controller's actions and DTO properties you can make your codes much easier to maintain.
@@ -147,7 +146,7 @@ public partial class IdentityController : AppControllerBase
             emailConfirmed = result.Succeeded;
         }
 
-        string url = $"/email-confirmation?email={email}&email-confirmed={emailConfirmed}{(string.IsNullOrEmpty(errors) ? "" : ($"&error={errors}"))}";
+        var url = $"/email-confirmation?email={email}&email-confirmed={emailConfirmed}{(string.IsNullOrEmpty(errors) ? "" : ($"&error={errors}"))}";
 
         return Redirect(url);
     }

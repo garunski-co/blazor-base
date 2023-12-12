@@ -3,7 +3,7 @@ using Spent.Client.Web.Services;
 
 namespace Spent.Client.Web.Extensions;
 
-public static class IServiceCollectionExtensions
+public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddClientWebServices(this IServiceCollection services)
     {

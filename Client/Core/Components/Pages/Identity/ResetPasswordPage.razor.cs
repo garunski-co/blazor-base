@@ -8,7 +8,7 @@ public partial class ResetPasswordPage
     private bool isLoading;
     private string? resetPasswordMessage;
     private BitMessageBarType resetPasswordMessageType;
-    private ResetPasswordRequestDto resetPasswordModel = new();
+    private readonly ResetPasswordRequestDto resetPasswordModel = new();
 
     [Parameter, SupplyParameterFromQuery] public string? Email { get; set; }
 

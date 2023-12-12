@@ -49,7 +49,7 @@ public partial class NavMenu : IDisposable
             }
         ];
 
-        unsubscribe = PubSubService.Subscribe(PubSubMessages.PROFILE_UPDATED, async payload =>
+        unsubscribe = PubSubService.Subscribe(PubSubMessages.ProfileUpdated, async payload =>
         {
             if (payload is null) return;
 
@@ -63,8 +63,8 @@ public partial class NavMenu : IDisposable
         user = await PrerenderStateService.GetValue($"{nameof(NavMenu)}-{nameof(user)}", async () =>
             await HttpClient.GetFromJsonAsync("User/GetCurrentUser", AppJsonContext.Default.UserDto, CurrentCancellationToken)) ?? new();
 
-        var access_token = await PrerenderStateService.GetValue($"{nameof(NavMenu)}-access_token", AuthTokenProvider.GetAccessTokenAsync);
-        profileImageUrlBase = $"{Configuration.GetApiServerAddress()}Attachment/GetProfileImage?access_token={access_token}&file=";
+        var accessToken = await PrerenderStateService.GetValue($"{nameof(NavMenu)}-access_token", AuthTokenProvider.GetAccessTokenAsync);
+        profileImageUrlBase = $"{Configuration.GetApiServerAddress()}Attachment/GetProfileImage?access_token={accessToken}&file=";
 
         SetProfileImageUrl();
     }

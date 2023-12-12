@@ -2,7 +2,7 @@
 
 namespace Spent.Client.Core.Extensions;
 
-public static class IConfigurationBuilderExtensions
+public static class ConfigurationBuilderExtensions
 {
     public static void AddClientConfigurations(this IConfigurationBuilder builder)
     {

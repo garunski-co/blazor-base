@@ -8,7 +8,7 @@ public partial class SignInPage
     private bool isLoading;
     private string? signInMessage;
     private BitMessageBarType signInMessageType;
-    private SignInRequestDto signInModel = new();
+    private readonly SignInRequestDto signInModel = new();
 
     [SupplyParameterFromQuery(Name = "redirect-url"), Parameter] public string? RedirectUrl { get; set; }
 

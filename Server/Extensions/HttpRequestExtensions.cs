@@ -21,10 +21,10 @@ public static class HttpRequestExtensions
 
     public static bool IsCrawlerClient(this HttpRequest request)
     {
-        if (request.Headers.TryGetValue(HeaderNames.UserAgent, out StringValues userAgentHeaderValue) is false)
+        if (request.Headers.TryGetValue(HeaderNames.UserAgent, out var userAgentHeaderValue) is false)
             return false;
 
-        string? userAgent = userAgentHeaderValue.FirstOrDefault();
+        var userAgent = userAgentHeaderValue.FirstOrDefault();
 
         if (userAgent is null)
             return false;

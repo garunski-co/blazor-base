@@ -20,13 +20,13 @@ public partial class NotAuthorizedPage
 
     protected override async Task OnAfterFirstRenderAsync()
     {
-        string? refresh_token = await StorageService.GetItem("refresh_token");
+        var refreshToken = await StorageService.GetItem("refresh_token");
 
         // Let's update the access token by refreshing it when a refresh token is available.
         // Following this procedure, the newly acquired access token may now include the necessary roles or claims.
         // To prevent infinitie redirect loop, let's append refresh_token=false to the url, so we only redirect in case no refresh_token=false is present
 
-        if (string.IsNullOrEmpty(refresh_token) is false && RedirectUrl?.Contains("refresh_token=false", StringComparison.InvariantCulture) is null or false)
+        if (string.IsNullOrEmpty(refreshToken) is false && RedirectUrl?.Contains("refresh_token=false", StringComparison.InvariantCulture) is null or false)
         {
             await AuthenticationManager.RefreshToken();
 

@@ -61,7 +61,7 @@ public static class Services
 
         services.AddDbContext<AppDbContext>(options =>
         {
-            options.UseNpgsql(configuration.GetConnectionString("SqlServerConnectionString"), dbOptions =>
+            options.UseNpgsql(configuration.GetConnectionString("Default"), dbOptions =>
             {
                 dbOptions.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
             });

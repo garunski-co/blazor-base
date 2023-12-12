@@ -1,6 +1,4 @@
-﻿using Spent.Commons.Attributes;
-
-namespace Spent.Server.Controllers;
+﻿namespace Spent.Server.Controllers;
 
 public partial class AppControllerBase : ControllerBase
 {

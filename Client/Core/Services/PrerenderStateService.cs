@@ -5,7 +5,7 @@
 /// </summary>
 public class PrerenderStateService : IPrerenderStateService, IAsyncDisposable
 {
-    private PersistingComponentStateSubscription? subscription;
+    private readonly PersistingComponentStateSubscription? subscription;
     private readonly PersistentComponentState? persistentComponentState;
     private readonly ConcurrentDictionary<string, object?> values = new();
 
@@ -32,7 +32,7 @@ public class PrerenderStateService : IPrerenderStateService, IAsyncDisposable
         if (AppRenderMode.PrerenderEnabled is false)
             return;
 
-        values.TryRemove(key, out object? _);
+        values.TryRemove(key, out var _);
         values.TryAdd(key, value);
     }
 

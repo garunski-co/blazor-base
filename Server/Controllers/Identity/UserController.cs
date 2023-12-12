@@ -1,5 +1,4 @@
-﻿using Spent.Commons.Attributes;
-using Spent.Commons.Dtos.Identity;
+﻿using Spent.Commons.Dtos.Identity;
 using Spent.Commons.Extensions;
 using Spent.Server.Models.Identity;
 
@@ -9,7 +8,7 @@ namespace Spent.Server.Controllers.Identity;
 [ApiController]
 public partial class UserController : AppControllerBase
 {
-    [AutoInject] private UserManager<User> userManager = default!;
+    [AutoInject] private readonly UserManager<User> userManager = default!;
 
     [HttpGet]
     public async Task<UserDto> GetCurrentUser(CancellationToken cancellationToken)

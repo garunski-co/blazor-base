@@ -1,10 +1,8 @@
-﻿using Spent.Commons.Attributes;
-
-namespace Spent.Server.Services;
+﻿namespace Spent.Server.Services;
 
 public partial class AppIdentityErrorDescriber : IdentityErrorDescriber
 {
-    [AutoInject] IStringLocalizer<IdentityStrings> localizer = default!;
+    [AutoInject] readonly IStringLocalizer<IdentityStrings> localizer = default!;
 
     IdentityError CreateIdentityError(string code, params object[] args)
     {

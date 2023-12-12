@@ -4,7 +4,7 @@ using Spent.Commons.Extensions;
 
 namespace Spent.Client.Core.Extensions;
 
-public static class IServiceCollectionExtensions
+public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddClientSharedServices(this IServiceCollection services)
     {

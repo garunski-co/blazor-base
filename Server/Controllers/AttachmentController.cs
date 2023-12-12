@@ -1,7 +1,6 @@
 ﻿using Spent.Server.Models.Identity;
 using ImageMagick;
 using MimeTypes;
-using Spent.Commons.Attributes;
 using Spent.Commons.Extensions;
 using SystemFile = System.IO.File;
 
@@ -11,9 +10,9 @@ namespace Spent.Server.Controllers;
 [ApiController]
 public partial class AttachmentController : AppControllerBase
 {
-    [AutoInject] private UserManager<User> userManager = default!;
+    [AutoInject] private readonly UserManager<User> userManager = default!;
 
-    [AutoInject] private IWebHostEnvironment webHostEnvironment = default!;
+    [AutoInject] private readonly IWebHostEnvironment webHostEnvironment = default!;
 
     [HttpPost]
     [RequestSizeLimit(11 * 1024 * 1024 /*11MB*/)]

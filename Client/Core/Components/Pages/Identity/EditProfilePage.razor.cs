@@ -27,11 +27,11 @@ public partial class EditProfilePage
         {
             await LoadEditProfileData();
 
-            var access_token = await PrerenderStateService.GetValue($"{nameof(EditProfilePage)}-access_token", AuthTokenProvider.GetAccessTokenAsync);
+            var accessToken = await PrerenderStateService.GetValue($"{nameof(EditProfilePage)}-access_token", AuthTokenProvider.GetAccessTokenAsync);
 
-            profileImageUploadUrl = $"{Configuration.GetApiServerAddress()}Attachment/UploadProfileImage?access_token={access_token}";
-            profileImageUrl = $"{Configuration.GetApiServerAddress()}Attachment/GetProfileImage?access_token={access_token}";
-            profileImageRemoveUrl = $"Attachment/RemoveProfileImage?access_token={access_token}";
+            profileImageUploadUrl = $"{Configuration.GetApiServerAddress()}Attachment/UploadProfileImage?access_token={accessToken}";
+            profileImageUrl = $"{Configuration.GetApiServerAddress()}Attachment/GetProfileImage?access_token={accessToken}";
+            profileImageRemoveUrl = $"Attachment/RemoveProfileImage?access_token={accessToken}";
         }
         finally
         {
@@ -52,7 +52,7 @@ public partial class EditProfilePage
     {
         await LoadEditProfileData();
 
-        PubSubService.Publish(PubSubMessages.PROFILE_UPDATED, user);
+        PubSubService.Publish(PubSubMessages.ProfileUpdated, user);
     }
 
     private void UpdateEditProfileData()
@@ -80,7 +80,7 @@ public partial class EditProfilePage
             (await (await HttpClient.PutAsJsonAsync("User/Update", userToEdit, AppJsonContext.Default.EditUserDto, CurrentCancellationToken))
                 .Content.ReadFromJsonAsync(AppJsonContext.Default.UserDto, CurrentCancellationToken))!.Patch(user);
 
-            PubSubService.Publish(PubSubMessages.PROFILE_UPDATED, user);
+            PubSubService.Publish(PubSubMessages.ProfileUpdated, user);
 
             editProfileMessageType = BitMessageBarType.Success;
             editProfileMessage = Localizer[nameof(AppStrings.ProfileUpdatedSuccessfullyMessage)];

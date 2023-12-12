@@ -34,7 +34,7 @@ public class CultureInfoManager
 
     public static string GetCurrentCulture(string? preferredCulture = null)
     {
-        string culture = preferredCulture ?? CultureInfo.CurrentUICulture.Name;
+        var culture = preferredCulture ?? CultureInfo.CurrentUICulture.Name;
         if (SupportedCultures.Any(sc => sc.code == culture) is false)
         {
             culture = DefaultCulture.code;

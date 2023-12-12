@@ -19,7 +19,7 @@ namespace Spent.Client.Core.Components;
 /// </summary>
 public partial class AppDataAnnotationsValidator : AppComponentBase, IDisposable
 {
-    private static readonly PropertyInfo otherPropertyNamePropertyInfo = typeof(CompareAttribute).GetProperty(nameof(CompareAttribute.OtherPropertyDisplayName))!;
+    private static readonly PropertyInfo OtherPropertyNamePropertyInfo = typeof(CompareAttribute).GetProperty(nameof(CompareAttribute.OtherPropertyDisplayName))!;
 
     private bool disposed;
     private ValidationMessageStore validationMessageStore = default!;
@@ -80,7 +80,7 @@ public partial class AppDataAnnotationsValidator : AppComponentBase, IDisposable
                     if (attribute is CompareAttribute compareAttribute)
                     {
                         var otherPropertyInfoDisplayAttribute = (parent.GetProperty(compareAttribute.OtherProperty) ?? throw new InvalidOperationException($"Invalid OtherProperty {compareAttribute.OtherProperty}")).GetCustomAttribute<DisplayAttribute>();
-                        otherPropertyNamePropertyInfo.SetValue(attribute, stringLocalizer.GetString(otherPropertyInfoDisplayAttribute?.Name ?? compareAttribute.OtherProperty).ToString());
+                        OtherPropertyNamePropertyInfo.SetValue(attribute, stringLocalizer.GetString(otherPropertyInfoDisplayAttribute?.Name ?? compareAttribute.OtherProperty).ToString());
                     }
                 }
 
@@ -147,7 +147,7 @@ public partial class AppDataAnnotationsValidator : AppComponentBase, IDisposable
                         if (attribute is CompareAttribute compareAttribute)
                         {
                             var otherPropertyInfoDisplayAttribute = (properties.FirstOrDefault(p => p.Name == compareAttribute.OtherProperty) ?? throw new InvalidOperationException($"Invalid OtherProperty {compareAttribute.OtherProperty}")).GetCustomAttribute<DisplayAttribute>();
-                            otherPropertyNamePropertyInfo.SetValue(attribute, stringLocalizer.GetString(otherPropertyInfoDisplayAttribute?.Name ?? compareAttribute.OtherProperty).ToString());
+                            OtherPropertyNamePropertyInfo.SetValue(attribute, stringLocalizer.GetString(otherPropertyInfoDisplayAttribute?.Name ?? compareAttribute.OtherProperty).ToString());
                         }
                     }
 

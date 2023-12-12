@@ -18,7 +18,7 @@ public class AppSecureJwtDataFormat(AppSettings appSettings, TokenValidationPara
         try
         {
             var handler = new JwtSecurityTokenHandler();
-            ClaimsPrincipal? principal = handler.ValidateToken(protectedText, validationParameters, out var validToken);
+            var principal = handler.ValidateToken(protectedText, validationParameters, out var validToken);
             var validJwt = (JwtSecurityToken)validToken;
             var data = new AuthenticationTicket(principal, properties: new AuthenticationProperties()
             {

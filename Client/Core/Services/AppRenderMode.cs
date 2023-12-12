@@ -5,7 +5,7 @@ namespace Spent.Client.Core.Services;
 
 public static class AppRenderMode
 {
-    public static readonly bool PrerenderEnabled = false;
+    public const bool PrerenderEnabled = false;
 
     private static IComponentRenderMode Auto { get; } = new InteractiveAutoRenderMode(PrerenderEnabled);
     private static IComponentRenderMode BlazorWebAssembly { get; } = new InteractiveWebAssemblyRenderMode(PrerenderEnabled);

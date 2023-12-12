@@ -17,7 +17,7 @@ public partial class ConfirmMessageBox
 
         await InvokeAsync(() =>
         {
-            _ = JSRuntime.SetBodyOverflow(true);
+            _ = JsRuntime.SetBodyOverflow(true);
 
             isOpen = true;
             this.title = title;
@@ -34,7 +34,7 @@ public partial class ConfirmMessageBox
     public async Task Confirm(bool value)
     {
         isOpen = false;
-        await JSRuntime.SetBodyOverflow(false);
+        await JsRuntime.SetBodyOverflow(false);
         tcs?.SetResult(value);
     }
 }

@@ -9,7 +9,7 @@ public partial class SignUpPage
     private bool isSignedUp;
     private string? signUpMessage;
     private BitMessageBarType signUpMessageType;
-    private SignUpRequestDto signUpModel = new();
+    private readonly SignUpRequestDto signUpModel = new();
 
 
     protected override async Task OnAfterFirstRenderAsync()

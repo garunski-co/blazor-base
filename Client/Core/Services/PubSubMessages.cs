@@ -2,6 +2,6 @@
 
 public static class PubSubMessages
 {
-    public const string PROFILE_UPDATED = "PROFILEUPDATED";
-    public const string SHOW_MESSAGE = "SHOWMESSAGE";
+    public const string ProfileUpdated = "PROFILEUPDATED";
+    public const string ShowMessage = "SHOWMESSAGE";
 }

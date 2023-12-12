@@ -1,12 +1,10 @@
-﻿using Spent.Commons.Attributes;
-
-namespace Spent.Client.Core.Services;
+﻿namespace Spent.Client.Core.Services;
 
 public partial class BrowserStorageService : IStorageService
 {
-    [AutoInject] private IJSRuntime jsRuntime;
+    [AutoInject] private readonly IJSRuntime jsRuntime;
 
-    public async ValueTask<string> GetItem(string key)
+    public async ValueTask<string?> GetItem(string key)
     {
         return await jsRuntime.InvokeAsync<string?>("window.localStorage.getItem", key) ??
             await jsRuntime.InvokeAsync<string?>("window.sessionStorage.getItem", key);
