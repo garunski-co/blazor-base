@@ -6,7 +6,13 @@ namespace Spent.Server.Data;
 public class AppDbContext(DbContextOptions<AppDbContext> options)
     : IdentityDbContext<User, Role, int>(options), IDataProtectionKeyContext
 {
-    public DbSet<DataProtectionKey> DataProtectionKeys { get; [UsedImplicitly] set; } = null!;
+    public DbSet<DataProtectionKey> DataProtectionKeys
+    {
+        get;
+
+        [UsedImplicitly]
+        set;
+    } = null!;
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

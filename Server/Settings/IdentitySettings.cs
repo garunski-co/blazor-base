@@ -1,30 +1,32 @@
-namespace Spent.Server;
+namespace Spent.Server.Settings;
 
+[UsedImplicitly]
+[SuppressMessage("ReSharper", "AutoPropertyCanBeMadeGetOnly.Global")]
 public class IdentitySettings
 {
-    public TimeSpan BearerTokenExpiration { get; set; }
+    public TimeSpan BearerTokenExpiration { get; init; } = default!;
 
-    public TimeSpan RefreshTokenExpiration { get; set; }
+    public TimeSpan RefreshTokenExpiration { get; init; } = default!;
 
-    public string Issuer { get; set; } = default!;
+    public string Issuer { get; init; } = default!;
 
-    public string Audience { get; set; } = default!;
+    public string Audience { get; init; } = default!;
 
-    public string IdentityCertificatePassword { get; set; } = default!;
+    public string IdentityCertificatePassword { get; init; } = default!;
 
-    public bool PasswordRequireDigit { get; set; }
+    public bool PasswordRequireDigit { get; init; } = default!;
 
-    public int PasswordRequiredLength { get; set; }
+    public int PasswordRequiredLength { get; init; } = default!;
 
-    public bool PasswordRequireNonAlphanumeric { get; set; }
+    public bool PasswordRequireNonAlphanumeric { get; init; } = default!;
 
-    public bool PasswordRequireUppercase { get; set; }
+    public bool PasswordRequireUppercase { get; init; } = default!;
 
-    public bool PasswordRequireLowercase { get; set; }
+    public bool PasswordRequireLowercase { get; init; } = default!;
 
-    public bool RequireUniqueEmail { get; set; }
+    public bool RequireUniqueEmail { get; init; } = default!;
 
-    public TimeSpan ConfirmationEmailResendDelay { get; set; }
+    public TimeSpan ConfirmationEmailResendDelay { get; init; } = default!;
 
-    public TimeSpan ResetPasswordEmailResendDelay { get; set; }
+    public TimeSpan ResetPasswordEmailResendDelay { get; init; } = default!;
 }

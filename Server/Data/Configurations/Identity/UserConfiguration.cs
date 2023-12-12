@@ -15,7 +15,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
                 EmailConfirmed = true,
                 LockoutEnabled = true,
                 Gender = Gender.Other,
-                BirthDate = new DateTime(2023, 1, 1),
+                BirthDate = new DateTimeOffset(new(2023, 1, 1)),
                 FullName = "Spent test account",
                 UserName = userName,
                 Email = userName,

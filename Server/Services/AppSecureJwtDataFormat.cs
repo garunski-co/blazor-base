@@ -1,6 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.IdentityModel.Tokens;
+using Spent.Server.Settings;
 
 namespace Spent.Server.Services;
 
@@ -48,7 +49,7 @@ public class AppSecureJwtDataFormat(AppSettings appSettings, TokenValidationPara
             {
                 Issuer = appSettings.IdentitySettings.Issuer,
                 Audience = appSettings.IdentitySettings.Audience,
-                IssuedAt = DateTime.UtcNow,
+                IssuedAt = DateTimeOffset.UtcNow.DateTime,
                 Expires = data.Properties.ExpiresUtc!.Value.UtcDateTime,
                 SigningCredentials =
                     new SigningCredentials(validationParameters.IssuerSigningKey, SecurityAlgorithms.RsaSha512),

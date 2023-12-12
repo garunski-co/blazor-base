@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Spent.Client.Core.Extensions;
 using Spent.Server.Extensions;
 using Spent.Server.Services;
+using Spent.Server.Settings;
 
 namespace Spent.Server.Startup;
 

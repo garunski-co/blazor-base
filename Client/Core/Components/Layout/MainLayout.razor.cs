@@ -12,7 +12,7 @@ public partial class MainLayout : IDisposable
     // private ErrorBoundary _errorBoundaryRef = default!;
     [AutoInject]
     private IExceptionHandler _exceptionHandler = default!;
-    
+
     private bool _isMenuOpen;
 
     private bool _isUserAuthenticated;

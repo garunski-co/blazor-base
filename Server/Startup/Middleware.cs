@@ -6,10 +6,11 @@ using Microsoft.AspNetCore.Components.Endpoints;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Http.Extensions;
 using Spent.Server.Components;
+using Spent.Server.Settings;
 
 namespace Spent.Server.Startup;
 
-public static class Middlewares
+public static class Middleware
 {
     public static void Use(WebApplication app, IHostEnvironment env, IConfiguration configuration)
     {

@@ -7,6 +7,7 @@ using Spent.Client.Core.Services.HttpMessageHandlers;
 using Spent.Client.Web.Extensions;
 using Spent.Server.Models.Identity;
 using Spent.Server.Services;
+using Spent.Server.Settings;
 
 namespace Spent.Server.Extensions;
 

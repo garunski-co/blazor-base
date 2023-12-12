@@ -1,4 +1,6 @@
-﻿namespace Spent.Server.Controllers;
+﻿using Spent.Server.Settings;
+
+namespace Spent.Server.Controllers;
 
 public partial class AppControllerBase : ControllerBase
 {
