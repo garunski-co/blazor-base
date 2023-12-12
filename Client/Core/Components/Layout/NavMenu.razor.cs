@@ -115,7 +115,7 @@ public partial class NavMenu : IDisposable
             return;
         }
 
-        _unsubscribe?.Invoke();
+        _unsubscribe();
 
         _disposed = true;
     }
