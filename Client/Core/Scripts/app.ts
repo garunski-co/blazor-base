@@ -1,12 +1,12 @@
 ﻿class App {
-    public static setCookie(name: string, value: string, seconds: number, remeber: boolean, secure: boolean) {
+    public static setCookie(name: string, value: string, seconds: number, remember: boolean, secure: boolean) {
         const date = new Date();
         date.setSeconds(date.getSeconds() + seconds);
         let cookie = `${name}=${value};path=/;samesite=strict;`;
-        if (remeber == true) {
+        if (remember) {
             cookie = cookie += `expires=${date.toUTCString()};`;
         }
-        if (secure == true) {
+        if (secure) {
             cookie = `${cookie};secure`;
         }
         document.cookie = cookie;
@@ -35,11 +35,11 @@
 
 declare class BitTheme {
     static init(options: any): void;
-};
+}
 
 BitTheme.init({
     system: true,
-    onChange: (newTheme: string, oldThem: string) => {
+    onChange: (newTheme: string) => {
         if (newTheme === 'dark') {
             document.body.classList.add('theme-dark');
             document.body.classList.remove('theme-light');

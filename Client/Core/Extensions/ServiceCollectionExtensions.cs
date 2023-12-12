@@ -46,10 +46,8 @@ public static class ServiceCollectionExtensions
         {
             return services.AddSingleton<TService, TImplementation>();
         }
-        else
-        {
-            return services.AddScoped<TService, TImplementation>();
-        }
+
+        return services.AddScoped<TService, TImplementation>();
     }
 
     /// <summary>

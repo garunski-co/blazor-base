@@ -1,6 +1,6 @@
 ﻿namespace Spent.Client.Core.Extensions;
 
-public static class IjsRuntimeExtensions
+public static class JsRuntimeExtensions
 {
     /// <summary>
     /// To disable the scrollbar of the body when showing the modal, so the modal can be always shown in the viewport without being scrolled out.

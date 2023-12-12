@@ -56,17 +56,15 @@ public partial class IdentityController : AppControllerBase
                 throw new BadRequestException(Localizer.GetString(nameof(AppStrings.DuplicateEmail),
                     existingUser.Email!));
             }
-            else
-            {
-                var deleteResult = await _userManager.DeleteAsync(existingUser);
-                if (!deleteResult.Succeeded)
-                {
-                    throw new ResourceValidationException(deleteResult.Errors
-                        .Select(err => new LocalizedString(err.Code, err.Description)).ToArray());
-                }
 
-                userToAdd.ConfirmationEmailRequestedOn = existingUser.ConfirmationEmailRequestedOn;
+            var deleteResult = await _userManager.DeleteAsync(existingUser);
+            if (!deleteResult.Succeeded)
+            {
+                throw new ResourceValidationException(deleteResult.Errors
+                    .Select(err => new LocalizedString(err.Code, err.Description)).ToArray());
             }
+
+            userToAdd.ConfirmationEmailRequestedOn = existingUser.ConfirmationEmailRequestedOn;
         }
 
         userToAdd.LockoutEnabled = true;

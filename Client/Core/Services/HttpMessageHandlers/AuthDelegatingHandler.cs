@@ -44,10 +44,8 @@ public class AuthDelegatingHandler(
 
                 return await base.SendAsync(request, cancellationToken);
             }
-            else
-            {
-                await authManager.SignOut();
-            }
+
+            await authManager.SignOut();
 
             throw;
         }
