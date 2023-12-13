@@ -78,7 +78,7 @@ public partial class AttachmentController : AppControllerBase
 
             sourceImage.Resize(resizedImageSize);
 
-            sourceImage.Write(resizedFilePath, MagickFormat.WebP);
+            await sourceImage.WriteAsync(resizedFilePath, MagickFormat.WebP, cancellationToken);
 
             user.ProfileImageName = destFileName;
 

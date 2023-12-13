@@ -8,11 +8,11 @@ public partial class SignOutConfirmModal
     [Parameter]
     public EventCallback<bool> IsOpenChanged { get; set; }
 
-    private async Task CloseModal()
+    private Task CloseModal()
     {
         IsOpen = false;
 
-        await IsOpenChanged.InvokeAsync(false);
+        return IsOpenChanged.InvokeAsync(false);
     }
 
     private async Task SignOut()

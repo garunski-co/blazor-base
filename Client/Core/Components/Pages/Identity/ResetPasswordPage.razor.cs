@@ -21,12 +21,12 @@ public partial class ResetPasswordPage
     [SupplyParameterFromQuery]
     public string? Token { get; set; }
 
-    protected override async Task OnInitAsync()
+    protected override Task OnInitAsync()
     {
         _resetPasswordModel.Email = Email;
         _resetPasswordModel.Token = Token;
 
-        await base.OnInitAsync();
+        return base.OnInitAsync();
     }
 
     protected override async Task OnAfterFirstRenderAsync()

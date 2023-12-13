@@ -35,13 +35,13 @@ public static class Services
                 options.DataAnnotationLocalizerProvider = StringLocalizerProvider.ProvideLocalizer)
             .ConfigureApiBehaviorOptions(options =>
             {
-                options.InvalidModelStateResponseFactory = context =>
-                {
-                    throw new ResourceValidationException(context.ModelState.Select(ms =>
-                        (ms.Key,
-                            ms.Value!.Errors.Select(e => new LocalizedString(e.ErrorMessage, e.ErrorMessage))
-                                .ToArray())).ToArray());
-                };
+                options.InvalidModelStateResponseFactory = context => throw new ResourceValidationException(context
+                    .ModelState
+                    .Select(ms =>
+                        (ms.Key, ms.Value!.Errors.Select(e => new LocalizedString(e.ErrorMessage, e.ErrorMessage))
+                            .ToArray()
+                        )
+                    ).ToArray());
             });
 
         services.Configure<ForwardedHeadersOptions>(options =>

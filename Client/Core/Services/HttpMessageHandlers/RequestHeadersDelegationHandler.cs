@@ -6,7 +6,7 @@ namespace Spent.Client.Core.Services.HttpMessageHandlers;
 public class RequestHeadersDelegationHandler(AuthDelegatingHandler handler)
     : DelegatingHandler(handler)
 {
-    protected override async Task<HttpResponseMessage> SendAsync(
+    protected override Task<HttpResponseMessage> SendAsync(
         HttpRequestMessage request,
         CancellationToken cancellationToken)
     {
@@ -17,6 +17,6 @@ public class RequestHeadersDelegationHandler(AuthDelegatingHandler handler)
         request.Headers.AcceptLanguage.Add(new StringWithQualityHeaderValue(CultureInfo.CurrentCulture.Name));
 #endif
 
-        return await base.SendAsync(request, cancellationToken);
+        return base.SendAsync(request, cancellationToken);
     }
 }

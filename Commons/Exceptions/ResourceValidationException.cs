@@ -10,6 +10,7 @@ public class ResourceValidationException : RestException
     public ResourceValidationException((string propName, LocalizedString[] errorMessages)[] details)
         : this("*", details) { }
 
+    [UsedImplicitly]
     public ResourceValidationException(Type resourceType, (string propName, LocalizedString[] errorMessages)[] details)
         : this(resourceType.FullName!, details) { }
 
@@ -39,7 +40,7 @@ public class ResourceValidationException : RestException
         Payload = payload;
     }
 
-    public ErrorResourcePayload Payload { get; set; } = new();
+    public ErrorResourcePayload Payload { get; }
 
     public override HttpStatusCode StatusCode => HttpStatusCode.BadRequest;
 }

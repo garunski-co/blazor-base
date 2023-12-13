@@ -11,12 +11,12 @@ namespace Spent.Server.Services;
 public class AppSecureJwtDataFormat(AppSettings appSettings, TokenValidationParameters validationParameters)
     : ISecureDataFormat<AuthenticationTicket>
 {
-    public AuthenticationTicket? Unprotect(string? protectedText)
+    public AuthenticationTicket Unprotect(string? protectedText)
     {
         return Unprotect(protectedText, null);
     }
 
-    public AuthenticationTicket? Unprotect(string? protectedText, string? purpose)
+    public AuthenticationTicket Unprotect(string? protectedText, string? purpose)
     {
         try
         {
@@ -61,7 +61,7 @@ public class AppSecureJwtDataFormat(AppSettings appSettings, TokenValidationPara
         return encodedJwt;
     }
 
-    private AuthenticationTicket NotSignedIn()
+    private static AuthenticationTicket NotSignedIn()
     {
         return new AuthenticationTicket(new ClaimsPrincipal(new ClaimsIdentity()), string.Empty);
     }

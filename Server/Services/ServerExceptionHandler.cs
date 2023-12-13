@@ -58,7 +58,7 @@ public partial class ServerExceptionHandler : IExceptionHandler
         return true;
     }
 
-    private Exception UnWrapException(Exception exp)
+    private static Exception UnWrapException(Exception exp)
     {
         return exp is TargetInvocationException && exp.InnerException is not null
             ? exp.InnerException

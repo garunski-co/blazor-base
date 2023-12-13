@@ -35,7 +35,7 @@ public partial class ConfirmMessageBox
         return await _tcs.Task;
     }
 
-    public async Task Confirm(bool value)
+    private async Task Confirm(bool value)
     {
         _isOpen = false;
         await JsRuntime.SetBodyOverflow(false);

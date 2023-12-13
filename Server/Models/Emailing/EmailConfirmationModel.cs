@@ -2,12 +2,10 @@
 
 public class EmailConfirmationModel
 {
-    public EmailConfirmationModel() { }
-
     public EmailConfirmationModel(string? confirmationLink)
     {
         ConfirmationLink = confirmationLink;
     }
 
-    public string? ConfirmationLink { get; set; }
+    public string? ConfirmationLink { get; }
 }

@@ -11,17 +11,9 @@ public class ODataOperationFilter : IOperationFilter
 {
     public void Apply(OpenApiOperation operation, OperationFilterContext context)
     {
-        if (operation.Parameters == null)
-        {
-            operation.Parameters = new List<OpenApiParameter>();
-        }
+        operation.Parameters ??= new List<OpenApiParameter>();
 
-        var descriptor = context.ApiDescription.ActionDescriptor as ControllerActionDescriptor;
-
-        if (descriptor is null)
-        {
-            return;
-        }
+        var descriptor = (ControllerActionDescriptor)context.ApiDescription.ActionDescriptor;
 
         var odataQueryOptionsParameter =
             descriptor.Parameters.SingleOrDefault(p => typeof(ODataQueryOptions).IsAssignableFrom(p.ParameterType));

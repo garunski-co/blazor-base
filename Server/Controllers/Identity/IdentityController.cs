@@ -35,9 +35,6 @@ public partial class IdentityController : AppControllerBase
     [AutoInject]
     private readonly UserManager<User> _userManager = default!;
 
-    [AutoInject]
-    private IStringLocalizer<IdentityStrings> _identityLocalizer = default!;
-
     /// <summary>
     ///     By leveraging summary tags in your controller's actions and DTO properties you can make your codes much easier to
     ///     maintain.
@@ -78,7 +75,7 @@ public partial class IdentityController : AppControllerBase
                 .ToArray());
         }
 
-        await SendConfirmationEmail(new() { Email = userToAdd.Email }, userToAdd, cancellationToken);
+        await SendConfirmationEmail(userToAdd, cancellationToken);
     }
 
     [HttpPost]
@@ -99,11 +96,10 @@ public partial class IdentityController : AppControllerBase
             throw new BadRequestException(Localizer[nameof(AppStrings.EmailAlreadyConfirmed)]);
         }
 
-        await SendConfirmationEmail(sendConfirmationEmailRequest, user, cancellationToken);
+        await SendConfirmationEmail(user, cancellationToken);
     }
 
     private async Task SendConfirmationEmail(
-        SendConfirmationEmailRequestDto sendConfirmationEmailRequest,
         User user,
         CancellationToken cancellationToken)
     {
@@ -224,8 +220,8 @@ public partial class IdentityController : AppControllerBase
         var refreshTokenProtector = _bearerTokenOptions.Get(IdentityConstants.BearerScheme).RefreshTokenProtector;
         var refreshTicket = refreshTokenProtector.Unprotect(refreshRequest.RefreshToken);
 
-        if (refreshTicket?.Properties?.ExpiresUtc is not { } expiresUtc || DateTimeOffset.UtcNow >= expiresUtc ||
-            await _signInManager.ValidateSecurityStampAsync(refreshTicket.Principal) is not User user)
+        if (refreshTicket?.Properties.ExpiresUtc is not { } expiresUtc || DateTimeOffset.UtcNow >= expiresUtc ||
+            await _signInManager.ValidateSecurityStampAsync(refreshTicket.Principal) is not { } user)
         {
             return Challenge();
         }

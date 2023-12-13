@@ -2,29 +2,29 @@
 
 public abstract class KnownException : Exception
 {
-    public KnownException(string message)
+    protected KnownException(string message)
         : base(message)
     {
         Key = message;
     }
 
-    public KnownException(string message, Exception? innerException)
+    protected KnownException(string message, Exception? innerException)
         : base(message, innerException)
     {
         Key = message;
     }
 
-    public KnownException(LocalizedString message)
+    protected KnownException(LocalizedString message)
         : base(message.Value)
     {
         Key = message.Name;
     }
 
-    public KnownException(LocalizedString message, Exception? innerException)
+    protected KnownException(LocalizedString message, Exception? innerException)
         : base(message.Value, innerException)
     {
         Key = message.Name;
     }
 
-    public string? Key { get; set; }
+    public string? Key { get; }
 }

@@ -2,7 +2,7 @@
 
 namespace Spent.Client.Core.Components.Layout;
 
-public partial class Header : IDisposable
+public partial class Header
 {
     private bool _disposed;
 
@@ -43,9 +43,9 @@ public partial class Header : IDisposable
         }
     }
 
-    private async Task ToggleMenu()
+    private Task ToggleMenu()
     {
-        await OnToggleMenu.InvokeAsync();
+        return OnToggleMenu.InvokeAsync();
     }
 
     protected virtual void Dispose(bool disposing)

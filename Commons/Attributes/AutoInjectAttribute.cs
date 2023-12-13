@@ -7,4 +7,4 @@ namespace Microsoft.Extensions.DependencyInjection;
 ///     generate the remaining code necessary to inject that field or property using dependency injection.
 /// </summary>
 [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
-public sealed class AutoInjectAttribute : Attribute { }
+public sealed class AutoInjectAttribute : Attribute;

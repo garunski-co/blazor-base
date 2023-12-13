@@ -2,7 +2,7 @@
 
 namespace Spent.Client.Core.Components.Layout;
 
-public partial class MessageBox : IDisposable
+public partial class MessageBox
 {
     private string? _body;
 
@@ -51,9 +51,9 @@ public partial class MessageBox : IDisposable
         return base.OnInitAsync();
     }
 
-    private async Task ShowMessageBox(string message, string title = "")
+    private Task ShowMessageBox(string message, string title = "")
     {
-        await InvokeAsync(() =>
+        return InvokeAsync(() =>
         {
             _ = JsRuntime.SetBodyOverflow(true);
 

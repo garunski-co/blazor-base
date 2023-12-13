@@ -2,7 +2,7 @@
 
 public class ResetPasswordModel
 {
-    public string? DisplayName { get; set; }
+    public string? DisplayName { get; init; }
 
-    public Uri? ResetPasswordLink { get; set; }
+    public Uri? ResetPasswordLink { get; init; }
 }

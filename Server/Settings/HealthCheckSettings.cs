@@ -1,5 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
-
 namespace Spent.Server.Settings;
 
 [UsedImplicitly]

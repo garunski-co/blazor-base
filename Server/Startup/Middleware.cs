@@ -114,25 +114,27 @@ public static class Middleware
     /// </summary>
     private static void Configure_401_403_404_Pages(WebApplication app)
     {
-        app.Use(async (context, next) =>
+        app.Use((context, next) =>
         {
-            if (context.Request.Path.HasValue)
+            if (!context.Request.Path.HasValue)
             {
-                if (context.Request.Path.Value.Contains("not-found", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    context.Response.StatusCode = (int)HttpStatusCode.NotFound;
-                }
-
-                if (context.Request.Path.Value.Contains("not-authorized",
-                        StringComparison.InvariantCultureIgnoreCase))
-                {
-                    context.Response.StatusCode = context.Request.Query["isForbidden"].FirstOrDefault() is "true"
-                        ? (int)HttpStatusCode.Forbidden
-                        : (int)HttpStatusCode.Unauthorized;
-                }
+                return next.Invoke(context);
             }
 
-            await next.Invoke(context);
+            if (context.Request.Path.Value.Contains("not-found", StringComparison.InvariantCultureIgnoreCase))
+            {
+                context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+            }
+
+            if (context.Request.Path.Value.Contains("not-authorized",
+                    StringComparison.InvariantCultureIgnoreCase))
+            {
+                context.Response.StatusCode = context.Request.Query["isForbidden"].FirstOrDefault() is "true"
+                    ? (int)HttpStatusCode.Forbidden
+                    : (int)HttpStatusCode.Unauthorized;
+            }
+
+            return next.Invoke(context);
         });
 
         app.UseStatusCodePages(options: new()

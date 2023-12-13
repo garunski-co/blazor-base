@@ -3,7 +3,7 @@ using Spent.Commons.Dtos.Identity;
 
 namespace Spent.Client.Core.Components.Layout;
 
-public partial class NavMenu : IDisposable
+public partial class NavMenu
 {
     private bool _disposed;
 
@@ -72,8 +72,8 @@ public partial class NavMenu : IDisposable
             StateHasChanged();
         });
 
-        _user = await PrerenderStateService.GetValue($"{nameof(NavMenu)}-{nameof(_user)}", async () =>
-            await HttpClient.GetFromJsonAsync("User/GetCurrentUser", AppJsonContext.Default.UserDto,
+        _user = await PrerenderStateService.GetValue($"{nameof(NavMenu)}-{nameof(_user)}", () =>
+            HttpClient.GetFromJsonAsync("User/GetCurrentUser", AppJsonContext.Default.UserDto,
                 CurrentCancellationToken)) ?? new();
 
         var accessToken = await PrerenderStateService.GetValue($"{nameof(NavMenu)}-access_token",
@@ -89,11 +89,11 @@ public partial class NavMenu : IDisposable
         _profileImageUrl = _user.ProfileImageName is not null ? _profileImageUrlBase + _user.ProfileImageName : null;
     }
 
-    private async Task DoSignOut()
+    private Task DoSignOut()
     {
         _isSignOutModalOpen = true;
 
-        await CloseMenu();
+        return CloseMenu();
     }
 
     private async Task GoToEditProfile()
@@ -102,10 +102,10 @@ public partial class NavMenu : IDisposable
         _navManager.NavigateTo("edit-profile");
     }
 
-    private async Task CloseMenu()
+    private Task CloseMenu()
     {
         IsMenuOpen = false;
-        await IsMenuOpenChanged.InvokeAsync(false);
+        return IsMenuOpenChanged.InvokeAsync(false);
     }
 
     protected virtual void Dispose(bool disposing)
